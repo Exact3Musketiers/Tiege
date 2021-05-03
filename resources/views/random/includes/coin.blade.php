@@ -48,12 +48,12 @@
 
     .animateHand {
         width: 10px;
-        animation: myfirst 2s;
+        animation: rotateHand 2s;
         animation-direction: alternate;
         animation-iteration-count: infinite;
     }
 
-    @keyframes myfirst {
+    @keyframes rotateHand {
         0% {
             margin-top: 0px;
             transform: rotate(0deg)
