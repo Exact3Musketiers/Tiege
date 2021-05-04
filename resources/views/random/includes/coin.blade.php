@@ -1,8 +1,8 @@
-<div class="jumbotron mx-auto" style="display: grid; height: 200px">
+<div id="coinPage" class="jumbotron mx-auto">
     <button class="btn btn-primary" id="flipButton" onclick="flipCoin()">Click for heads/tails</button>
     <div id="hand"></div>
     <div id="coin"></div>
-    <div id="coinResult" class="display-3 mx-auto"></div>
+    <div id="coinResult" class="display-4 mx-auto"></div>
 </div>
 
 
@@ -24,9 +24,9 @@
 
             setTimeout(() => {
                 if (Math.floor(Math.random() * (1 - 0 + 1)) + 0 == 1)
-                    coinResult.innerHTML = 'Het is: Head';
+                    coinResult.innerHTML = '<img src="{{asset("images/heads.png")}}"><p class="text-center">Heads</p>';
                 else
-                    coinResult.innerHTML = 'Het is: Tails';
+                    coinResult.innerHTML = '<img src="{{asset("images/tails.png")}}"><p class="text-center">Tails</p>';
                 coin.innerHTML = '';
                 hand.innerHTML = '';
                 flipButton.disabled = false;
@@ -38,6 +38,13 @@
 
 
 <style>
+    #coinPage{
+        display: grid;
+        height: 320px;
+    }
+    #coinPage .btn{
+        height: 40px;
+    }
     #hand i {
         transform: scale(-1, 1);
     }
