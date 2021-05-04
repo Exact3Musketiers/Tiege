@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('includes._errors', ['bag' => 'form-feedback'])
+
     <h1 class="text-center">Currency Exchange</h1>
     <form method="POST" action="{{ route('fetch') }}">
         @csrf
@@ -24,28 +26,26 @@
             <label for="from" class="col-md-4 col-form-label text-md-right">{{ __('From') }}</label>
 
             <div class="col-md-6">
-                <input id="from" type="text" class="form-control @error('from') is-invalid @enderror" name="from"
-                       value="{{ old('from') != null ? old('from') : $from }}" required autofocus>
-                @error('from')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <div class="form-group">
+                    <select class="form-control" id="from" name="from">
+                        @foreach ($currencies->results as $currency)
+                            <option value="{{ $currency->id }}" {{ (old('from') === $currency->id || $from === $currency->id) ? 'selected' : '' }}>{{ $currency->currencyName }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="to" class="col-md-4 col-form-label text-md-right">{{ __('To') }}</label>
-
             <div class="col-md-6">
-                <input id="to" type="text" class="form-control @error('to') is-invalid @enderror" name="to"
-                       value="{{ old('to') != null ? old('to') : $to }}" required autofocus>
-
-                @error('to')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <div class="form-group">
+                    <select class="form-control" id="to" name="to">
+                        @foreach ($currencies->results as $currency)
+                            <option value="{{ $currency->id }}" {{ (old('to') === $currency->id || $to === $currency->id) ? 'selected' : '' }}>{{ $currency->currencyName }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
 
