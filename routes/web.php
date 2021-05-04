@@ -20,5 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/currency', [App\Http\Controllers\CurrencyController::class, 'index'])->name('currency');
+
 
 Route::resource('random', App\Http\Controllers\RandomController::class);
+
+Route::post('/currencyFetch', [App\Http\Controllers\CurrencyController::class, 'fetch'])->name('fetch');

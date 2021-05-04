@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    hallo grote kerel, welkom hierzo lekker he.
+    hallo
     @include('random.includes.coin')
     @include('random.includes.rng')
     @include('random.includes.dice')

@@ -57,6 +57,9 @@
                         @endif
                     @else
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('currency') }}">{{ __('Currency Exchange') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('random.index') }}">{{ __('Random') }}</a>
                         </li>
                         <li class="nav-item dropdown">
