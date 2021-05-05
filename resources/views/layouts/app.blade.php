@@ -57,6 +57,9 @@
                         @endif
                     @else
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('lastfm') }}">{{ __('LastFM') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('currency') }}">{{ __('Currency Exchange') }}</a>
                         </li>
                         <li class="nav-item">
