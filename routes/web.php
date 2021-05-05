@@ -27,4 +27,4 @@ Route::get('/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->
 Route::resource('random', App\Http\Controllers\RandomController::class);
 
 Route::post('/currencyFetch', [App\Http\Controllers\CurrencyController::class, 'fetch'])->name('Currency.fetch');
-Route::post('/lastfmFetch', [App\Http\Controllers\LastfmController::class, 'fetch'])->name('Lastfm.fetch');
+//Route::post('/lastfmFetch', [App\Http\Controllers\LastfmController::class, 'fetch'])->name('Lastfm.fetch');
