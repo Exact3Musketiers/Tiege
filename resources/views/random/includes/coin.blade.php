@@ -20,7 +20,7 @@
 
         setTimeout(() => {
             hand.classList.remove('animateHand');
-            coin.innerHTML = '<i class="fas fa-ring fa-spin w-50 display-3"></i>';
+            coin.innerHTML = '<i class="fas fa-coin fa-spin w-50 display-3"></i>';
 
             setTimeout(() => {
                 if (Math.floor(Math.random() * (1 - 0 + 1)) + 0 == 1)

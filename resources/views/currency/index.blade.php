@@ -4,7 +4,7 @@
     @include('includes._errors', ['bag' => 'form-feedback'])
 
     <h1 class="text-center">Currency Exchange</h1>
-    <form method="POST" action="{{ route('fetch') }}">
+    <form method="POST" id="currencyForm" action="{{ route('fetch') }}">
         @csrf
 
         <div class="form-group row">
@@ -22,14 +22,15 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mb-0">
             <label for="from" class="col-md-4 col-form-label text-md-right">{{ __('From') }}</label>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <select class="form-control" id="from" name="from">
                         @foreach ($currencies->results as $currency)
-                            <option value="{{ $currency->id }}" {{ (old('from') === $currency->id || $from === $currency->id) ? 'selected' : '' }}>{{ $currency->currencyName }}</option>
+                            <option
+                                value="{{ $currency->id }}" {{ (old('from') === $currency->id || $from === $currency->id) ? 'selected' : '' }}>{{ $currency->currencyName }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -37,12 +38,21 @@
         </div>
 
         <div class="form-group row">
+            <div class="col-md-8 offset-md-8">
+                <button type="button" id="switchButton" onclick="switchCurrency()" class="btn btn-primary">
+                    <i class="fas fa-repeat-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group row mt-0">
             <label for="to" class="col-md-4 col-form-label text-md-right">{{ __('To') }}</label>
             <div class="col-md-6">
                 <div class="form-group">
                     <select class="form-control" id="to" name="to">
                         @foreach ($currencies->results as $currency)
-                            <option value="{{ $currency->id }}" {{ (old('to') === $currency->id || $to === $currency->id) ? 'selected' : '' }}>{{ $currency->currencyName }}</option>
+                            <option
+                                value="{{ $currency->id }}" {{ (old('to') === $currency->id || $to === $currency->id) ? 'selected' : '' }}>{{ $currency->currencyName }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -62,3 +72,38 @@
         <h1>{{$result}}</h1>
     </div>
 @endsection
+
+<script>
+    function switchCurrency() {
+        let from = document.getElementById('from');
+        let to = document.getElementById('to');
+        const _ = from.value.toString();
+        for (let i = 0; i < from.options.length; i++) {
+            if (from.options[i].value == to.value)
+                from[i].selected = true;
+        }
+        for (let i = 0; i < to.options.length; i++) {
+            if (to.options[i].value == _)
+                to[i].selected = true;
+        }
+    }
+</script>
+
+<style>
+    #currencyForm input {
+        width: 500px;
+    }
+
+    #currencyForm select {
+        width: 500px;
+    }
+
+    #switchButton {
+        width: 60px;
+        height: 40px;
+    }
+
+    #switchButton i {
+        font-size: 18px;
+    }
+</style>
