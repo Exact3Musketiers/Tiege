@@ -4,7 +4,7 @@
     @include('includes._errors', ['bag' => 'form-feedback'])
 
     <h1 class="text-center">Currency Exchange</h1>
-    <form method="POST" id="currencyForm" action="{{ route('fetch') }}">
+    <form method="POST" id="currencyForm" action="{{ route('Lastfm.fetch') }}">
         @csrf
 
         <div class="form-group row">

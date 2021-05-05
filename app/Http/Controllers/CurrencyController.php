@@ -13,13 +13,16 @@ class CurrencyController extends Controller
         $result = $from = $to = $amount = '';
 
         //https://free.currencyconverterapi.com/
-        $currenciesResponse = Http::get('https://free.currconv.com/api/v7/currencies', [
-            'apiKey' => 'f0cb65cb861fcca63810',
-        ]);
-
-        $currencies = json_decode($currenciesResponse->body());
+        $currencies = json_decode($this->fetchCurrencies()->body());
 
         return view('currency.index', compact('result', 'from', 'to', 'amount', 'currencies'));
+    }
+
+    public function fetchCurrencies(): \Illuminate\Http\Client\Response
+    {
+        return Http::get('https://free.currconv.com/api/v7/currencies', [
+            'apiKey' => 'f0cb65cb861fcca63810',
+        ]);
     }
 
     public function fetch(Request $request)
@@ -34,31 +37,25 @@ class CurrencyController extends Controller
         $from = $request->input('from');
         $to = $request->input('to');
         $fromto = $from . '_' . $to;
-        
+
         //https://free.currencyconverterapi.com/
-        $currenciesResponse = Http::get('https://free.currconv.com/api/v7/currencies', [
-            'apiKey' => 'f0cb65cb861fcca63810',
-        ]);
         $convertResponse = Http::get('https://free.currconv.com/api/v7/convert', [
             'apiKey' => 'f0cb65cb861fcca63810',
             'q' => $fromto,
             'compact' => 'y'
         ]);
 
-        $currencies = json_decode($currenciesResponse->body());
+        $currencies = json_decode($this->fetchCurrencies()->body());
         $convert = json_decode($convertResponse->body());
 
         $convertedValue = $convert->$fromto->val * $amount;
         // dd($currencies->results->$from);
-        if (property_exists($currencies->results->$to, 'currencySymbol'))
-        {
+        if (property_exists($currencies->results->$to, 'currencySymbol')) {
             $currencySymbol = $currencies->results->$to->currencySymbol;
-        }
-        else
-        {
+        } else {
             $currencySymbol = 'Buckerinos ';
         }
-            
+
 
         $result = $currencySymbol . round($convertedValue, 4);
         return view('currency.index', compact('result', 'from', 'to', 'amount', 'currencies'));
