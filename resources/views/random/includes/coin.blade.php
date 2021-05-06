@@ -1,4 +1,4 @@
-<div id="coinPage" class="jumbotron mx-auto">
+<div id="coinPage" class="jumbotron mx-auto d-grid">
     <button class="btn btn-primary" id="flipButton" onclick="flipCoin()">Click for heads/tails</button>
     <div id="hand"></div>
     <div id="coin"></div>
@@ -39,7 +39,6 @@
 
 <style>
     #coinPage{
-        display: grid;
         height: 320px;
     }
     #coinPage .btn{

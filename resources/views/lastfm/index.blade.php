@@ -2,25 +2,19 @@
 
 @section('content')
     {{--    //TODO: make this a sidebar or something fancy you know--}}
-    <div class="jumbotron jumbotron-fluid mx-auto text-center">
+    <div id="lyricsbox" class="mx-auto text-center mb-5">
         <h1>{{ $recentTracks->track[0]->artist->{'#text'} }}</h1>
+
+        <img src={{ $recentTracks->track[0]->image[2]->{"#text"} }}/>
         <h1>{{ $recentTracks->track[0]->name }}</h1>
         <h4>{{ $recentTracks->track[0]->album->{'#text'} }}</h4>
-        <img src={{ $recentTracks->track[0]->image[2]->{"#text"} }}/>
-
-        {{--    //TODO: keep trying if nothing is found or something, it sometimes crashes--}}
-        @foreach($scrapedLyrics[0] as $sentence)
-            <div class="m-0 lyrics-sentence">
-                {{
-                    (strpos($sentence, "[")
-                    ? substr($sentence, strpos($sentence, "[", strlen($sentence)))
-                    : strpos($sentence, "]"))
-                    ? substr($sentence, 0, strpos($sentence, "]"))
-                    : $sentence
-                }}
-            </div>
-
-        @endforeach
+        <div class="pt-3 pb-5">
+            @foreach($scrapedLyrics[0] as $sentence)
+                <div class="m-0 lyrics-sentence">
+                    {{$sentence}}
+                </div>
+            @endforeach
+        </div>
     </div>
 
 
@@ -42,7 +36,7 @@
         background-color: #2a2c2d !important;
     }
 
-    main .jumbotron {
+    #lyricsbox {
         background-color: #313334;
         color: #c5c1bc;
     }

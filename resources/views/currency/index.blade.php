@@ -8,7 +8,7 @@
         @csrf
 
         <div class="form-group row">
-            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}</label>
+            <label for="amount" class="col-md-4 col-form-label text-end">{{ __('Amount') }}</label>
 
             <div class="col-md-6">
                 <input id="amount" type="text" class="form-control @error('amount') is-invalid @enderror" name="amount"
@@ -23,11 +23,10 @@
         </div>
 
         <div class="form-group row mb-0">
-            <label for="from" class="col-md-4 col-form-label text-md-right">{{ __('From') }}</label>
-
+            <label for="from" class="col-md-4 col-form-label text-end">{{ __('From') }}</label>
             <div class="col-md-6">
                 <div class="form-group">
-                    <select class="form-control" id="from" name="from">
+                    <select class="form-select" id="from" name="from">
                         @foreach ($currencies->results as $currency)
                             <option
                                 value="{{ $currency->id }}" {{ (old('from') === $currency->id || $from === $currency->id) ? 'selected' : '' }}>{{ $currency->currencyName }}</option>
@@ -46,10 +45,10 @@
         </div>
 
         <div class="form-group row mt-0">
-            <label for="to" class="col-md-4 col-form-label text-md-right">{{ __('To') }}</label>
+            <label for="to" class="col-md-4 col-form-label text-end">{{ __('To') }}</label>
             <div class="col-md-6">
                 <div class="form-group">
-                    <select class="form-control" id="to" name="to">
+                    <select class="form-select" id="to" name="to">
                         @foreach ($currencies->results as $currency)
                             <option
                                 value="{{ $currency->id }}" {{ (old('to') === $currency->id || $to === $currency->id) ? 'selected' : '' }}>{{ $currency->currencyName }}</option>
