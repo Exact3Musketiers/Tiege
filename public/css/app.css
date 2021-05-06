@@ -10842,3 +10842,38 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.sb-with {
+  max-width: 200px !important;
+}
+
+.wrap-col {
+  overflow-x: hidden;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+}
+
+.has-background-image {
+  width: 100%;
+  height: 100%;
+  background: center center;
+  background-size: cover;
+}
+
+.quick-access-box {
+  background-color: rgba(255, 255, 255, 0.69);
+}
+.quick-access-box .quick-access-logo {
+  font-size: 50px;
+  padding-bottom: 10px;
+  color: #212529;
+  cursor: pointer;
+}
+.quick-access-box .quick-access-logo:hover {
+  background: #ff0ef8;
+  background: linear-gradient(45deg, #ff0ef8 0%, #d2bf49 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

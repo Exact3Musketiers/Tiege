@@ -25,4 +25,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function search(Request $request)
+    {
+        $search = str_replace(' ', '+', $request->search);
+        $url = 'https://www.google.com/search?q=' . $search;
+
+        return redirect()->away($url);
+    }
 }

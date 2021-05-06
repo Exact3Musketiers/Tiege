@@ -6,3 +6,44 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.sb-with {
+    max-width: 200px !important;
+}
+
+.wrap-col {
+    overflow-x: hidden;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+}
+
+.has-background-image {
+    width: 100%;
+    height: 100%;
+    background: center center;
+    background-size:cover;
+}
+
+.quick-access-box {
+    background-color: rgba(255, 255, 255, 0.690);
+
+   .quick-access-logo {
+        font-size: 50px;
+        padding-bottom: 10px;
+        color: #212529;
+        cursor: pointer;
+    }
+
+    .quick-access-logo:hover {
+        background: rgb(255,14,248);
+        background: linear-gradient(45deg, rgba(255,14,248,1) 0%, rgba(210,191,73,1) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+
+}
+
