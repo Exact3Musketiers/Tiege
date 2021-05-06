@@ -49,7 +49,7 @@ class LastfmController extends Controller
         else
             $result = $data['lyrics'][0];
 
-        preg_match_all('/[A-Z][^A-Z]*/', $result, $scrapedLyrics);
+        preg_match_all('/[A-Z][^A-HJ-Z]+/', $result, $scrapedLyrics);
 
         return view('lastfm.index', compact('scrapedLyrics', 'recentTracks'));
     }
