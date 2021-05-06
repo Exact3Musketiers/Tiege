@@ -56,7 +56,7 @@
                         @endif
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('lyrics') }}">{{ __('LastFM') }}</a>
+                            <a class="nav-link" href="{{ route('lastfm') }}">{{ __('LastFM') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('currency') }}">{{ __('Currency Exchange') }}</a>
@@ -103,7 +103,7 @@
                         </a>
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                             <li class="nav-item">
-                                <a href="#" class="nav-link align-middle px-0">
+                                <a href="{{ route('home') }}" class="nav-link align-middle px-0">
                                     <i class="fas fa-home"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                                 </a>
                             </li>
