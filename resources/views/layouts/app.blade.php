@@ -42,10 +42,10 @@
                                     <i class="far fa-hand-peace"></i> <span class="ms-1 d-none d-sm-inline">Numbers</span> </a>
                                 <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                     <li class="w-100">
-                                        <a href="{{ route('random.index') }}" class="nav-link px-0"> <span class="d-none d-sm-inline">Random</span></a>
+                                        <a href="{{ route('random.index') }}" class="nav-link px-0"> <span class="d-none d-sm-inline"></span>Random</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('currency') }}" class="nav-link px-0"> <span class="d-none d-sm-inline">Currency</span></a>
+                                        <a href="{{ route('currency') }}" class="nav-link px-0"> <span class="d-none d-sm-inline"></span>Currency</a>
                                     </li>
                                 </ul>
                             </li>
@@ -54,7 +54,7 @@
                                     <i class="fas fa-music"></i> <span class="ms-1 d-none d-sm-inline">Music</span></a>
                                 <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                                     <li class="w-100">
-                                        <a href="{{ route('lastfm') }}" class="nav-link px-0"> <span class="d-none d-sm-inline">Lyrics</span></a>
+                                        <a href="{{ route('lastfm') }}" class="nav-link px-0"> <span class="d-none d-sm-inline"></span>Lyrics</a>
                                     </li>
                                 </ul>
                             </li>
