@@ -6,7 +6,7 @@ use App\Services\ScraperService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class LastfmController extends Controller
+class LyricsController extends Controller
 {
     public function formatSongDetails($item)
     {
@@ -51,6 +51,6 @@ class LastfmController extends Controller
 
         preg_match_all('/[A-Z][^A-HJ-Z]+/', $result, $scrapedLyrics);
 
-        return view('lastfm.index', compact('scrapedLyrics', 'recentTracks'));
+        return view('lyrics.index', compact('scrapedLyrics', 'recentTracks'));
     }
 }

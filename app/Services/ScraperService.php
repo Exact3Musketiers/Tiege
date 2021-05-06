@@ -20,7 +20,7 @@ class ScraperService
 
         $crawler = $client->request('GET', $url);
 //        while ($crawler->getBaseHref() !== 'https://genius.com/') {
-//            redirect()->route('lastfm');
+//            redirect()->route('lyrics');
 //        }
         sleep(0.5);
         $unavailable = $crawler->filter('.mxm-lyrics-not-available')->each(function ($node) {
