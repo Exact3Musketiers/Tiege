@@ -11,14 +11,15 @@ class LastfmController extends Controller
     public function formatSongDetails($item)
     {
         return
-            preg_replace('/-Remastered-[0-9]*/', '',
-                preg_replace('/-[0-9]*-Remaster/', '',
-                    preg_replace("/(--)/", '-',
-                        preg_replace("/(---)/", '-',
-                            str_replace(' ', '-',
-                                preg_replace("/[_.!`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", "-",
-                                    preg_replace("/[-_!#%,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", "",
-                                        $item)))))));
+            preg_replace("(((?<=feat)(.*$))|-feat)", '',
+                preg_replace('/-Remastered-[0-9]*/', '',
+                    preg_replace('/-[0-9]*-Remaster/', '',
+                        preg_replace("/(--)/", '-',
+                            preg_replace("/(---)/", '-',
+                                str_replace(' ', '-',
+                                    preg_replace("/[_.!`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", "-",
+                                        preg_replace("/[-_!#%,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", "",
+                                            $item))))))));
     }
 
     public function index(ScraperService $scraperService)
@@ -37,6 +38,7 @@ class LastfmController extends Controller
         $artist = $this->formatSongDetails($recentTracks->track[0]->artist->{'#text'});
         $song = $this->formatSongDetails($recentTracks->track[0]->name);
 
+        //TODO: make genius.com as fallback
         $url = 'https://www.musixmatch.com/lyrics/' . $artist . '/' . $song;
 
 //        dd($artist, $song, $recentTracks->track[0]->name);
