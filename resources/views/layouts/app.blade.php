@@ -54,7 +54,7 @@
                                     <i class="fas fa-music"></i> <span class="ms-1 d-none d-sm-inline">Music</span></a>
                                 <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                                     <li class="w-100">
-                                        <a href="{{ route('lastfm') }}" class="nav-link px-0"> <span class="d-none d-sm-inline"></span>Lyrics</a>
+                                        <a href="{{ route('lyrics') }}" class="nav-link px-0"> <span class="d-none d-sm-inline"></span>Lyrics</a>
                                     </li>
                                 </ul>
                             </li>
