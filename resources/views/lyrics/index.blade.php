@@ -57,23 +57,4 @@
                 lyrics[i].style.fontSize = parseInt(window.getComputedStyle(lyrics[i], null).getPropertyValue('font-size').replace("px", '')) + 4;
     }
 </script>
-<style>
-    body {
-        background-color: #2a2c2d !important;
-    }
-
-    #lyricsbox {
-        background-color: #313334;
-        color: #c5c1bc;
-    }
-
-    .lyrics-sentence {
-        font-size: 18px;
-    }
-
-    .lyrics-sentence:hover {
-        background: #252931;
-    }
-
-</style>
 
