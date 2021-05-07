@@ -8,4 +8,6 @@
         <h6>{{ $recentTracks->track[0]->album->{'#text'} }}</h6>
         <a href="{{route('lyrics')}}">See lyrics</a>
     </div>
+    <img src="{{asset('images/equalizer.gif')}}" width="200"/>
+
 @endif
