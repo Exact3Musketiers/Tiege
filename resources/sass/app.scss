@@ -7,6 +7,7 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+
 body {
     background-color: #2a2c2d !important;
     color: #c5c1bc !important;
@@ -57,9 +58,22 @@ main {
     }
 }
 
+.nav {
+    a {
+        color: #ffffff;
+
+        &:hover, &:active, &:focus {
+            color: $secondary;
+        }
+    }
+
+}
+
 .navbar-dark-under {
-    background-color: black;
-    width: 100%;
+    border-top: 2px solid $primary;
+    background-color: #121517;
+    width: 200px;
+    margin-left: -24px;
 }
 
 //Lyrics
@@ -68,10 +82,10 @@ main {
 
     .lyrics-sentence {
         font-size: 18px;
-    }
 
-    .lyrics-sentence:hover {
-        background: #252931;
+        &:hover {
+            background: #252931;
+        }
     }
 }
 

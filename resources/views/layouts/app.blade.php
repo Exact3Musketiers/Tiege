@@ -17,7 +17,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
@@ -28,9 +27,9 @@
             <div class="row flex-nowrap">
                 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark sb-with">
                     <div
-                        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
                         <a href="{{ route('home') }}"
-                           class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                           class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-decoration-none text-primary">
                             <span class="fs-5 d-none d-sm-inline">{{ config('app.name', 'Tiege.test') }}</span>
                         </a>
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
@@ -67,7 +66,7 @@
                             </li>
                         </ul>
                         {{--    //TODO: fix width of this thingy, cause it's a big biatch--}}
-                        <div class="navbar-dark-under">
+                        <div class="navbar-dark-under pt-3">
                             <div class="col-12">
                                 @include('partials.music')
                             </div>
