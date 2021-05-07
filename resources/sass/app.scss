@@ -32,8 +32,13 @@ main {
     background-size: cover;
 }
 
+.container {
+    width: 80%;
+}
+
 .quick-access-box {
     background-color: rgba(255, 255, 255, 0.690);
+    border: solid 1px #99A0A4 !important;
     color: #212529 !important;
 
 
@@ -50,8 +55,6 @@ main {
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-
-
 }
 
 .navbar-dark-under {
@@ -60,7 +63,6 @@ main {
 }
 
 //Lyrics
-
 #lyricsbox {
     background-color: #313334;
 
