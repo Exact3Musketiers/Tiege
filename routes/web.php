@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
 
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+
 
     Route::resource('random', App\Http\Controllers\RandomController::class);
 

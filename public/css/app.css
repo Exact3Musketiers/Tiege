@@ -10884,6 +10884,11 @@ main {
   -webkit-text-fill-color: transparent;
 }
 
+.navbar-dark-under {
+  background-color: black;
+  width: 100%;
+}
+
 #lyricsbox {
   background-color: #313334;
 }
