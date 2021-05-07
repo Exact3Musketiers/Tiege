@@ -10891,6 +10891,7 @@ main {
 
 .nav a {
   color: #ffffff;
+  text-decoration: none;
 }
 .nav a:hover, .nav a:active, .nav a:focus {
   color: #3490dc;
@@ -10901,6 +10902,9 @@ main {
   background-color: #121517;
   width: 200px;
   margin-left: -24px;
+}
+.navbar-dark-under a {
+  text-decoration: none;
 }
 
 #lyricsbox {
