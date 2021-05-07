@@ -10842,6 +10842,14 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+::-webkit-scrollbar-thumb {
+  background-color: #424242 !important;
+}
+
+::-webkit-scrollbar {
+  background-color: transparent !important;
+}
+
 body {
   background-color: #2a2c2d;
   color: #c5c1bc;

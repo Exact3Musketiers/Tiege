@@ -7,6 +7,12 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+::-webkit-scrollbar-thumb {
+    background-color: #424242 !important;
+}
+::-webkit-scrollbar {
+    background-color: transparent !important
+}
 
 body {
     background-color: $dark-primary;
