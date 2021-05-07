@@ -10862,8 +10862,13 @@ main {
   background-size: cover;
 }
 
+.container {
+  width: 80%;
+}
+
 .quick-access-box {
   background-color: rgba(255, 255, 255, 0.69);
+  border: solid 1px #99A0A4 !important;
 }
 .quick-access-box .quick-access-logo {
   font-size: 50px;

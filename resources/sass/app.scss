@@ -27,8 +27,13 @@ main {
     background-size:cover;
 }
 
+.container {
+    width: 80%;
+}
+
 .quick-access-box {
     background-color: rgba(255, 255, 255, 0.690);
+    border: solid 1px #99A0A4 !important;
 
    .quick-access-logo {
         font-size: 50px;
@@ -43,7 +48,8 @@ main {
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-
-
 }
 
+.first-box {
+    // border: solid 1px #212529 !important;
+}
