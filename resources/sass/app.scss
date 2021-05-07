@@ -9,16 +9,8 @@
 
 
 body {
-    background-color: #2a2c2d !important;
-    color: #c5c1bc !important;
-}
-
-.sb-with {
-    max-width: 200px !important;
-}
-
-.wrap-col {
-    overflow-x: hidden;
+    background-color: $dark-primary;
+    color: $white;
 }
 
 main {
@@ -26,27 +18,38 @@ main {
     height: 100%;
 }
 
-.has-background-image {
-    width: 100%;
-    height: 100%;
-    background: center center;
-    background-size: cover;
-}
 
 .container {
     width: 80%;
 }
 
+button {
+    color: #ffffff !important;
+}
+
+.form-group {
+    padding: 5px 0 5px 0;
+}
+
+select, input {
+    background-color: rgb(69, 74, 76) !important;
+    //background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e);
+    border-color: #766f64 !important;
+    color: $white !important;
+}
+
+
+//Home
 .quick-access-box {
     background-color: rgba(255, 255, 255, 0.690);
     border: solid 1px #99A0A4 !important;
-    color: #212529 !important;
+    color: $black;
 
 
     .quick-access-logo {
         font-size: 50px;
         padding-bottom: 10px;
-        color: #212529;
+        color: $black;
         cursor: pointer;
     }
 
@@ -58,6 +61,22 @@ main {
     }
 }
 
+.has-background-image {
+    width: 100%;
+    height: 100%;
+    background: center center;
+    background-size: cover;
+}
+
+.sb-with {
+    max-width: 200px !important;
+}
+
+.wrap-col {
+    overflow-x: hidden;
+}
+
+//nav
 .nav {
     a {
         color: #ffffff;
@@ -72,7 +91,7 @@ main {
 
 .navbar-dark-under {
     border-top: 2px solid $primary;
-    background-color: #1a1a1a;
+    background-color: $dark-tertiary;
     width: 200px;
     margin-left: -24px;
 
@@ -89,7 +108,7 @@ main {
         font-size: 18px;
 
         &:hover {
-            background: #252931;
+            background: $dark-primary;
         }
     }
 }
@@ -107,7 +126,7 @@ main {
     }
 
     #coin {
-        color: gold;
+        color: #FFD700FF;
     }
 
     .animateHand {
