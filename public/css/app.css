@@ -10842,6 +10842,11 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+body {
+  background-color: #2a2c2d !important;
+  color: #c5c1bc !important;
+}
+
 .sb-with {
   max-width: 200px !important;
 }
@@ -10869,6 +10874,7 @@ main {
 .quick-access-box {
   background-color: rgba(255, 255, 255, 0.69);
   border: solid 1px #99A0A4 !important;
+  color: #212529 !important;
 }
 .quick-access-box .quick-access-logo {
   font-size: 50px;
@@ -10881,4 +10887,72 @@ main {
   background: linear-gradient(45deg, #ff0ef8 0%, #d2bf49 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+#lyricsbox {
+  background-color: #313334;
+}
+#lyricsbox .lyrics-sentence {
+  font-size: 18px;
+}
+#lyricsbox .lyrics-sentence:hover {
+  background: #252931;
+}
+
+#coinPage {
+  height: 320px;
+}
+#coinPage .btn {
+  height: 40px;
+}
+#coinPage #hand i {
+  transform: scale(-1, 1);
+}
+#coinPage #coin {
+  color: gold;
+}
+#coinPage .animateHand {
+  width: 10px;
+  -webkit-animation: rotateHand 2s;
+          animation: rotateHand 2s;
+  -webkit-animation-direction: alternate;
+          animation-direction: alternate;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+@-webkit-keyframes rotateHand {
+  0% {
+    margin-top: 0px;
+    transform: rotate(0deg);
+  }
+  25% {
+    margin-top: 25px;
+    transform: rotate(30deg);
+  }
+  75% {
+    margin-top: 0px;
+    transform: rotate(-20deg);
+  }
+  100% {
+    margin-top: -50px;
+    transform: rotate(-50deg);
+  }
+}
+@keyframes rotateHand {
+  0% {
+    margin-top: 0px;
+    transform: rotate(0deg);
+  }
+  25% {
+    margin-top: 25px;
+    transform: rotate(30deg);
+  }
+  75% {
+    margin-top: 0px;
+    transform: rotate(-20deg);
+  }
+  100% {
+    margin-top: -50px;
+    transform: rotate(-50deg);
+  }
 }
