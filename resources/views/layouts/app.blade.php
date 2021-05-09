@@ -34,18 +34,18 @@
                            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-decoration-none text-primary">
                             <span class="fs-5 d-none d-sm-inline">{{ config('app.name', 'Tiege.test') }}</span>
                         </a>
-                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                             id="menu">
                             <li class="nav-item">
-                                <a href="{{ route('home') }}" class="nav-link align-middle px-0">
+                                <a href="{{ route('home') }}" class="nav-link align-middle px-0" id="home">
                                     <i class="fas fa-home"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <i class="far fa-hand-peace"></i> <span
+                                <a href="#numbers" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                    <i class="far fa-hand-peace"></i><span
                                         class="ms-1 d-none d-sm-inline">Numbers</span> </a>
-                                <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                                <ul class="collapse nav flex-column ms-1" id="numbers" data-bs-parent="#menu">
                                     <li class="w-100">
                                         <a href="{{ route('random.index') }}" class="nav-link px-0"> <span
                                                 class="d-none d-sm-inline"></span>Random</a>
@@ -57,9 +57,9 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                                <a href="#music" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                                     <i class="fas fa-music"></i> <span class="ms-1 d-none d-sm-inline">Music</span></a>
-                                <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                                <ul class="collapse nav flex-column ms-1" id="music" data-bs-parent="#menu">
                                     <li class="w-100">
                                         <a href="{{ route('lyrics') }}" class="nav-link px-0"> <span
                                                 class="d-none d-sm-inline"></span>Lyrics</a>
@@ -119,3 +119,21 @@
 </div>
 </body>
 </html>
+
+<script>
+    //Sets current active navbar links
+    document.addEventListener("DOMContentLoaded", function () {
+        const loc = window.location.href;
+        console.log(loc);
+        const split = loc.split("/");
+        const hrefSelector = document.querySelectorAll("a[href='" + loc + "']");
+        if(split[3] == "")
+            document.getElementById("home").classList.add('active');
+        else {
+            document.getElementById(split[3]).parentNode.children[0].classList.add('active');
+            document.getElementById(split[3]).classList.add('show');
+            if (hrefSelector.length > 0)
+                document.getElementById(hrefSelector[0].classList.add('active'));
+        }
+    });
+</script>

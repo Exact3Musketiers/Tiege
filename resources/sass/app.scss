@@ -95,6 +95,9 @@ select, input {
     }
 
 }
+#menu .active{
+    color: $secondary;
+}
 
 .navbar-dark-under {
     border-top: 2px solid $primary;

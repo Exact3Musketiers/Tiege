@@ -19,14 +19,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::post('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('home.search');
 
-    Route::get('/currency', [App\Http\Controllers\CurrencyController::class, 'index'])->name('currency');
+    Route::get('/numbers/currency', [App\Http\Controllers\CurrencyController::class, 'index'])->name('currency');
 
-    Route::get('/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
+    Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
 
 
-    Route::resource('random', App\Http\Controllers\RandomController::class);
+    Route::resource('/numbers/random', App\Http\Controllers\RandomController::class);
 
     Route::post('/currencyFetch', [App\Http\Controllers\CurrencyController::class, 'fetch'])->name('Currency.fetch');
     //Route::post('/lastfmFetch', [App\Http\Controllers\LyricsController::class, 'fetch'])->name('Lastfm.fetch');
