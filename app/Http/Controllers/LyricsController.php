@@ -44,11 +44,11 @@ class LyricsController extends Controller
             $artist = $this->formatSongDetails($recentTracks->track[0]->artist->{'#text'});
             $song = $this->formatSongDetails($recentTracks->track[0]->name);
 
-            //TODO: make genius.com as fallback
-            $url = 'https://www.musixmatch.com/lyrics/' . $artist . '/' . $song;
 
 //        dd($artist, $song, $recentTracks->track[0]->name);
-            $data = $scraperService->scrape($url);
+            $data = $scraperService->scrape($artist, $song, 0);
+//            dd($data);
+            isset($data);
             $scrapedLyrics = '';
             if (count($data['lyrics']) > 1)
                 $result = $data['lyrics'][0] . ' ' . $data['lyrics'][1];
