@@ -11,8 +11,8 @@
                     <form action="{{ route('home.search') }}" method="POST">
                         @csrf
                         <div class="input-group mb-3">
-                            <input name="search" type="text" class="form-control" placeholder="Wat wil je weten?">
-                            <button type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2">Zoek</button>
+                            <input name="search" type="text" class="form-control outline-primary" placeholder="Wat wil je weten?">
+                            <button type="submit" class="btn btn-primary" type="button" id="button-addon2">Zoek</button>
                         </div>
                     </form>
                     <hr>

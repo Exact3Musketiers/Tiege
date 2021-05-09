@@ -54,6 +54,16 @@ select, input {
     -webkit-backdrop-filter: blur( 10px );
 
 
+
+    form, .input-group {
+        input {
+                background: rgb(255, 255, 255) !important;
+        }
+    }
+
+
+
+
     .quick-access-logo {
         font-size: 50px;
         padding-bottom: 10px;
