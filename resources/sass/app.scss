@@ -48,9 +48,21 @@ select, input {
 
 //Home
 .quick-access-box {
-    background-color: rgba(255, 255, 255, 0.690);
-    border: solid 1px #99A0A4 !important;
+    background: rgba(255, 255, 255, 0.690);
+    border: solid 1px #939497 !important;
     color: $black;
+    backdrop-filter: blur( 10px );
+    -webkit-backdrop-filter: blur( 10px );
+
+
+
+    form, .input-group {
+        input {
+                background: rgb(255, 255, 255) !important;
+        }
+    }
+
+
 
 
     .quick-access-logo {
