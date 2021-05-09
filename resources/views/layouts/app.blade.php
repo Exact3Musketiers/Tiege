@@ -124,7 +124,6 @@
     //Sets current active navbar links
     document.addEventListener("DOMContentLoaded", function () {
         const loc = window.location.href;
-        console.log(loc);
         const split = loc.split("/");
         const hrefSelector = document.querySelectorAll("a[href='" + loc + "']");
         if(split[3] == "")
