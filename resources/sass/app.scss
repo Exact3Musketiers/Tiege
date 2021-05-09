@@ -10,6 +10,7 @@
 ::-webkit-scrollbar-thumb {
     background-color: #424242 !important;
 }
+
 ::-webkit-scrollbar {
     background-color: transparent !important
 }
@@ -98,11 +99,40 @@ select, input {
 .navbar-dark-under {
     border-top: 2px solid $primary;
     background-color: $dark-tertiary;
-    width: 200px;
     margin-left: -24px;
 
     a {
         text-decoration: none;
+    }
+
+}
+
+@media only screen and (min-width: 600px) {
+    .sidebar {
+        position: fixed;
+    }
+    .sidebar-behind {
+        width: 200px;
+    }
+    .navbar-dark-under {
+        width: 200px;
+        margin-left: -24px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .sidebar {
+        position: fixed;
+    }
+    .sidebar-behind {
+        width: 110px;
+    }
+    .navbar-dark-under {
+        position: absolute;
+        left: 26px;
+        width: 108px;
+        //margin-left: -24px;
+        bottom: 0;
     }
 }
 
