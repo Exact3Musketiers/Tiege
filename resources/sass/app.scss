@@ -68,15 +68,17 @@ select, input {
     .quick-access-logo {
         font-size: 50px;
         padding-bottom: 10px;
-        color: $black;
+        color: $primary;
+        text-shadow: 1px 1px 0px #000;
         cursor: pointer;
     }
 
     .quick-access-logo:hover {
-        background: rgb(255, 14, 248);
-        background: linear-gradient(45deg, rgba(255, 14, 248, 1) 0%, rgba(210, 191, 73, 1) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        text-shadow: none;
+    }
+
+    .quick-access-logo:active {
+        text-shadow: none;
     }
 }
 
