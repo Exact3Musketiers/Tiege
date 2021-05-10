@@ -121,12 +121,31 @@
 </html>
 
 <script>
+    //Hides nav on ctrl+b
+    function HideNav(e) {
+        var evtobj = window.event ? event : e
+        if (evtobj.keyCode == 66 && evtobj.ctrlKey) {
+            var sidebar = document.getElementsByClassName('sidebar');
+            var sidebarBehind = document.getElementsByClassName('sidebar-behind');
+            if (sidebar[0].classList.contains('collapse')) {
+                sidebar[0].classList.remove('collapse');
+                sidebarBehind[0].classList.remove('collapse')
+            }
+            else {
+                sidebar[0].classList.add('collapse')
+                sidebarBehind[0].classList.add('collapse')
+            }
+        }
+    }
+    document.onkeydown = HideNav;
+
+
     //Sets current active navbar links
     document.addEventListener("DOMContentLoaded", function () {
         const loc = window.location.href;
         const split = loc.split("/");
         const hrefSelector = document.querySelectorAll("a[href='" + loc + "']");
-        if(split[3] == "")
+        if (split[3] == "")
             document.getElementById("home").classList.add('active');
         else {
             document.getElementById(split[3]).parentNode.children[0].classList.add('active');
