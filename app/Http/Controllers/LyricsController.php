@@ -23,7 +23,8 @@ class LyricsController extends Controller
                                             $item))))))));
     }
 
-    public function getLastfmInfo(){
+    public function getLastfmInfo()
+    {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getRecentTracks',
             'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
@@ -45,18 +46,21 @@ class LyricsController extends Controller
             $song = $this->formatSongDetails($recentTracks->track[0]->name);
 
 
-//        dd($artist, $song, $recentTracks->track[0]->name);
-            $data = $scraperService->scrape($artist, $song, 0);
-//            dd($data);
-            isset($data);
+            $data = $scraperService->scrape($artist, $song);
+            $service = $data['service'];
             $scrapedLyrics = '';
             if (count($data['lyrics']) > 1)
                 $result = $data['lyrics'][0] . ' ' . $data['lyrics'][1];
             else
                 $result = $data['lyrics'][0];
 
+            //Removes all letters between brackets
+            $result = preg_replace('/\[.*?\]/', '', $result);
+            //Creates new line on capital letters, except I
             preg_match_all('/[A-Z][^A-HJ-Z]+/', $result, $scrapedLyrics);
-            return view('lyrics.index', compact('scrapedLyrics', 'recentTracks'));
+
+
+            return view('lyrics.index', compact('scrapedLyrics', 'recentTracks', 'service'));
         }
         $scrapedLyrics[0][0] = 'To use this feature you need Last.FM connected to your account.';
         $recentTracks = null;

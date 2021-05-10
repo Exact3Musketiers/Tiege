@@ -5,12 +5,15 @@
     <div id="lyricsbox" class="mx-auto text-center mb-5">
         @if($recentTracks != null)
 
-
             <h1>{{ $recentTracks->track[0]->artist->{'#text'} }}</h1>
 
             <img src={{ $recentTracks->track[0]->image[2]->{"#text"} }}/>
             <h1>{{ $recentTracks->track[0]->name }}</h1>
             <h4>{{ $recentTracks->track[0]->album->{'#text'} }}</h4>
+
+            @if($service)
+                <p>Deze lyrics komt van: {{$service}}</p>
+            @endif
 
             <button class="btn btn-dark" onclick="changeFont(true)"><i class="fas fa-font"></i><i
                     class="fas fa-plus"></i>
