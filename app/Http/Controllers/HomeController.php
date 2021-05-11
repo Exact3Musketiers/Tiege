@@ -24,16 +24,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Get times
         $six = Carbon::createFromFormat('G:i', '06:00');
         $twelve = Carbon::createFromFormat('G:i', '12:00');
         $eighteen = Carbon::createFromFormat('G:i', '18:00');
         $zero = Carbon::createFromFormat('G:i:s', '23:59:59');
-
+        // Check current time
         $morning = Carbon::now()->isBetween($six,  $twelve);
         $afternoon = Carbon::now()->isBetween($twelve,  $eighteen);
         $evening = Carbon::now()->isBetween($eighteen,  $zero);
         $night = Carbon::now()->between($zero,  $six);
-
+        // Get current daypart
         if ($morning === true) {
             $daypart =  'Goedemorgen';
         }
@@ -46,7 +47,7 @@ class HomeController extends Controller
         elseif ($night) {
             $daypart = 'Goedenacht';
         }
-
+        // array of greetings
         $greetings = [
             'Hallo ',
             'Gedag ',
@@ -57,11 +58,13 @@ class HomeController extends Controller
             'Wow, dat is de enige echte ',
             'Tadaa! ',
         ];
-
+        // Merge daypart with greetings array
         array_push($greetings, $daypart);
+        // Randomize array order
         shuffle($greetings);
+        // Get the first greeting
         $greeting = $greetings[0];
-
+        // Return with greeting
         return view('home', compact('greeting'));
     }
 
