@@ -51,6 +51,9 @@ class ScraperService
             $lyrics = $this->geniusFallback($url);
         }
 //            dd($url, $lyrics, $unavailable, $unavailable == null, $unavailable != null || strpos($lyrics[0], "No lyrics available") === 0);
+        //If still nothing is found
+        if (empty($lyrics))
+            $lyrics[0] = 'No lyrics found';
 
         return compact('lyrics', 'service');
     }

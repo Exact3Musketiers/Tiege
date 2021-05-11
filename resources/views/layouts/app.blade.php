@@ -121,10 +121,10 @@
 </html>
 
 <script>
-    //Hides nav on ctrl+b
+    //Hides nav on ctrl+q
     function HideNav(e) {
         var evtobj = window.event ? event : e
-        if (evtobj.keyCode == 66 && evtobj.ctrlKey) {
+        if (evtobj.keyCode == 81 && evtobj.ctrlKey) {
             var sidebar = document.getElementsByClassName('sidebar');
             var sidebarBehind = document.getElementsByClassName('sidebar-behind');
             if (sidebar[0].classList.contains('collapse')) {

@@ -6,6 +6,7 @@ use App\Services\ScraperService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Models\User;
 
 class LyricsController extends Controller
 {
@@ -34,6 +35,34 @@ class LyricsController extends Controller
             'format' => 'json'
         ]);
         return json_decode($recentResponse->body())->recenttracks;
+    }
+
+    public function getFriendsLastfmInfo()
+    {
+        $users = User::pluck('lastfm');
+        $friendFeed = array();
+//        $users = array_unique($users);
+        foreach ($users as $user) {
+            if (isset($user)) {
+                $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
+                    'method' => 'user.getRecentTracks',
+                    'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+                    'user' => $user,
+                    'limit' => 1,
+                    'nowplaying' => true,
+                    'format' => 'json'
+                ]);
+                $recentTracks = json_decode($recentResponse->body())->recenttracks;
+
+                $friendFeed = [
+                    $user => array(
+                        'artist' => $recentTracks->track[0]->artist->{'#text'},
+                        'song' => $recentTracks->track[0]->name
+                    )
+                ];
+            }
+        }
+//        dd($friendFeed);
     }
 
 
