@@ -28,8 +28,11 @@ class MusicServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('partials.music', function ($view) {
-            $recentTracks = app('App\Http\Controllers\LyricsController')->getLastfmInfo();
-            $view->with('recentTracks', $recentTracks);
+            $musicFeed = [
+                'recentTracks' => app('App\Http\Controllers\LyricsController')->getLastfmInfo(),
+                'friendsTracks' => app('App\Http\Controllers\LyricsController')->getFriendsLastfmInfo()
+            ];
+            $view->with('musicFeed', $musicFeed);
         });
     }
 }

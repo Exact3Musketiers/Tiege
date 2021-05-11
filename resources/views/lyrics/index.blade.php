@@ -3,7 +3,7 @@
 @section('content')
     {{--    //TODO: make this a sidebar or something fancy you know--}}
     <div id="lyricsbox" class="mx-auto text-center mb-5">
-        @if($recentTracks != null)
+        @if(isset($recentTracks))
 
             <h1>{{ $recentTracks->track[0]->artist->{'#text'} }}</h1>
 
@@ -12,7 +12,7 @@
             <h4>{{ $recentTracks->track[0]->album->{'#text'} }}</h4>
 
             @if($service)
-                <p>Deze lyrics komt van: {{$service}}</p>
+                <p>Lyrics from: {{$service}}</p>
             @endif
 
             <button class="btn btn-dark" onclick="changeFont(true)"><i class="fas fa-font"></i><i
@@ -33,21 +33,6 @@
             {{$scrapedLyrics[0][0]}}
         @endif
     </div>
-
-
-
-
-    {{--    <form method="POST" id="lyricsForm" action="{{ route('Lastfm.fetch') }}">--}}
-    {{--        @csrf--}}
-
-    {{--        <div class="form-group row mb-0">--}}
-    {{--            <div class="col-md-8 offset-md-4">--}}
-    {{--                <button type="submit" class="btn btn-primary">--}}
-    {{--                    {{ __('Get Lyrics') }}--}}
-    {{--                </button>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </form>--}}
 @endsection
 <script>
     function changeFont(direction) {
