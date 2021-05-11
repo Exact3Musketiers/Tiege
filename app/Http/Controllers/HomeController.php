@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,45 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $six = Carbon::createFromFormat('G:i', '06:00');
+        $twelve = Carbon::createFromFormat('G:i', '12:00');
+        $eighteen = Carbon::createFromFormat('G:i', '18:00');
+        $zero = Carbon::createFromFormat('G:i:s', '23:59:59');
+
+        $morning = Carbon::now()->isBetween($six,  $twelve);
+        $afternoon = Carbon::now()->isBetween($twelve,  $eighteen);
+        $evening = Carbon::now()->isBetween($eighteen,  $zero);
+        $night = Carbon::now()->between($zero,  $six);
+
+        if ($morning === true) {
+            $daypart =  'Goedemorgen';
+        }
+        elseif ($afternoon) {
+            $daypart = 'Goedemiddag';
+        }
+        elseif ($evening) {
+            $daypart = 'Goedenavond';
+        }
+        elseif ($night) {
+            $daypart = 'Goedenacht';
+        }
+
+        $greetings = [
+            'Hallo ',
+            'Gedag ',
+            'Gegroet ',
+            'Hoi ', 'Guten Tag, ',
+            'Jo Jo Jo ',
+            'Hey! het is broederman ',
+            'Wow, dat is de enige echte ',
+            'Tadaa! ',
+        ];
+
+        array_push($greetings, $daypart);
+        shuffle($greetings);
+        $greeting = $greetings[0];
+
+        return view('home', compact('greeting'));
     }
 
     /**
@@ -48,7 +87,7 @@ class HomeController extends Controller
                 // Check if request contains top level domain
                 if (count($tld) > 0);
                 {
-                    // Removes aal domain prefixes
+                    // Removes all domain prefixes
                     $site = str_replace('https://', '', $site);
                     $site = str_replace('http://', '', $site);
                     $site = str_replace('www.', '', $site);

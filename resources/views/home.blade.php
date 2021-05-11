@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="alert align-middle quick-access-box mt-5">
-                    <h4 class="alert-heading">Gegroet {{ Auth()->user()->name }}!</h4>
+                    <h4 class="alert-heading">{{ $greeting }} {{ Auth()->user()->name }}!</h4>
                     <p>Hier zijn de apps waar jij altijd van kan genieten.</p>
                     <hr>
                     <form action="{{ route('home.search') }}" method="POST">

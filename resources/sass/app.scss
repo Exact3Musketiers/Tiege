@@ -58,7 +58,8 @@ select, input {
 
     form, .input-group {
         input {
-                background: rgb(255, 255, 255) !important;
+            background: rgb(255, 255, 255) !important;
+            color: $black !important;
         }
     }
 
