@@ -56,6 +56,7 @@ class LyricsController extends Controller
 
                 $friendFeed = [
                     $user => array(
+                        'user' => $user,
                         'artist' => $recentTracks->track[0]->artist->{'#text'},
                         'song' => $recentTracks->track[0]->name
                     )
@@ -63,6 +64,7 @@ class LyricsController extends Controller
             }
         }
 //        dd($friendFeed);
+        return $friendFeed;
     }
 
 
