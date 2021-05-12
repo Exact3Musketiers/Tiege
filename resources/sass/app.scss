@@ -48,13 +48,13 @@ select, input {
 
 //Home
 .quick-access-box {
-    background: rgba(255, 255, 255, 0.690);
-    border: solid 1px #939497 !important;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 10.0px );
+    -webkit-backdrop-filter: blur( 10.0px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
     color: $black;
-    backdrop-filter: blur( 10px );
-    -webkit-backdrop-filter: blur( 10px );
-
-
 
     form, .input-group {
         input {
@@ -62,9 +62,6 @@ select, input {
             color: $black !important;
         }
     }
-
-
-
 
     .quick-access-logo {
         font-size: 50px;
