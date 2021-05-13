@@ -42,13 +42,18 @@
                                 To Jas Or Not To Jas. That's the question.
                             </div>
                             <div class="card-body">
-                                <h4>To Jas!</h4>
-                                <p>och wat jammer het is kut weer</p>
-                                <hr>
-                                <p>En zo ziet de rest van de dag eruit:</p>
-                                <i class="fas fa-sun"></i>
-                                <i class="fas fa-smog"></i>
-                                <i class="far fa-snowflake"></i>
+                                @if(isset($weather['error']))
+                                    <p>{{ $weather['error'] }}</p>
+                                @else
+                                    <h4>{{ ($weather['toJas']) ? 'To Jas :(' : 'Not To Jas!' }}</h4>
+                                    <p>{{ ($weather['toJas']) ? 'och wat jammer het is kut weer' : 'Wat een feest! Het is warm!' }}</p>
+                                    <hr>
+                                    <p>Het is nu namelijk {{ $weather['temperature'] }} °C En het word maximaal {{ $weather['temperatureMax'] }} °C</p>
+                                    <hr>
+                                    <p>Het is op dit moment {{ $weather['type'] }} </p>
+                                    <hr>
+                                    <p>Er is een {{ $weather['windText'] }} uit het {{ $weather['windDirection'] }} van {{ $weather['windBft'] }} bft </p>
+                                @endif
                             </div>
                         </div>
                     </div>
