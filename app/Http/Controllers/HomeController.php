@@ -125,31 +125,32 @@ class HomeController extends Controller
      */
     public function weather()
     {
+        // Call openweathermap api
         $weatherResponse = Http::get('api.openweathermap.org/data/2.5/weather', [
             'q' => 'sneek,nl',
             'lang' => 'nl',
             'units' => 'metric',
             'APPID' => '2a00ff331d7e11c1e9e53406e66efb78',
         ]);
-
+        // Decode json
         $weather = json_decode($weatherResponse->body());
-
+        // Check if data exists
         if (isset($weather->weather[0])) {
+            // Get temoperature
             $temperatureFeels = $weather->main->temp;
             $main = $weather->weather[0]->main;
+            // To Jas Or Not To Jas
             $toJas = true;
-
             if ($temperatureFeels >= 15) {
                 if ($main !== 'Rain') {
                     $toJas = false;
                 }
             }
-
+            // Get wind
             $windDeg = $weather->wind->deg;
             $windSpeed = $weather->wind->speed;
             $windText = '';
             $windBft = '';
-
             // Wind speed
             switch ($windSpeed) {
                 case $windSpeed >= 0.0 && $windSpeed <= 0.2:
@@ -256,7 +257,7 @@ class HomeController extends Controller
                     $windDirection = 'Noord Noord Westen';
                     break;
             }
-
+            // All data in array
             $allWeather = [
                 'temperature' => $weather->main->temp,
                 'temperatureMax' => $weather->main->temp_max,
@@ -269,10 +270,11 @@ class HomeController extends Controller
                 'toJas' => $toJas,
             ];
         }
+        // If check fails send error message
         else {
             $allWeather = ['error' => 'De api is boos'];
         }
-
+        // Return weather
         return $allWeather;
 
     }
