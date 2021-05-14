@@ -203,7 +203,7 @@ class HomeController extends Controller
                     break;
                 case $windSpeed >= 32.7:
                     $windText = 'orkaan';
-                    $windBft = 11;
+                    $windBft = 12;
                     break;
             }
             // Wind direction
