@@ -57,6 +57,18 @@
                                 </ul>
                             </li>
                             <li>
+                                <a href="#textify" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                    <i class="fas fa-font"></i><span
+                                        class="ms-1 d-none d-sm-inline">Text-ify</span> </a>
+                                <ul class="collapse nav flex-column ms-1" id="textify" data-bs-parent="#menu">
+                                    <li class="w-100">
+                                    <li>
+                                        <a href="{{ route('sarcasm') }}" class="nav-link px-0"> <span
+                                                class="d-none d-sm-inline"></span>SaRCasMIfY</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
                                 <a href="#music" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                                     <i class="fas fa-music"></i> <span class="ms-1 d-none d-sm-inline">Music</span></a>
                                 <ul class="collapse nav flex-column ms-1" id="music" data-bs-parent="#menu">
