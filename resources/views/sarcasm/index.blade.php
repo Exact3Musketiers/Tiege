@@ -27,7 +27,7 @@
         <div class="modal-dialog">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Uw tEXt IS gEkOpIeErd</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">gefEliciTeERd!</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times" style="font-size: 20px;"></i></button>
                 </div>
                 <div class="modal-body">
@@ -43,8 +43,31 @@
     </div>
 
 <script>
-    sarcasmify();
-    copyURL();
+
+    document.getElementById("sarcasmButt").addEventListener("click", sarcasmify)
+    document.getElementById("copyButt").addEventListener("click", copyURL)
+
+    function sarcasmify() {
+        var text = document.getElementById("text").value.toLowerCase();
+        var sarcasm = document.getElementById("sarcasm");
+        var textArray = text.split('');
+
+        for (let i = 0; i < textArray.length; i++) {
+
+            if (Math.floor(Math.random() * 2) == 0) {
+                textArray[i] = textArray[i].toUpperCase();
+            }
+        }
+
+        sarcasm.value = textArray.join('')
+    }
+
+    function copyURL() {
+        var input = document.getElementById("sarcasm");
+        input.select(),
+        input.setSelectionRange(0,99999),
+        document.execCommand("copy")
+    }
 </script>
 @endsection
 
