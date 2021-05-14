@@ -64,10 +64,13 @@
                                         <a href="{{ route('lyrics') }}" class="nav-link px-0"> <span
                                                 class="d-none d-sm-inline"></span>Lyrics</a>
                                     </li>
+                                    <li class="w-100">
+                                        <a href="{{ route('lastfm') }}" class="nav-link px-0"> <span
+                                                class="d-none d-sm-inline"></span>Lastfm</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
-                        {{--    //TODO: fix width of this thingy, cause it's a big biatch--}}
                         <div class="navbar-dark-under pt-3">
                             <div class="col-12">
                                 @include('partials.music')

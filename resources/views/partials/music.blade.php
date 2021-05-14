@@ -9,7 +9,7 @@
         <a href="{{route('lyrics')}}">See lyrics</a>
         <hr>
         @foreach($musicFeed['friendsTracks'] as $friendMusic)
-            <div class="row mb-2">
+            <div class="row mb-lg-2">
                 @if($friendMusic['user'] != Auth::user()->lastfm)
                     <div class="col-lg-4 border-end">
                         <b>{{$friendMusic['user']}}</b>
