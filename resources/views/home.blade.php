@@ -64,12 +64,17 @@
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-3 col-md-6"></div>
-                                @foreach ($news['articles'] as $article)
-                                    <span><strong>{{ $article->title }}</strong> - <a href="{{ $article->url }}">link</a>
-                                    </span>
-                                    <hr>
-                                @endforeach
-                                <p class="m-0 text-center">Geupdatet: {{ $news['updatedAt'] }}</p>
+                                @if (isset($news['error']))
+                                    {{$news['error']}}
+                                @else
+                                    @foreach ($news['articles'] as $article)
+                                        <span><strong>{{ $article->title }}</strong> - <a href="{{ $article->url }}">link</a>
+                                        </span>
+                                        <hr>
+                                    @endforeach
+                                    <p class="m-0 text-center">Geupdatet: {{ $news['updatedAt'] }}</p>
+                                @endif
+
                             </div>
                         </div>
                     </div>

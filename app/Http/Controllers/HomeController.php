@@ -25,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $this->writeNews();
+
         // Get times
         $six = Carbon::createFromFormat('G:i', '06:00');
         $twelve = Carbon::createFromFormat('G:i', '12:00');
@@ -314,12 +316,23 @@ class HomeController extends Controller
 
     public function readNews()
     {
-        $updatedAt = date('H:m:s', filemtime('news.json'));
-        $news = json_decode(file_get_contents('news.json'));
-        $news = [
-            'articles' => $news->articles,
-            'updatedAt' => $updatedAt,
-        ];
+
+
+        if (file_exists('news.json'))
+        {
+            $updatedAt = date('H:m:s', filemtime('news.json'));
+            $news = json_decode(file_get_contents('news.json'));
+            $news = [
+                'articles' => $news->articles,
+                'updatedAt' => $updatedAt,
+            ];
+        }
+        else
+        {
+            $news = [
+                'error' => 'Er is niets nieuws gebeurd'
+            ];
+        }
 
         return $news;
     }
