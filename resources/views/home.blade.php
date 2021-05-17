@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="row">
-                    <div class="col-sm-12 my-3">
+                    <div class="col-sm-12 col-md-8 my-3 float-start">
                         <div class="card quick-access-box">
                             <div class="card-header h4">
                                 {{ $greeting }} {{ Auth()->user()->name }}!
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12">
+                    <div class="float-end col-sm-12 col-md-4 my-3">
                         <div class="card quick-access-box mb-3">
                             <div class="card-header h4">
                                 To Jas Or Not To Jas. That's the question.
@@ -56,17 +56,15 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
                         <div class="card quick-access-box mb-3">
                             <div class="card-header h4">
                                 En dan nu het nieuws
                             </div>
                             <div class="card-body">
                                 <div class="col-lg-3 col-md-6"></div>
-                                @if (isset($news['error']))
-                                    {{$news['error']}}
-                                @else
+                                    @if (isset($news['error']))
+                                        {{$news['error']}}
+                                    @else
                                     @foreach ($news['articles'] as $article)
                                         <span><strong>{{ $article->title }}</strong> - <a href="{{ $article->url }}">link</a>
                                         </span>
@@ -74,7 +72,6 @@
                                     @endforeach
                                     <p class="m-0 text-center">Geupdatet: {{ $news['updatedAt'] }}</p>
                                 @endif
-
                             </div>
                         </div>
                     </div>
