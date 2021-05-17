@@ -64,12 +64,18 @@ class HomeController extends Controller
         array_push($greetings, $daypart);
         // Randomize array order
         shuffle($greetings);
+
         // Get the first greeting
         $greeting = $greetings[0];
+
         // Get weather
         $weather = $this->weather();
+
+        // Get news
+        $news = $this->readNews();
+
         // Return with greeting and weather
-        return view('home', compact('greeting', 'weather'));
+        return view('home', compact('greeting', 'weather', 'news'));
     }
 
     /**
@@ -277,5 +283,44 @@ class HomeController extends Controller
         // Return weather
         return $allWeather;
 
+    }
+
+    public function getNews()
+    {
+        $newsResponse = Http::get('https://newsapi.org/v2/top-headlines', [
+            'country' => 'nl',
+            'pageSize' => '5',
+            'apiKey' => 'd0e021d0387b4426b1e2315b8f62f1ed',
+        ]);
+
+        return $newsResponse;
+    }
+
+    public function writeNews()
+    {
+        if (!file_exists('news.json')) {
+            $newsResponse = $this->getNews();
+            file_put_contents('news.json', $newsResponse);
+        }
+        $currentTime = time();
+        $age = filemtime('news.json');
+        $timeDifference = $currentTime - $age;
+        if ($timeDifference >= 3600) {
+            // Call NewsAPI
+            $newsResponse = $this->getNews();
+            file_put_contents('news.json', $newsResponse);
+        }
+    }
+
+    public function readNews()
+    {
+        $updatedAt = date('H:m:s', filemtime('news.json'));
+        $news = json_decode(file_get_contents('news.json'));
+        $news = [
+            'articles' => $news->articles,
+            'updatedAt' => $updatedAt,
+        ];
+
+        return $news;
     }
 }

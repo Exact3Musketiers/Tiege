@@ -46,7 +46,7 @@
                                     <p>{{ $weather['error'] }}</p>
                                 @else
                                     <h4>{{ ($weather['toJas']) ? 'To Jas :(' : 'Not To Jas!' }}</h4>
-                                    <p>{{ ($weather['toJas']) ? 'och wat jammer het is kut weer' : 'Wat een feest! Het is warm!' }}</p>
+                                    <p>{{ ($weather['toJas']) ? 'Ook jammer.' : 'Wat een feest! Het is warm!' }}</p>
                                     <hr>
                                     <p>Het is nu namelijk {{ $weather['temperature'] }} °C En het word maximaal {{ $weather['temperatureMax'] }} °C</p>
                                     <hr>
@@ -63,11 +63,13 @@
                                 En dan nu het nieuws
                             </div>
                             <div class="card-body">
-                                <h4>Katja Wonings nieuwe hond is dood D:</h4>
-                                <p>Wat zielig </p>
-                                <hr>
-                                <p class="mb-0">En hier hebben we dit belangrijke bericht gevonden</p>
-                                <p>Het internet</p>
+                                <div class="col-lg-3 col-md-6"></div>
+                                @foreach ($news['articles'] as $article)
+                                    <span><strong>{{ $article->title }}</strong> - <a href="{{ $article->url }}">link</a>
+                                    </span>
+                                    <hr>
+                                @endforeach
+                                <p class="m-0 text-center">Geupdatet: {{ $news['updatedAt'] }}</p>
                             </div>
                         </div>
                     </div>
