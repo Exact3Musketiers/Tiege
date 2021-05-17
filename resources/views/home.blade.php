@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="row">
-                    <div class="col-sm-12 col-md-8 my-3 float-start">
+                    <div class="col-lg-8 col-md-12 my-3 float-start">
                         <div class="card quick-access-box">
                             <div class="card-header h4">
                                 {{ $greeting }} {{ Auth()->user()->name }}!
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="float-end col-sm-12 col-md-4 my-3">
+                    <div class="float-end col-lg-4 col-md-12 my-3">
                         <div class="card quick-access-box mb-3">
                             <div class="card-header h4">
                                 To Jas Or Not To Jas. That's the question.
