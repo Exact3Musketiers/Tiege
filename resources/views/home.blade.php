@@ -37,6 +37,10 @@
                         </div>
                     </div>
                     <div class="float-end col-lg-4 col-md-12 my-3">
+                        <div class="card mb-3">
+                            <img src="{{ asset("images/sarcasm.jpg" )}}" class="img-thumbnail" alt="...">
+                          </div>
+
                         <div class="card quick-access-box mb-3">
                             <div class="card-header h4">
                                 To Jas Or Not To Jas. That's the question.
@@ -70,7 +74,10 @@
                                         </span>
                                         <hr>
                                     @endforeach
-                                    <p class="m-0 text-center">Geupdatet: {{ $news['updatedAt'] }}</p>
+                                        <div class="m-0">
+                                            <span class="float-start"><a href="#" class="text-start">Lees meer</a></span>
+                                            <span class="float-end">Geupdatet: {{ $news['updatedAt'] }}</span>
+                                        </div>
                                 @endif
                             </div>
                         </div>

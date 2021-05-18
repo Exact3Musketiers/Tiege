@@ -291,7 +291,7 @@ class HomeController extends Controller
     {
         $newsResponse = Http::get('https://newsapi.org/v2/top-headlines', [
             'country' => 'nl',
-            'pageSize' => '5',
+            'pageSize' => '20',
             'apiKey' => 'd0e021d0387b4426b1e2315b8f62f1ed',
         ]);
 
@@ -322,8 +322,9 @@ class HomeController extends Controller
         {
             $updatedAt = date('H:m:s', filemtime('news.json'));
             $news = json_decode(file_get_contents('news.json'));
+            $articles = array_slice($news->articles, 0, 5);
             $news = [
-                'articles' => $news->articles,
+                'articles' => $articles,
                 'updatedAt' => $updatedAt,
             ];
         }
