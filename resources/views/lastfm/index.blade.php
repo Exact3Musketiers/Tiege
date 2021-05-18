@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    {{--    //TODO: make this a sidebar or something fancy you know--}}
     <div id="lastfmbox" class="mx-auto text-center mb-5">
         <div class="row">
             <h1 class="card bg-dark col-12">LastFM Leaderboards</h1>
