@@ -66,17 +66,19 @@ select, input {
     .quick-access-logo {
         font-size: 50px;
         padding-bottom: 10px;
-        color: $primary;
-        text-shadow: 1px 1px 0px #000;
+
         cursor: pointer;
-    }
-
-    .quick-access-logo:hover {
         text-shadow: none;
-    }
+        background: rgb(0, 165, 207);
+        background: $gradient;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
 
-    .quick-access-logo:active {
-        text-shadow: none;
+        &:hover, &:active {
+            color: $primary;
+            text-shadow: 1px 1px 4px $primary;
+            -webkit-text-fill-color: $primary;
+        }
     }
 }
 
@@ -90,6 +92,7 @@ select, input {
     height: 100vh;
     background: url('https://source.unsplash.com/collection/175083/1920x1080') center center;
     background-size: cover;
+
 }
 
 .sb-with {
