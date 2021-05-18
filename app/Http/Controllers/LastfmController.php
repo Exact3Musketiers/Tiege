@@ -15,21 +15,23 @@ class LastfmController extends Controller
         $to = strtotime('-1weeks friday Friday +18 hours');
         $fromDate = date('d.m.y', $from);
         $toDate = date('d.m.y', $to);
-        $weeklyTracks = $this->getWeeklyTrackChart($from, $to);
-        $topAlbums = $this->getTopAlbums();
-        $weeklyArtists = $this->getWeeklyArtist();
+        $countWeeklyTracks = $this->getWeeklyTrackChart($from, $to, null);
+        $weeklyTracks = $this->getWeeklyTrackChart($from, $to, 10);
+        $topAlbums = $this->getTopAlbums($from, $to);
+        $weeklyArtists = $this->getWeeklyArtist($from, $to);
 
-        return view('lastfm.index', compact('fromDate', 'toDate', 'weeklyTracks', 'topAlbums', 'weeklyArtists'));
+        return view('lastfm.index', compact('fromDate', 'toDate', 'countWeeklyTracks', 'weeklyTracks', 'topAlbums', 'weeklyArtists'));
     }
 
-
-    public function getTopAlbums()
+    public function getTopAlbums($from, $to)
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getTopAlbums',
             'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
             'user' => Auth::user()->lastfm,
-            'limit' => 5,
+            'limit' => 10,
+            'from' => $from,
+            'to' => $to,
             'nowplaying' => true,
             'format' => 'json',
             'period' => '7day' //overall,7day,1month,3month,6month,12month
@@ -39,12 +41,13 @@ class LastfmController extends Controller
         return json_decode($recentResponse->body())->topalbums;
     }
 
-    public function getWeeklyTrackChart($from, $to)
+    public function getWeeklyTrackChart($from, $to, $limit)
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getWeeklyTrackChart',
             'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
             'user' => Auth::user()->lastfm,
+            'limit' => $limit,
             'from' => $from,
             'to' => $to,
             'format' => 'json',
@@ -54,13 +57,15 @@ class LastfmController extends Controller
         return json_decode($recentResponse->body())->weeklytrackchart;
     }
 
-    public function getWeeklyArtist()
+    public function getWeeklyArtist($from, $to)
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getweeklyartistchart',
             'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
             'user' => Auth::user()->lastfm,
-            'limit' => 5,
+            'limit' => 10,
+            'from' => $from,
+            'to' => $to,
             'nowplaying' => true,
             'format' => 'json'
         ]);

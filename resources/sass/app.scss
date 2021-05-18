@@ -230,6 +230,15 @@ select, input {
     }
 }
 
-
+//Lastfm
+#lastfmBox {
+    .badge{
+        font-size: 16px;
+    }
+    .insideBadge {
+        position: absolute;
+        margin-left: -30px;
+    }
+}
 
 
