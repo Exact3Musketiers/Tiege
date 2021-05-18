@@ -22,7 +22,6 @@ class LastfmController extends Controller
         return view('lastfm.index', compact('fromDate', 'toDate', 'weeklyTracks', 'topAlbums', 'weeklyArtists'));
     }
 
-
     public function getTopAlbums()
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
