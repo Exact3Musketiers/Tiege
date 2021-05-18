@@ -74,7 +74,7 @@ class HomeController extends Controller
         $weather = $this->weather();
 
         // Get news
-        $news = $this->readNews();
+        $news = $this->readNews(6);
 
         // Return with greeting and weather
         return view('home', compact('greeting', 'weather', 'news'));
@@ -314,15 +314,13 @@ class HomeController extends Controller
         }
     }
 
-    public function readNews()
+    public function readNews($limit)
     {
-
-
         if (file_exists('news.json'))
         {
             $updatedAt = date('H:m:s', filemtime('news.json'));
             $news = json_decode(file_get_contents('news.json'));
-            $articles = array_slice($news->articles, 0, 5);
+            $articles = array_slice($news->articles, 0, $limit);
             $news = [
                 'articles' => $articles,
                 'updatedAt' => $updatedAt,
