@@ -231,10 +231,14 @@ select, input {
 }
 
 //Lastfm
-#lastfmbox .badge {
-    position: absolute;
-    font-size: 16px;
-    margin-left: -30px;
+#lastfmBox {
+    .badge{
+        font-size: 16px;
+    }
+    .insideBadge {
+        position: absolute;
+        margin-left: -30px;
+    }
 }
 
 
