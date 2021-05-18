@@ -16,7 +16,7 @@ class LastfmController extends Controller
         $fromDate = date('d-m-Y', $from);
         $toDate = date('d-m-Y', $to);
         $countWeeklyTracks = $this->getWeeklyTrackChart($from, $to, null);
-        $weeklyTracks = $this->getWeeklyTrackChart($from, $to, 9);
+        $weeklyTracks = (object)['track' => array_slice($countWeeklyTracks->track, 0, 9)];
         $topAlbums = $this->getTopAlbums($from, $to, 9);
         $weeklyArtists = $this->getWeeklyArtist($from, $to);
 
