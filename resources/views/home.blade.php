@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="row">
-                    <div class="col-sm-12 my-3">
+                    <div class="col-lg-8 col-md-12 my-3 float-start">
                         <div class="card quick-access-box">
                             <div class="card-header h4">
                                 {{ $greeting }} {{ Auth()->user()->name }}!
@@ -36,33 +36,42 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12">
+                    <div class="float-end col-lg-4 col-md-12 my-3">
                         <div class="card quick-access-box mb-3">
                             <div class="card-header h4">
                                 To Jas Or Not To Jas. That's the question.
                             </div>
                             <div class="card-body">
-                                <h4>To Jas!</h4>
-                                <p>och wat jammer het is kut weer</p>
-                                <hr>
-                                <p>En zo ziet de rest van de dag eruit:</p>
-                                <i class="fas fa-sun"></i>
-                                <i class="fas fa-smog"></i>
-                                <i class="far fa-snowflake"></i>
+                                @if(isset($weather['error']))
+                                    <p>{{ $weather['error'] }}</p>
+                                @else
+                                    <h4>{{ ($weather['toJas']) ? 'To Jas :(' : 'Not To Jas!' }}</h4>
+                                    <p>{{ ($weather['toJas']) ? 'Ook jammer.' : 'Wat een feest! Het is warm!' }}</p>
+                                    <hr>
+                                    <p>Het is nu namelijk {{ $weather['temperature'] }} °C En het word maximaal {{ $weather['temperatureMax'] }} °C</p>
+                                    <hr>
+                                    <p>Het is op dit moment {{ $weather['type'] }} </p>
+                                    <hr>
+                                    <p>Er is een {{ $weather['windText'] }} uit het {{ $weather['windDirection'] }} van {{ $weather['windBft'] }} bft </p>
+                                @endif
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
                         <div class="card quick-access-box mb-3">
                             <div class="card-header h4">
                                 En dan nu het nieuws
                             </div>
                             <div class="card-body">
-                                <h4>Katja Wonings nieuwe hond is dood D:</h4>
-                                <p>Wat zielig </p>
-                                <hr>
-                                <p class="mb-0">En hier hebben we dit belangrijke bericht gevonden</p>
-                                <p>Het internet</p>
+                                <div class="col-lg-3 col-md-6"></div>
+                                    @if (isset($news['error']))
+                                        {{$news['error']}}
+                                    @else
+                                    @foreach ($news['articles'] as $article)
+                                        <span><strong>{{ $article->title }}</strong> - <a href="{{ $article->url }}">link</a>
+                                        </span>
+                                        <hr>
+                                    @endforeach
+                                    <p class="m-0 text-center">Geupdatet: {{ $news['updatedAt'] }}</p>
+                                @endif
                             </div>
                         </div>
                     </div>

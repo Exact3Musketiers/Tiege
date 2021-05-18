@@ -27,7 +27,7 @@ main {
 
 
 .container {
-    width: 80%;
+    width: 90%;
 }
 
 button {
@@ -49,11 +49,11 @@ select, input {
 //Home
 .quick-access-box {
     background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 10.0px );
-    -webkit-backdrop-filter: blur( 10.0px );
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(10.0px);
+    -webkit-backdrop-filter: blur(10.0px);
     border-radius: 10px;
-    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    border: 1px solid rgba(255, 255, 255, 0.18);
     color: $black;
 
     form, .input-group {
@@ -107,7 +107,8 @@ select, input {
     }
 
 }
-#menu .active{
+
+#menu .active {
     color: $secondary;
 }
 
@@ -122,6 +123,18 @@ select, input {
 
 }
 
+@media only screen and (min-width: 1000px) {
+    .music-widget > .row {
+        vertical-align: sub;
+    }
+    .music-widget > .row > .border-end {
+        border-right: 1px solid #dee2e6 !important;
+    }
+    .music-widget > .row > .border-end > b {
+        vertical-align: sub;
+    }
+}
+
 @media only screen and (min-width: 600px) {
     .sidebar {
         position: fixed;
@@ -132,6 +145,16 @@ select, input {
     .navbar-dark-under {
         width: 200px;
         margin-left: -24px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .music-widget > .row > .border-end {
+        border-right: 0 !important;
+    }
+    .music-widget > .row {
+        width: 100%;
+        border-bottom: darken($primary, 25%) 1px solid;
     }
 }
 

@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/numbers/currency', [App\Http\Controllers\CurrencyController::class, 'index'])->name('currency');
 
+    Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
     Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
 
@@ -29,8 +30,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/numbers/random', App\Http\Controllers\RandomController::class);
 
-    Route::post('/currencyFetch', [App\Http\Controllers\CurrencyController::class, 'fetch'])->name('Currency.fetch');
+    Route::post('/currencyFetch', [App\Http\Controllers\CurrencyController::class, 'fetch'])->name('currency.fetch');
     //Route::post('/lastfmFetch', [App\Http\Controllers\LyricsController::class, 'fetch'])->name('Lastfm.fetch');
 
+    Route::get('/s', [App\Http\Controllers\SarcasmController::class, 'index'])->name('sarcasm');
 
 });

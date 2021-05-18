@@ -41,21 +41,39 @@
                                     <i class="fas fa-home"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#numbers" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <i class="far fa-hand-peace"></i><span
-                                        class="ms-1 d-none d-sm-inline">Numbers</span> </a>
-                                <ul class="collapse nav flex-column ms-1" id="numbers" data-bs-parent="#menu">
-                                    <li class="w-100">
-                                        <a href="{{ route('random.index') }}" class="nav-link px-0"> <span
-                                                class="d-none d-sm-inline"></span>Random</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('currency') }}" class="nav-link px-0"> <span
-                                                class="d-none d-sm-inline"></span>Currency</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            @if(Auth::user()->role != 1)
+
+                                <li>
+                                    <a href="#numbers" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                        <i class="far fa-hand-peace"></i><span
+                                            class="ms-1 d-none d-sm-inline">Numbers</span> </a>
+                                    <ul class="collapse nav flex-column ms-1" id="numbers" data-bs-parent="#menu">
+                                        <li class="w-100">
+                                            <a href="{{ route('random.index') }}" class="nav-link px-0"> <span
+                                                    class="d-none d-sm-inline"></span>Random</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('currency') }}" class="nav-link px-0"> <span
+                                                    class="d-none d-sm-inline"></span>Currency</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
+                            @if(Auth::user()->role != 1)
+
+                                <li>
+                                    <a href="#textify" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                        <i class="fas fa-font"></i><span
+                                            class="ms-1 d-none d-sm-inline">Text-ify</span> </a>
+                                    <ul class="collapse nav flex-column ms-1" id="textify" data-bs-parent="#menu">
+                                        <li class="w-100">
+                                        <li>
+                                            <a href="{{ route('sarcasm') }}" class="nav-link px-0"> <span
+                                                    class="d-none d-sm-inline"></span>SaRCasMIfY</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
                             <li>
                                 <a href="#music" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                                     <i class="fas fa-music"></i> <span class="ms-1 d-none d-sm-inline">Music</span></a>
@@ -71,7 +89,6 @@
                                 </ul>
                             </li>
                         </ul>
-                        {{--    //TODO: fix width of this thingy, cause it's a big biatch--}}
                         <div class="navbar-dark-under pt-3">
                             <div class="col-12">
                                 @include('partials.music')
@@ -134,13 +151,13 @@
             if (sidebar[0].classList.contains('collapse')) {
                 sidebar[0].classList.remove('collapse');
                 sidebarBehind[0].classList.remove('collapse')
-            }
-            else {
+            } else {
                 sidebar[0].classList.add('collapse')
                 sidebarBehind[0].classList.add('collapse')
             }
         }
     }
+
     document.onkeydown = HideNav;
 
 
