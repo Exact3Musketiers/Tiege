@@ -103,7 +103,7 @@
                             Meme of the day
                         </div>
                         <div class="card-body">
-                            <img src="{{ asset("images/sarcasm.jpg" )}}" class="img-thumbnail" alt="...">
+                            <img src="{{ asset("images/sarcasm.jpg" )}}" class="card-img rounded" alt="...">
 
                         </div>
                     </div>
