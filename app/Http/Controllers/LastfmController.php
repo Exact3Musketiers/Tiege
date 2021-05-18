@@ -11,25 +11,25 @@ class LastfmController extends Controller
 {
     public function index()
     {
-        $from = strtotime('-2weeks friday Friday +18 hours');
-        $to = strtotime('-1weeks friday Friday +18 hours');
-        $fromDate = date('d.m.y', $from);
-        $toDate = date('d.m.y', $to);
+        $from = strtotime('-2weeks Friday +18 hours');
+        $to = strtotime('-1weeks Friday +18 hours');
+        $fromDate = date('d-m-Y', $from);
+        $toDate = date('d-m-Y', $to);
         $countWeeklyTracks = $this->getWeeklyTrackChart($from, $to, null);
-        $weeklyTracks = $this->getWeeklyTrackChart($from, $to, 10);
-        $topAlbums = $this->getTopAlbums($from, $to);
+        $weeklyTracks = $this->getWeeklyTrackChart($from, $to, 9);
+        $topAlbums = $this->getTopAlbums($from, $to, 9);
         $weeklyArtists = $this->getWeeklyArtist($from, $to);
 
         return view('lastfm.index', compact('fromDate', 'toDate', 'countWeeklyTracks', 'weeklyTracks', 'topAlbums', 'weeklyArtists'));
     }
 
-    public function getTopAlbums($from, $to)
+    public function getTopAlbums($from, $to, $limit)
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getTopAlbums',
             'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
             'user' => Auth::user()->lastfm,
-            'limit' => 10,
+            'limit' => $limit,
             'from' => $from,
             'to' => $to,
             'nowplaying' => true,
