@@ -6,7 +6,10 @@
             <div class="card bg-dark">
                 <h1 class="card-header">LastFM Leaderboards</h1>
                 @if(Auth::user()->lastfm != $user)
-                    <button class="btn btn-primary position-absolute"><i class="fad fa-backward"></i> Back</button>
+                    <a class="btn btn-primary position-absolute" href="{{route('lastfm')}}">
+                        <i class="fad fa-backward"></i>
+                        Back
+                    </a>
                 @endif
                 <h4>{{$user}}</h4>
                 <h4>Last week</h4>
