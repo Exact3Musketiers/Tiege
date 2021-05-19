@@ -78,12 +78,12 @@ class LastfmController extends Controller
     }
 
 
-    public function getRecentTracks()
+    public function getRecentTracks($user)
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getRecentTracks',
             'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
-            'user' => Auth::user()->lastfm,
+            'user' => $user,
             'limit' => 1,
             'nowplaying' => true,
             'format' => 'json'

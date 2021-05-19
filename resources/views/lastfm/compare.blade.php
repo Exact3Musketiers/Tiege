@@ -4,8 +4,8 @@
     <div id="lastfmBox" class="mx-auto text-center mb-5 container">
         <div class="row">
             <div class="card bg-dark">
-                <h1 class="card-header">LastFM Leaderboards</h1>
-                <h4>{{$user}}</h4>
+                <h1 class="card-header">LastFM VERSUS MODE</h1>
+                <h4>{{Auth::user()->lastfm . ' VS ' .$user}}</h4>
                 <h4>Last week</h4>
                 <h3>{{$fromDate}} - {{$toDate}}</h3>
                 <h4><b> {{count($countWeeklyTracks->track)}} scrobbles</b></h4>
@@ -14,10 +14,7 @@
                         <i class="fad fa-backward"></i>
                         Back
                     </a>
-                    <a class="btn btn-primary" href="{{ route('lastfm.compare', ['user' => $user]) }}">
-                        <i class="fas fa-not-equal"></i>
-                        Compare
-                    </a>
+                    <a class="btn btn-primary"><i class="fas fa-not-equal"></i> Compare</a>
                 @endif
             </div>
             <div class="card bg-dark col-lg-12 col-md-12 my-4">

@@ -3,28 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Services\ScraperService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LyricsController extends Controller
 {
-    public function formatSongDetails($item)
-    {
-        return
-            preg_replace("(((?<=feat)(.*$))|-feat)", '',
-                preg_replace('/-Remastered-[0-9]*/', '',
-                    preg_replace('/-[0-9]*-Remaster/', '',
-                        preg_replace('/(--)/', '-',
-                            preg_replace('/(---)/', '-',
-                                str_replace(' ', '-',
-                                    preg_replace("/[_.!`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", '-',
-                                        preg_replace("/[-_!#%,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", '',
-                                            $item))))))));
-    }
-
-    public function index(ScraperService $scraperService)
+    public function index(ScraperService $scraperService, Request $request)
     {
         if (Auth::user()->lastfm != null) {
-            $recentTracks = app('App\Http\Controllers\LastfmController')->getRecentTracks();
+            $user = $request->query('user');
+            if (empty($user))
+                $user = Auth::user()->lastfm;
+
+            $recentTracks = app('App\Http\Controllers\LastfmController')->getRecentTracks($user);
 
             $artist = $this->formatSongDetails($recentTracks->track[0]->artist->{'#text'});
             $song = $this->formatSongDetails($recentTracks->track[0]->name);
@@ -49,5 +40,19 @@ class LyricsController extends Controller
         $scrapedLyrics[0][0] = 'To use this feature you need Last.FM connected to your account.';
         $recentTracks = null;
         return view('lyrics.index', compact('scrapedLyrics', 'recentTracks'));
+    }
+
+    public function formatSongDetails($item)
+    {
+        return
+            preg_replace("(((?<=feat)(.*$))|-feat)", '',
+                preg_replace('/-Remastered-[0-9]*/', '',
+                    preg_replace('/-[0-9]*-Remaster/', '',
+                        preg_replace('/(--)/', '-',
+                            preg_replace('/(---)/', '-',
+                                str_replace(' ', '-',
+                                    preg_replace("/[_.!`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", '-',
+                                        preg_replace("/[-_!#%,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", '',
+                                            $item))))))));
     }
 }
