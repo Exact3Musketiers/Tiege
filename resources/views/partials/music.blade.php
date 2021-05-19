@@ -12,7 +12,7 @@
             <div class="row mb-lg-2">
                 @if($friendMusic['user'] != Auth::user()->lastfm)
                     <div class="col-lg-4 border-end">
-                        <b>{{$friendMusic['user']}}</b>
+                        <a href="{{ route('lastfm', ['user' => $friendMusic['user']]) }}"> <b>{{$friendMusic['user']}}</b></a>
                     </div>
                     <div class="col-lg-8 m-0 ps-lg-2 pe-lg-2">
                         <div class="row text-lg-start text-sm-center p-0 m-0"><b>{{$friendMusic['artist']}}</b></div>

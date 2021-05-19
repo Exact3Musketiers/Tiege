@@ -5,7 +5,10 @@
         <div class="row">
             <div class="card bg-dark">
                 <h1 class="card-header">LastFM Leaderboards</h1>
-                <h4>{{Auth::user()->lastfm}}</h4>
+                @if(Auth::user()->lastfm != $user)
+                    <button class="btn btn-primary position-absolute"><i class="fad fa-backward"></i> Back</button>
+                @endif
+                <h4>{{$user}}</h4>
                 <h4>Last week</h4>
                 <h3>{{$fromDate}} - {{$toDate}}</h3>
                 <h4><b> {{count($countWeeklyTracks->track)}} scrobbles</b></h4>
