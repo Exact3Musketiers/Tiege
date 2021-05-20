@@ -18,6 +18,13 @@
                 <h4>{{$user}}</h4>
                 <h3>{{$fromDate}} - {{$toDate}}</h3>
                 <h4><b> {{count($countWeeklyTracks->track)}} scrobbles</b></h4>
+                @if(Auth::user()->lastfm != $user)
+                    <a class="btn btn-primary" href="{{ route('lastfm.compare', ['user' => $user]) }}">
+                        <i class="fas fa-not-equal"></i>
+                        Compare
+                    </a>
+                @endif
+
             </div>
             <div class="card bg-dark col-lg-12 col-md-12 my-4">
                 <div class="card-header">

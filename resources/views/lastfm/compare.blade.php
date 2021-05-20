@@ -23,25 +23,23 @@
 
             </div>
             <hr/>
-
+            <h1>Scrobbles</h1>
             {{--Last week--}}
             <div class="card bg-dark">
                 <div class="card-header">
-                    <h4>Last week</h4>
-                    <h3>{{$fromDate}} - {{$toDate}}</h3>
-                    <h4>
-                        <b> {{count($userCountWeeklyTracks->track)}} scrobbles</b>
-                        VS
-                        <b> {{count($countWeeklyTracks->track)}} scrobbles</b>
-                    </h4>
-
+                    <h3>Last week</h3>
+                    <h4>{{$fromDate}} - {{$toDate}}</h4>
                     <div class="progress">
                         <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
                              role="progressbar"
-                             style={{"width:" . count($userCountWeeklyTracks->track) / (count($countWeeklyTracks->track) + count($userCountWeeklyTracks->track)) * 100 . '%'}}></div>
+                             style={{"width:" . count($userCountWeeklyTracks->track) / (count($countWeeklyTracks->track) + count($userCountWeeklyTracks->track)) * 100 . '%'}}>
+                            {{count($userCountWeeklyTracks->track)}}
+                        </div>
                         <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
                              role="progressbar"
-                             style={{"width:" . count($countWeeklyTracks->track) / (count($countWeeklyTracks->track) + count($userCountWeeklyTracks->track)) * 100 . '%'}}></div>
+                             style={{"width:" . count($countWeeklyTracks->track) / (count($countWeeklyTracks->track) + count($userCountWeeklyTracks->track)) * 100 . '%'}}>
+                            {{count($countWeeklyTracks->track)}}
+                        </div>
                     </div>
 
                 </div>
@@ -50,21 +48,19 @@
             {{--Weekly--}}
             <div class="card bg-dark">
                 <div class="card-header">
-                    <h4>Weekly running</h4>
-                    <h3>{{$toDate}} - Now</h3>
-                    <h4>
-                        <b> {{count($userData->weeklyRunningTracks->track)}} scrobbles</b>
-                        VS
-                        <b> {{count($data->weeklyRunningTracks->track)}} scrobbles</b>
-                    </h4>
-
+                    <h3>Weekly running</h3>
+                    <h4>{{$toDate}} - Now</h4>
                     <div class="progress">
                         <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
                              role="progressbar"
-                             style={{"width:" . count($userData->weeklyRunningTracks->track) / (count($data->weeklyRunningTracks->track) + count($userData->weeklyRunningTracks->track)) * 100 . '%'}}></div>
+                             style={{"width:" . count($userData->weeklyRunningTracks->track) / (count($data->weeklyRunningTracks->track) + count($userData->weeklyRunningTracks->track)) * 100 . '%'}}>
+                            {{count($userData->weeklyRunningTracks->track)}}
+                        </div>
                         <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
                              role="progressbar"
-                             style={{"width:" . count($data->weeklyRunningTracks->track) / (count($data->weeklyRunningTracks->track) + count($userData->weeklyRunningTracks->track)) * 100 . '%'}}></div>
+                             style={{"width:" . count($data->weeklyRunningTracks->track) / (count($data->weeklyRunningTracks->track) + count($userData->weeklyRunningTracks->track)) * 100 . '%'}}>
+                            {{count($data->weeklyRunningTracks->track)}}
+                        </div>
                     </div>
 
                 </div>
@@ -74,20 +70,18 @@
             {{--Today--}}
             <div class="card bg-dark">
                 <div class="card-header">
-                    <h4>Today</h4>
-                    <h4>
-                        <b> {{count($userData->dailyTracks->track)}} scrobbles</b>
-                        VS
-                        <b> {{count($data->dailyTracks->track)}} scrobbles</b>
-                    </h4>
-
+                    <h3>Today</h3>
                     <div class="progress">
                         <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
                              role="progressbar"
-                             style={{"width:" . count($userData->dailyTracks->track) / (count($data->dailyTracks->track) + count($userData->dailyTracks->track)) * 100 . '%'}}></div>
+                             style={{"width:" . count($userData->dailyTracks->track) / (count($data->dailyTracks->track) + count($userData->dailyTracks->track)) * 100 . '%'}}>
+                            {{count($userData->dailyTracks->track)}}
+                        </div>
                         <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
                              role="progressbar"
-                             style={{"width:" . count($data->dailyTracks->track) / (count($data->dailyTracks->track) + count($userData->dailyTracks->track)) * 100 . '%'}}></div>
+                             style={{"width:" . count($data->dailyTracks->track) / (count($data->dailyTracks->track) + count($userData->dailyTracks->track)) * 100 . '%'}}>
+                            {{count($data->dailyTracks->track)}}
+                        </div>
                     </div>
 
                 </div>

@@ -244,6 +244,19 @@ select, input {
         font-size: 16px;
     }
 
+    .progress {
+        height: 21px;
+        font-size: 20px;
+    }
+
+    .progress-bar.bg-primary {
+        color: $black;
+    }
+
+    .progress-bar.bg-danger {
+        color: $white;
+    }
+
     .insideBadge {
         position: absolute;
         margin-left: -30px;
