@@ -27,10 +27,10 @@ class LastfmController extends Controller
             'topAlbums' => $this->getTopAlbums($from, $to, 9, $user),
             'weeklyArtists' => $this->getWeeklyArtist($from, $to, $user),
             'dailyTracks' => $this->getDailyTrack($user),
-            'weeklyRunningTracks' => $this->getWeeklyTrackChart($to, null, null, $user)
+            'getTopTags' => $this->getTopTags($user),
+            'weeklyRunningTracks' => $this->getWeeklyTrackChart($to, time(), null, $user)
         ];
         $userData = $userCountWeeklyTracks = null;
-
         //For compare page, gets the data for the logged in user.
         if (Route::currentRouteName() == 'lastfm.compare') {
             $userCountWeeklyTracks = $this->getWeeklyTrackChart($from, $to, null, Auth::user()->lastfm);
@@ -40,8 +40,11 @@ class LastfmController extends Controller
                 'topAlbums' => $this->getTopAlbums($from, $to, 9, Auth::user()->lastfm),
                 'weeklyArtists' => $this->getWeeklyArtist($from, $to, Auth::user()->lastfm),
                 'dailyTracks' => $this->getDailyTrack(Auth::user()->lastfm),
-                'weeklyRunningTracks' => $this->getWeeklyTrackChart($to, null, null, Auth::user()->lastfm)
+                'getTopTags' => $this->getTopTags(Auth::user()->lastfm),
+                'weeklyRunningTracks' => $this->getWeeklyTrackChart($to, time(), null, Auth::user()->lastfm)
             ];
+//            dd($userData, $data);
+
             return view('lastfm.compare', compact('fromDate', 'toDate', 'countWeeklyTracks', 'userCountWeeklyTracks', 'userData', 'data', 'user'));
         }
 
@@ -80,17 +83,31 @@ class LastfmController extends Controller
         return json_decode($recentResponse->body())->recenttracks;
     }
 
+    public function getTopTags($user)
+    {
+        //TODO: fix a way for getting tags, think i need track.getTopTags and put track+artist in it
+        $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
+            'method' => 'user.getTopTags',
+            'user' => $user,
+            'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+            'format' => 'json'
+//            'limit' => 10
+        ]);
+        return json_decode($recentResponse->body())->toptags;
+    }
+
     public function getWeeklyTrackChart($from, $to, $limit, $user)
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getWeeklyTrackChart',
             'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
             'user' => $user,
-            'limit' => $limit,
             'from' => $from,
             'to' => $to,
+            'limit' => $limit,
             'format' => 'json',
         ]);
+
 //        dd($from, date('d.m.y H:i:s', $from), $to, date('d.m.y H:i:s', $to), json_decode($recentResponse->body()));
 
         return json_decode($recentResponse->body())->weeklytrackchart;
