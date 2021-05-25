@@ -24,7 +24,6 @@
                 @endif
             </div>
         @endforeach
-        {{--    <img src="{{asset('images/equalizer2.gif')}}" width="200"/>--}}
     </div>
 @endif
 

@@ -148,8 +148,7 @@ class LastfmController extends Controller
     public function getFriendsLastfmInfo()
     {
         $users = User::pluck('lastfm');
-        $friendFeed = array();
-//        $users = array_unique($users);
+        $friendsFeed = array();
         foreach ($users as $user) {
             if (isset($user)) {
                 $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
@@ -161,17 +160,14 @@ class LastfmController extends Controller
                     'format' => 'json'
                 ]);
                 $recentTracks = json_decode($recentResponse->body())->recenttracks;
-
-                $friendFeed = [
-                    $user => array(
-                        'user' => $user,
-                        'artist' => $recentTracks->track[0]->artist->{'#text'},
-                        'song' => $recentTracks->track[0]->name
-                    )
-                ];
+                array_push($friendsFeed, array(
+                    'user' => $user,
+                    'artist' => $recentTracks->track[0]->artist->{'#text'},
+                    'song' => $recentTracks->track[0]->name
+                ));
             }
         }
-//        dd($friendFeed);
-        return $friendFeed;
+
+        return $friendsFeed;
     }
 }
