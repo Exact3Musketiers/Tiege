@@ -21,12 +21,13 @@ class LastfmController extends Controller
         $toDate = date('d-m-Y', $to);
 
         $countWeeklyTracks = $this->getWeeklyTrackChart($from, $to, null, $user);
+        $dailyTracks = $this->getDailyTrack($user);
         $data = (object)[
             'countWeeklyTracks' => $countWeeklyTracks,
             'weeklyTracks' => (object)['track' => array_slice($countWeeklyTracks->track, 0, 9)],
             'topAlbums' => $this->getTopAlbums($from, $to, 9, $user),
             'weeklyArtists' => $this->getWeeklyArtist($from, $to, $user),
-            'dailyTracks' => $this->getDailyTrack($user),
+            'dailyTracks' => is_countable($dailyTracks) || empty($dailyTracks->track) ? $dailyTracks : (object)['track' => array($dailyTracks->track)], //Sets single tracks (currently listening), to an object following the correct formatting
             'getTopTags' => $this->getTopTags($user),
             'weeklyRunningTracks' => $this->getWeeklyTrackChart($to, time(), null, $user)
         ];
@@ -34,16 +35,17 @@ class LastfmController extends Controller
         //For compare page, gets the data for the logged in user.
         if (Route::currentRouteName() == 'lastfm.compare') {
             $userCountWeeklyTracks = $this->getWeeklyTrackChart($from, $to, null, Auth::user()->lastfm);
+            $dailyTracks = $this->getDailyTrack(Auth::user()->lastfm);
             $userData = (object)[
                 'countWeeklyTracks' => $userCountWeeklyTracks,
                 'weeklyTracks' => (object)['track' => array_slice($userCountWeeklyTracks->track, 0, 9)],
                 'topAlbums' => $this->getTopAlbums($from, $to, 9, Auth::user()->lastfm),
                 'weeklyArtists' => $this->getWeeklyArtist($from, $to, Auth::user()->lastfm),
-                'dailyTracks' => $this->getDailyTrack(Auth::user()->lastfm),
+                'dailyTracks' => is_countable($dailyTracks) || empty($dailyTracks->track) ? $dailyTracks : (object)['track' => array($dailyTracks->track)], //Sets single tracks (currently listening), to an object following the correct formatting
                 'getTopTags' => $this->getTopTags(Auth::user()->lastfm),
                 'weeklyRunningTracks' => $this->getWeeklyTrackChart($to, time(), null, Auth::user()->lastfm)
             ];
-//            dd($userData, $data);
+//            dd($userData, $data, $dailyTracks, empty($dailyTracks->track));
 
             return view('lastfm.compare', compact('fromDate', 'toDate', 'countWeeklyTracks', 'userCountWeeklyTracks', 'userData', 'data', 'user'));
         }
