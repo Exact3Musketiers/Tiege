@@ -65,9 +65,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if ($data['password_musketier'] == 'ikbeneenvande3musketiersenikwilgraageenaccounthebben!') {
+            $role = 0;
+        } else {
+            $role = 1;
+        }
+
         return User::create([
             'name' => $data['name'],
             'lastfm' => $data['lastfm'],
+            'role' => $role,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
