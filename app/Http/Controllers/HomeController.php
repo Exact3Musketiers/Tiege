@@ -138,7 +138,7 @@ class HomeController extends Controller
             'q' => 'sneek,nl',
             'lang' => 'nl',
             'units' => 'metric',
-            'APPID' => '2a00ff331d7e11c1e9e53406e66efb78',
+            'APPID' => config('services.weather.key'),
         ]);
         // Decode json
         $weather = json_decode($weatherResponse->body());
@@ -292,7 +292,7 @@ class HomeController extends Controller
         $newsResponse = Http::get('https://newsapi.org/v2/top-headlines', [
             'country' => 'nl',
             'pageSize' => '20',
-            'apiKey' => 'd0e021d0387b4426b1e2315b8f62f1ed',
+            'apiKey' => config('services.news.key'),
         ]);
 
         return $newsResponse;

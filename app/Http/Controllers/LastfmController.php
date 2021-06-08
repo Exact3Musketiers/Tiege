@@ -57,7 +57,7 @@ class LastfmController extends Controller
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getTopAlbums',
-            'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+            'api_key' => config('services.lastfm.key'),
             'user' => $user,
             'limit' => $limit,
             'from' => $from,
@@ -75,7 +75,7 @@ class LastfmController extends Controller
         $from = strtotime(date("Y-m-d 00:00:01"));
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getRecentTracks',
-            'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+            'api_key' => config('services.lastfm.key'),
             'user' => $user,
 //            'limit' => 1,
             'nowplaying' => true,
@@ -91,7 +91,7 @@ class LastfmController extends Controller
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getTopTags',
             'user' => $user,
-            'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+            'api_key' => config('services.lastfm.key'),
             'format' => 'json'
 //            'limit' => 10
         ]);
@@ -102,7 +102,7 @@ class LastfmController extends Controller
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getWeeklyTrackChart',
-            'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+            'api_key' => config('services.lastfm.key'),
             'user' => $user,
             'from' => $from,
             'to' => $to,
@@ -119,7 +119,7 @@ class LastfmController extends Controller
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getweeklyartistchart',
-            'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+            'api_key' => config('services.lastfm.key'),
             'user' => $user,
             'limit' => 10,
             'from' => $from,
@@ -136,7 +136,7 @@ class LastfmController extends Controller
     {
         $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
             'method' => 'user.getRecentTracks',
-            'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+            'api_key' => config('services.lastfm.key'),
             'user' => $user,
             'limit' => 1,
             'nowplaying' => true,
@@ -153,7 +153,7 @@ class LastfmController extends Controller
             if (isset($user)) {
                 $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
                     'method' => 'user.getRecentTracks',
-                    'api_key' => 'ad5a8aacfd3a692dff389c55a849abe6',
+                    'api_key' => config('services.lastfm.key'),
                     'user' => $user,
                     'limit' => 1,
                     'nowplaying' => true,
