@@ -28,12 +28,13 @@ class LyricsController extends Controller
                 $result = $data['lyrics'][0] . ' ' . $data['lyrics'][1];
             else
                 $result = $data['lyrics'][0];
-
             //Removes all letters between brackets
             $result = preg_replace('/\[.*?\]/', '', $result);
+
             //Creates new line on capital letters, except I
             preg_match_all('/[A-Z][^A-HJ-Z]+/', $result, $scrapedLyrics);
-
+            //TODO: fix lyrics with (Pantomime Ben Hammersley) and (Bump and Grind David Lee Roth)
+//            dd($result, $scrapedLyrics);
 
             return view('lyrics.index', compact('scrapedLyrics', 'recentTracks', 'service'));
         }
