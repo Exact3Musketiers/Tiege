@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/music/lastfm/compare', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm.compare');
 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
-
+    Route::post('/profile/destroy', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('/numbers/random', App\Http\Controllers\RandomController::class);
 
