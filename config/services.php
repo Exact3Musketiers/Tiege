@@ -30,4 +30,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'weather' => [
+        'key' => env('OPENWEATHERMAP_KEY'),
+    ],
+    'news' => [
+        'key' => env('NEWSAPI_KEY'),
+    ],
+    'currency' => [
+        'key' => env('CURRENCYCONVERTERAPI_KEY'),
+    ],
+    'lastfm' => [
+        'key' => env('AUDIOSCROBBLER_KEY'),
+    ],
+
 ];

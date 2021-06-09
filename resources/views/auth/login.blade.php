@@ -73,6 +73,11 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6 offset-md-4 pt-3">
+                                    <p>Nog geen account? <a href="{{ route('register') }}">Maak er een</a>!</p>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

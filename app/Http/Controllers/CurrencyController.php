@@ -21,7 +21,7 @@ class CurrencyController extends Controller
     public function fetchCurrencies(): \Illuminate\Http\Client\Response
     {
         return Http::get('https://free.currconv.com/api/v7/currencies', [
-            'apiKey' => 'f0cb65cb861fcca63810',
+            'apiKey' => config('services.currency.key'),
         ]);
     }
 

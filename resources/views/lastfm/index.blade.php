@@ -1,57 +1,103 @@
 @extends('layouts.app')
 
 @section('content')
-    {{--    //TODO: make this a sidebar or something fancy you know--}}
-    <div id="lastfmbox" class="mx-auto text-center mb-5">
+    <div id="lastfmBox" class="mx-auto text-center mb-5 container">
         <div class="row">
-            <h1 class="card bg-dark col-12">LastFM Leaderboards</h1>
-
             <div class="card bg-dark">
-                <h4>Last week</h4>
+                @if(Auth::user()->lastfm != $user)
+                    <a class="btn btn-primary position-absolute start-0" href="{{route('lastfm')}}">
+                        <i class="fad fa-backward"></i>
+                        {{Auth::user()->lastfm}}
+                    </a>
+                @endif
+                <p class="position-absolute end-0">Powered by AudioScrobbler</p>
+            </div>
+
+            <div class="card bg-dark align-items-center mt-5">
+                <h1 class="card-header fw-bold">LastFM Leaderboards</h1>
+                <h4><b>{{$userName}}</b> ({{$user}})</h4>
                 <h3>{{$fromDate}} - {{$toDate}}</h3>
-                <b> {{count($weeklyTracks->track)}} scrobbles</b>
+                <h4><b> {{count($countWeeklyTracks->track)}} scrobbles</b></h4>
+                @if(Auth::user()->lastfm != $user)
+                    <a class="btn btn-primary" href="{{ route('lastfm.compare', ['user' => $user]) }}">
+                        <i class="fas fa-not-equal"></i>
+                        Compare
+                    </a>
+                @endif
+
             </div>
-
-
-            <div class="card bg-dark col-lg-6 col-md-12 m-4">
+            <div class="card bg-dark col-lg-12 col-md-12 my-4">
                 <div class="card-header">
-                    <h2>Top albums</h2>
+                    <h2 class="fw-bold">Top artists</h2>
+                    <h4>{{$fromDate}} - {{$toDate}}</h4>
                 </div>
                 <div class="row">
-                    @foreach($topAlbums->album as $album)
-                        <div class="card-body col-lg-6 col-md-12">
+                    @foreach($data->weeklyArtists->artist as $artist)
+                        <div class="card-body col-lg-6 col-md-6 col-sm-12">
                             @if($loop->index == 0)
-                                <img src={{ $album->image[2]->{"#text"} }}/>
-                                <span class="badge bg-success">{{ $album->playcount }}</span>
+                                <span class="badge bg-success">{{ $artist->playcount }}</span>
                             @else
-                                <img src={{ $album->image[1]->{"#text"} }}/>
-                                <span class="badge bg-primary">{{ $album->playcount }}</span>
+                                <span class="badge bg-primary">{{ $artist->playcount }}</span>
                             @endif
-                            <h2>{{ $album->name }}</h2>
-                            <h3>{{ $album->artist->name }}</h3>
+                            <h2>{{ $artist->name }}</h2>
                         </div>
                     @endforeach
                 </div>
             </div>
-            //TODO: die andere weeklyArtists
-            <div class="card bg-dark col-lg-6 col-md-12 m-4">
-                <div class="card-header">
-                    <h2>Top albums</h2>
-                </div>
-                <div class="row">
-                    @foreach($topAlbums->album as $album)
-                        <div class="card-body col-lg-6 col-md-12">
+
+            <div class="card bg-transparent col-lg-6 col-md-12">
+                <div class="bg-dark">
+                    <div class="card-header">
+                        <h2 class="fw-bold">Top albums</h2>
+                        <h4>Last 7 days</h4>
+                    </div>
+                    <div class="row">
+                        @foreach($data->topAlbums->album as $album)
                             @if($loop->index == 0)
-                                <img src={{ $album->image[2]->{"#text"} }}/>
-                                <span class="badge bg-success">{{ $album->playcount }}</span>
+                                <div class="card-body col-lg-12">
+                                    <img src={{ $album->image[2]->{"#text"} }}/>
+                                    <span class="badge bg-success insideBadge">{{$album->playcount }}</span>
+                                    <h2>{{ $album->name }}</h2>
+                                    <h3>{{ $album->artist->name }}</h3>
+                                </div>
                             @else
-                                <img src={{ $album->image[1]->{"#text"} }}/>
-                                <span class="badge bg-primary">{{ $album->playcount }}</span>
+                                <div class="card-body col-lg-6 col-md-12">
+                                    <img src={{ $album->image[1]->{"#text"} }}/>
+                                    <span class="badge bg-primary insideBadge">{{ $album->playcount }}</span>
+                                    <h2>{{ $album->name }}</h2>
+                                    <h3>{{ $album->artist->name }}</h3>
+                                </div>
                             @endif
-                            <h2>{{ $album->name }}</h2>
-                            <h3>{{ $album->artist->name }}</h3>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-transparent col-lg-6 col-md-12">
+                <div class="bg-dark">
+                    <div class="card-header">
+                        <h2 class="fw-bold">Top tracks</h2>
+                        <h4>{{$fromDate}} - {{$toDate}}</h4>
+                    </div>
+                    <div class="row">
+                        @foreach($data->weeklyTracks->track as $track)
+                            @if($loop->index == 0)
+                                <div class="card-body col-lg-12">
+                                    <img src={{ $track->image[2]->{"#text"} }}/>
+                                    <span class="badge bg-success insideBadge">{{ $track->playcount }}</span>
+                                    <h2>{{ $track->name }}</h2>
+                                    <h3>{{ $track->artist->{"#text"} }}</h3>
+                                </div>
+                            @else
+                                <div class="card-body col-lg-6 col-md-12">
+                                    <img src={{ $track->image[1]->{"#text"} }}/>
+                                    <span class="badge bg-primary insideBadge">{{ $track->playcount }}</span>
+                                    <h2>{{ $track->name }}</h2>
+                                    <h3>{{ $track->artist->{"#text"} }}</h3>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
