@@ -144,7 +144,8 @@ class LastfmController extends Controller
             'nowplaying' => true,
             'format' => 'json'
         ]);
-        return json_decode($recentResponse->body())->recenttracks;
+        if (!isset(json_decode($recentResponse->body())->message))
+            return json_decode($recentResponse->body())->recenttracks;
     }
 
     public function getFriendsLastfmInfo()
@@ -160,7 +161,7 @@ class LastfmController extends Controller
                 'nowplaying' => true,
                 'format' => 'json'
             ]);
-            if (!empty($user)) {
+            if (!isset(json_decode($recentResponse->body())->message)) {
                 $recentTracks = json_decode($recentResponse->body())->recenttracks;
                 array_push($friendsFeed, array(
                     'user' => $user,
