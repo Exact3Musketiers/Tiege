@@ -30,11 +30,14 @@
                 <div class="sidebar-behind">
                 </div>
 
-                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sb-with sidebar text-center mt-3">
-                    <a href="{{route('home')}}">
-                        <img src="{{asset('images/logo-white.png')}}" width="25%">
-                    </a>
-                    <div class="card bg-dark">
+                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sb-with sidebar text-center">
+                    <div class="fs-2 card bg-dark slide-in-blurred-top">
+                        <a class="slide-rotate-hor-top text-decoration-none" href="{{route('home')}}">
+                            <div class="rainbow rainbow_text_animated">Tige.site</div>
+                        </a>
+                    </div>
+
+                    <div class="card bg-dark slide-in-left">
                         <div class="profile profile-picture text-center">
 
                             <div class="text-light fs-1 fw-bold h-50">
@@ -78,7 +81,7 @@
                     </div>
 
 
-                    <div class="card bg-dark mb-auto">
+                    <div class="card bg-dark mb-auto slide-in-left">
                         <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                             id="menu">
                             @if(Auth::user()->role != 1)
@@ -134,7 +137,7 @@
                         </ul>
                     </div>
                     <div
-                        class="card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
+                        class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
                         <div class="navbar-dark-under pt-3">
                             <div class="col-12">
                                 @include('partials.music')
