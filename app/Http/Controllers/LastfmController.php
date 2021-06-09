@@ -152,15 +152,15 @@ class LastfmController extends Controller
         $users = User::pluck('lastfm');
         $friendsFeed = array();
         foreach ($users as $user) {
-            if (!empty($user) || isset($user)) {
-                $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
-                    'method' => 'user.getRecentTracks',
-                    'api_key' => config('services.lastfm.key'),
-                    'user' => $user,
-                    'limit' => 1,
-                    'nowplaying' => true,
-                    'format' => 'json'
-                ]);
+            $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
+                'method' => 'user.getRecentTracks',
+                'api_key' => config('services.lastfm.key'),
+                'user' => $user,
+                'limit' => 1,
+                'nowplaying' => true,
+                'format' => 'json'
+            ]);
+            if (!empty($user)) {
                 $recentTracks = json_decode($recentResponse->body())->recenttracks;
                 array_push($friendsFeed, array(
                     'user' => $user,
