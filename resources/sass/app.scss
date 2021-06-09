@@ -109,10 +109,11 @@ select, input {
 
 //nav
 .collapse-sidebar {
-    margin-left: 7.4%;
+    margin-left: 85px;
     background: center;
     position: absolute;
     width: 40px;
+
     i {
         &::before {
             content: "X";
@@ -120,7 +121,7 @@ select, input {
     }
 
     &[aria-expanded="false"] {
-        margin-left: 2%;
+        margin-left: 10px;
         i {
             &::before {
                 content: "\f805";
@@ -128,6 +129,18 @@ select, input {
         }
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .collapse-sidebar {
+        margin-left: 48px;
+        margin-top: 8px !important;
+
+        &[aria-expanded="false"] {
+            margin-left: 10px;
+        }
+    }
+}
+
 
 .btn-toggle {
     display: inline-flex;
