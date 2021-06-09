@@ -108,6 +108,27 @@ select, input {
 }
 
 //nav
+.collapse-sidebar {
+    margin-left: 7.4%;
+    background: center;
+    position: absolute;
+    width: 40px;
+    i {
+        &::before {
+            content: "X";
+        }
+    }
+
+    &[aria-expanded="false"] {
+        margin-left: 2%;
+        i {
+            &::before {
+                content: "\f805";
+            }
+        }
+    }
+}
+
 .btn-toggle {
     display: inline-flex;
     align-items: center;
@@ -186,6 +207,7 @@ select, input {
 
         a {
             width: 100%;
+
             &:hover, &:focus {
                 background: $dark-tertiary;
             }
