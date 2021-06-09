@@ -12,7 +12,10 @@ class LastfmController extends Controller
 {
     public function index(Request $request)
     {
-        if (empty($user)) {
+        if (empty(Auth::user()->lastfm))
+            return view('lastfm.index');
+        $user = $request->query('user');
+        if (empty($user))
             $user = Auth::user()->lastfm;
             $userName = Auth::user()->name;
         } else {
@@ -147,7 +150,8 @@ class LastfmController extends Controller
             'nowplaying' => true,
             'format' => 'json'
         ]);
-        return json_decode($recentResponse->body())->recenttracks;
+        if (!isset(json_decode($recentResponse->body())->message))
+            return json_decode($recentResponse->body())->recenttracks;
     }
 
     public function getFriendsLastfmInfo()
@@ -165,13 +169,15 @@ class LastfmController extends Controller
                     'nowplaying' => true,
                     'format' => 'json'
                 ]);
-                $recentTracks = json_decode($recentResponse->body())->recenttracks;
-                array_push($friendsFeed, array(
-                    'user' => $lastfmUsers[$i],
-                    'name' => $users[$i],
-                    'artist' => $recentTracks->track[0]->artist->{'#text'},
-                    'song' => $recentTracks->track[0]->name
-                ));
+                if (!isset(json_decode($recentResponse->body())->message)) {
+                    $recentTracks = json_decode($recentResponse->body())->recenttracks;
+                    array_push($friendsFeed, array(
+                        'user' => $lastfmUsers[$i],
+                        'name' => $users[$i],
+                        'artist' => $recentTracks->track[0]->artist->{'#text'},
+                        'song' => $recentTracks->track[0]->name
+                    ));
+                }
             }
 
         return $friendsFeed;
