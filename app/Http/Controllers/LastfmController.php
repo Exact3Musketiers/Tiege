@@ -12,6 +12,8 @@ class LastfmController extends Controller
 {
     public function index(Request $request)
     {
+        if (empty(Auth::user()->lastfm))
+            return view('lastfm.index');
         $user = $request->query('user');
         if (empty($user))
             $user = Auth::user()->lastfm;
@@ -150,7 +152,7 @@ class LastfmController extends Controller
         $users = User::pluck('lastfm');
         $friendsFeed = array();
         foreach ($users as $user) {
-            if (isset($user)) {
+            if (!empty($user)) {
                 $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
                     'method' => 'user.getRecentTracks',
                     'api_key' => config('services.lastfm.key'),
