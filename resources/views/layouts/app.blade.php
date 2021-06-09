@@ -25,6 +25,7 @@
     @auth
         <div class="container-fluid">
             {{--SIDEBAR--}}
+
             <div class="row flex-nowrap">
                 <div class="sidebar-behind">
                 </div>
@@ -48,95 +49,90 @@
                                 @endif
                             </div>
                         </div>
-
-                        <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        <ul class="list-unstyled ps-0 nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                             id="profileMenu">
-                            <li>
-                                <a href="#options" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                    <i class="fas fa-cog"></i><span
-                                        class="ms-1 d-none d-sm-inline">Options</span> </a>
-                                <ul class="collapse nav flex-column ms-1" id="options" data-bs-parent="#profileMenu">
-                                    <li class="w-100">
-                                    <li>
-                                        <a href="{{ route('profile') }}" class="nav-link px-0">
-                                            <span class="d-none d-sm-inline"></span>Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link px-0" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#profile-collapse"
+                                        aria-expanded="false" id="options">
+                                    <i class="fas fa-cog"></i>
+                                    <span class="ms-1">Options</span>
+                                </button>
+                                <div class="collapse" id="profile-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="{{ route('profile') }}" class="link-dark rounded">Profile</a></li>
+                                        <li><a class="link-dark rounded" href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                              class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
+                                                {{ __('Logout') }}
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                  class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
 
 
-                    <div class="card bg-dark">
+                    <div class="card bg-dark mb-auto">
                         <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                             id="menu">
-                            <li class="nav-item">
-                                <a href="{{ route('home') }}" class="nav-link align-middle px-0" id="home">
-                                    <i class="fas fa-home"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
-                                </a>
-                            </li>
                             @if(Auth::user()->role != 1)
 
-                                <li>
-                                    <a href="#numbers" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                        <i class="far fa-hand-peace"></i><span
-                                            class="ms-1 d-none d-sm-inline">Numbers</span> </a>
-                                    <ul class="collapse nav flex-column ms-1" id="numbers" data-bs-parent="#menu">
-                                        <li class="w-100">
-                                            <a href="{{ route('random.index') }}" class="nav-link px-0"> <span
-                                                    class="d-none d-sm-inline"></span>Random</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('currency') }}" class="nav-link px-0"> <span
-                                                    class="d-none d-sm-inline"></span>Currency</a>
-                                        </li>
-                                    </ul>
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle align-items-center rounded collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#numbers-collapse"
+                                            aria-expanded="false">
+                                        <i class="far fa-hand-peace"></i>
+                                        <span class="ms-1">Numbers</span>
+                                    </button>
+                                    <div class="collapse" id="numbers-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="numbers">
+                                            <li><a href="{{ route('random.index') }}"
+                                                   class="link-dark rounded">Random</a></li>
+                                            <li><a href="{{ route('currency') }}" class="link-dark rounded">Currency</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </li>
                             @endif
                             @if(Auth::user()->role != 1)
 
-                                <li>
-                                    <a href="#textify" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle align-items-center rounded collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#textify-collapse"
+                                            aria-expanded="false">
                                         <i class="fas fa-font"></i><span
-                                            class="ms-1 d-none d-sm-inline">Text-ify</span> </a>
-                                    <ul class="collapse nav flex-column ms-1" id="textify" data-bs-parent="#menu">
-                                        <li class="w-100">
-                                        <li>
-                                            <a href="{{ route('sarcasm') }}" class="nav-link px-0"> <span
-                                                    class="d-none d-sm-inline"></span>SaRCasMIfY</a>
-                                        </li>
-                                    </ul>
+                                            class="ms-1">Text-ify</span>
+                                    </button>
+                                    <div class="collapse" id="textify-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="textify">
+                                            <li><a href="{{ route('sarcasm') }}"
+                                                   class="link-dark rounded">SaRCasMIfY</a></li>
+                                        </ul>
+                                    </div>
                                 </li>
                             @endif
-                            <li>
-                                <a href="#music" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                    <i class="fas fa-music"></i> <span class="ms-1 d-none d-sm-inline">Music</span></a>
-                                <ul class="collapse nav flex-column ms-1" id="music" data-bs-parent="#menu">
-                                    <li class="w-100">
-                                        <a href="{{ route('lyrics') }}" class="nav-link px-0"> <span
-                                                class="d-none d-sm-inline"></span>Lyrics</a>
-                                    </li>
-                                    <li class="w-100">
-                                        <a href="{{ route('lastfm') }}" class="nav-link px-0"> <span
-                                                class="d-none d-sm-inline"></span>Lastfm</a>
-                                    </li>
-                                </ul>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#music-collapse"
+                                        aria-expanded="false">
+                                    <i class="fas fa-music"></i><span
+                                        class="ms-1">Music</span>
+                                </button>
+                                <div class="collapse" id="music-collapse" id="music">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="{{ route('lyrics') }}" class="link-dark rounded">Lyrics</a></li>
+                                        <li><a href="{{ route('lastfm') }}" class="link-dark rounded">Lastfm</a></li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
-
                     <div
                         class="card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
                         <div class="navbar-dark-under pt-3">
@@ -144,7 +140,6 @@
                                 @include('partials.music')
                             </div>
                         </div>
-
                     </div>
                 </div>
                 @endauth
@@ -213,3 +208,4 @@
 
     });
 </script>
+
