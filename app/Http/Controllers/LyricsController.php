@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ScraperService;
+use App\Services\LyricsScraperService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LyricsController extends Controller
 {
-    public function index(ScraperService $scraperService, Request $request)
+    public function index(LyricsScraperService $scraperService, Request $request)
     {
         if (Auth::user()->lastfm != null) {
             $user = $request->query('user');

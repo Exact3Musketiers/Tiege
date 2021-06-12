@@ -99,20 +99,17 @@ select, input {
 
 }
 
-.sb-with {
-    max-width: 200px !important;
-}
-
 .wrap-col {
     overflow-x: hidden;
 }
 
 //nav
 .collapse-sidebar {
-    margin-left: 85px;
+    margin-left: 79px;
     background: center;
-    position: absolute;
+    position: fixed;
     width: 40px;
+    z-index: 2;
 
     i {
         &::before {
@@ -122,6 +119,7 @@ select, input {
 
     &[aria-expanded="false"] {
         margin-left: 10px;
+
         i {
             &::before {
                 content: "\f805";
@@ -214,6 +212,11 @@ select, input {
 
 .sidebar {
     position: fixed;
+    margin-left: -15px;
+    overflow-y: scroll;
+    height: 100vh;
+    max-width: 212px !important;
+
 
     li {
         width: 100% !important;
@@ -241,6 +244,7 @@ select, input {
         padding: 5px 0 5px 0;
     }
     .sidebar {
+
         .card {
             padding: 4px;
         }
@@ -262,6 +266,8 @@ select, input {
     .navbar-dark-under {
         width: 200px;
         margin-left: -24px;
+        margin-bottom: 50px;
+
     }
 }
 
@@ -280,14 +286,12 @@ select, input {
         padding: 10px 0 10px 0;
     }
     .sidebar, .sidebar-behind {
-        width: 110px;
+        //width: 161px;
+        width: 205px;
     }
     .navbar-dark-under {
-        position: absolute;
-        left: 26px;
-        width: 108px;
-        //margin-left: -24px;
-        bottom: 0;
+        margin-left: 5px;
+        margin-bottom: 100px;
     }
 }
 
