@@ -130,7 +130,7 @@ select, input {
 
 @media only screen and (max-width: 600px) {
     .collapse-sidebar {
-        margin-left: 48px;
+        margin-left: 45vw;
         margin-top: 8px !important;
 
         &[aria-expanded="false"] {
@@ -286,13 +286,22 @@ select, input {
         padding: 10px 0 10px 0;
     }
     .sidebar, .sidebar-behind {
-        //width: 161px;
-        width: 205px;
+        width: 100vw;
+    }
+    .sidebar {
+        max-width: 100% !important;
+
     }
     .navbar-dark-under {
         margin-left: 5px;
         margin-bottom: 100px;
+        width: 100vw;
+
+        .mb-lg-2 .text-lg-start {
+            justify-content: center;
+        }
     }
+
 }
 
 //Lyrics
