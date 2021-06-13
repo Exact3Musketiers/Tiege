@@ -177,7 +177,7 @@
     let clickedDesktop = true;
 
     function toggleMenu() {
-        var isMobile = window.innerWidth <= 600;
+        const isMobile = window.innerWidth <= 600;
         clickedMobile = document.getElementById("menuToggler").getAttribute("aria-expanded") === 'true' && isMobile;
         clickedDesktop = document.getElementById("menuToggler").getAttribute("aria-expanded") === 'true' && !isMobile;
     }
