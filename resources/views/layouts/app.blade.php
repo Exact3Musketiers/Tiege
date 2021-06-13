@@ -28,8 +28,10 @@
 
 
             <div class="row flex-nowrap">
-                <button class="btn btn-primary rounded-circle collapse-sidebar mt-3" id="menuToggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseSidebar" aria-expanded="true" aria-controls="collapseSidebar">
+                <button class="btn btn-primary rounded-circle collapse-sidebar mt-3" id="menuToggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseSidebar" aria-expanded="true" aria-controls="collapseSidebar"
+                        onclick="toggleMenu()">
                     <i class="fas"></i>
                 </button>
                 <div class="sidebar-behind collapse show mt-5" id="collapseSidebar">
@@ -170,17 +172,26 @@
 </html>
 
 <script>
-    function mobileNav() {
+    //TODO: deze niet already open dingen overriden
+    let clickedMobile = false
+    let clickedDesktop = true;
 
-        if (window.innerWidth <= 600) {
+    function toggleMenu() {
+        const isMobile = window.innerWidth <= 600;
+        clickedMobile = document.getElementById("menuToggler").getAttribute("aria-expanded") === 'true' && isMobile;
+        clickedDesktop = document.getElementById("menuToggler").getAttribute("aria-expanded") === 'true' && !isMobile;
+    }
+
+    function mobileNav() {
+        if (window.innerWidth <= 600 && !clickedMobile || window.innerWidth >= 600 && !clickedDesktop) {
             document.getElementById("collapseSidebar").classList.remove("show");
             document.getElementById("menuToggler").setAttribute("aria-expanded", "false");
-        }
-        else{
+        } else {
             document.getElementById("collapseSidebar").classList.add("show")
             document.getElementById("menuToggler").setAttribute("aria-expanded", "true");
         }
     }
+    
     window.onload = window.onresize = mobileNav;
 
     //Hides nav on ctrl+q
