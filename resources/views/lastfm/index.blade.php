@@ -15,7 +15,6 @@
                     @endif
                     <p class="position-absolute end-0">Powered by AudioScrobbler</p>
                 </div>
-
             <div class="card bg-dark align-items-center mt-5">
                 <h1 class="card-header fw-bold">LastFM Leaderboards</h1>
                 <h4><b>{{$userName}}</b> ({{$user}})</h4>

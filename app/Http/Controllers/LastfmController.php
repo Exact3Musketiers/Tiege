@@ -12,6 +12,8 @@ class LastfmController extends Controller
 {
     public function index(Request $request)
     {
+        if (empty(Auth::user()->lastfm))
+            return view('lastfm.index');
         $user = $request->query('user');
         if (empty($user)) {
             $user = Auth::user()->lastfm;
@@ -147,7 +149,8 @@ class LastfmController extends Controller
             'nowplaying' => true,
             'format' => 'json'
         ]);
-        return json_decode($recentResponse->body())->recenttracks;
+        if (!isset(json_decode($recentResponse->body())->message))
+            return json_decode($recentResponse->body())->recenttracks;
     }
 
     public function getFriendsLastfmInfo()
