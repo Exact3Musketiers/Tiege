@@ -12,13 +12,13 @@ class LastfmController extends Controller
 {
     public function index(Request $request)
     {
+        $user = $request->query('user');
         if (empty($user)) {
             $user = Auth::user()->lastfm;
             $userName = Auth::user()->name;
-        } else {
-            $user = $request->query('user');
+        } else
             $userName = User::wherelastfm($user)->pluck('name')[0];
-        }
+
 
         $from = strtotime('-2weeks Friday +18 hours');
         $to = strtotime('-1weeks Friday +18 hours');

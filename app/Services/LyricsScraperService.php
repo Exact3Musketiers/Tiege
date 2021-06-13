@@ -6,7 +6,7 @@ use Goutte\Client;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 
-class ScraperService
+class LyricsScraperService
 {
     /**
      * Make a call to to specified url and return formatted data

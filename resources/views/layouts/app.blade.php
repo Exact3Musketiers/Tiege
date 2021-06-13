@@ -28,7 +28,7 @@
 
 
             <div class="row flex-nowrap">
-                <button class="btn btn-primary rounded-circle collapse-sidebar mt-3" type="button" data-bs-toggle="collapse"
+                <button class="btn btn-primary rounded-circle collapse-sidebar mt-3" id="menuToggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseSidebar" aria-expanded="true" aria-controls="collapseSidebar">
                     <i class="fas"></i>
                 </button>
@@ -144,7 +144,7 @@
                             </ul>
                         </div>
                         <div
-                            class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
+                            class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2">
                             <div class="navbar-dark-under pt-3">
                                 <div class="col-12">
                                     @include('partials.music')
@@ -170,6 +170,19 @@
 </html>
 
 <script>
+    function mobileNav() {
+
+        if (window.innerWidth <= 600) {
+            document.getElementById("collapseSidebar").classList.remove("show");
+            document.getElementById("menuToggler").setAttribute("aria-expanded", "false");
+        }
+        else{
+            document.getElementById("collapseSidebar").classList.add("show")
+            document.getElementById("menuToggler").setAttribute("aria-expanded", "true");
+        }
+    }
+    window.onload = window.onresize = mobileNav;
+
     //Hides nav on ctrl+q
     function HideNav(e) {
         var evtobj = window.event ? event : e

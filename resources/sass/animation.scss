@@ -2,7 +2,14 @@
     text-align: center;
     text-decoration: underline;
     font-size: 32px;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
+}
+@media only screen and (max-width: 600px) {
+    .rainbow{
+        font-size: 26px;
+        letter-spacing: 0;
+
+    }
 }
 .rainbow_text_animated {
     background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
