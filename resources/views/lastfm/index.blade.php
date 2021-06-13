@@ -15,23 +15,39 @@
                     @endif
                     <p class="position-absolute end-0">Powered by AudioScrobbler</p>
                 </div>
+            <div class="card bg-dark align-items-center mt-5">
+                <h1 class="card-header fw-bold">LastFM Leaderboards</h1>
+                <h4><b>{{$userName}}</b> ({{$user}})</h4>
+                <h3>{{$fromDate}} - {{$toDate}}</h3>
+                <h4><b> {{count($countWeeklyTracks->track)}} scrobbles</b></h4>
+                @if(Auth::user()->lastfm != $user)
+                    <a class="btn btn-primary" href="{{ route('lastfm.compare', ['user' => $user]) }}">
+                        <i class="fas fa-not-equal"></i>
+                        Compare
+                    </a>
+                @endif
 
-                <div class="card bg-dark align-items-center mt-5">
-                    <h1 class="card-header">LastFM Leaderboards</h1>
-                    <h4>{{$user}}</h4>
-                    <h3>{{$fromDate}} - {{$toDate}}</h3>
-                    <h4><b> {{count($countWeeklyTracks->track)}} scrobbles</b></h4>
-                    @if(Auth::user()->lastfm != $user)
-                        <a class="btn btn-primary" href="{{ route('lastfm.compare', ['user' => $user]) }}">
-                            <i class="fas fa-not-equal"></i>
-                            Compare
-                        </a>
-                    @endif
-
+            </div>
+            <div class="card bg-dark col-lg-12 col-md-12 my-4">
+                <div class="card-header">
+                    <h2 class="fw-bold">Top artists</h2>
+                    <h4>{{$fromDate}} - {{$toDate}}</h4>
+                </div>
+                <div class="row">
+                    @foreach($data->weeklyArtists->artist as $artist)
+                        <div class="card-body col-lg-6 col-md-6 col-sm-12">
+                            @if($loop->index == 0)
+                                <span class="badge bg-success">{{ $artist->playcount }}</span>
+                            @else
+                                <span class="badge bg-primary">{{ $artist->playcount }}</span>
+                            @endif
+                            <h2>{{ $artist->name }}</h2>
+                        </div>
+                    @endforeach
                 </div>
                 <div class="card bg-dark col-lg-12 col-md-12 my-4">
                     <div class="card-header">
-                        <h2>Top artists</h2>
+                        <h2 class="fw-bold">Top artists</h2>
                         <h4>{{$fromDate}} - {{$toDate}}</h4>
                     </div>
                     <div class="row">
@@ -51,7 +67,7 @@
                 <div class="card bg-transparent col-lg-6 col-md-12">
                     <div class="bg-dark">
                         <div class="card-header">
-                            <h2>Top albums</h2>
+                            <h2 class="fw-bold">Top albums</h2>
                             <h4>Last 7 days</h4>
                         </div>
                         <div class="row">
@@ -79,7 +95,7 @@
                 <div class="card bg-transparent col-lg-6 col-md-12">
                     <div class="bg-dark">
                         <div class="card-header">
-                            <h2>Top tracks</h2>
+                            <h2 class="fw-bold">Top tracks</h2>
                             <h4>{{$fromDate}} - {{$toDate}}</h4>
                         </div>
                         <div class="row">

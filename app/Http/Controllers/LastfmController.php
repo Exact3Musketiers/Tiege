@@ -15,8 +15,13 @@ class LastfmController extends Controller
         if (empty(Auth::user()->lastfm))
             return view('lastfm.index');
         $user = $request->query('user');
-        if (empty($user))
+        if (empty($user)) {
             $user = Auth::user()->lastfm;
+            $userName = Auth::user()->name;
+        } else
+            $userName = User::wherelastfm($user)->pluck('name')[0];
+
+
         $from = strtotime('-2weeks Friday +18 hours');
         $to = strtotime('-1weeks Friday +18 hours');
         $fromDate = date('d-m-Y', $from);
@@ -49,10 +54,10 @@ class LastfmController extends Controller
             ];
 //            dd($userData, $data, $dailyTracks, empty($dailyTracks->track), is_countable($dailyTracks->track));
 
-            return view('lastfm.compare', compact('fromDate', 'toDate', 'countWeeklyTracks', 'userCountWeeklyTracks', 'userData', 'data', 'user'));
+            return view('lastfm.compare', compact('fromDate', 'toDate', 'countWeeklyTracks', 'userCountWeeklyTracks', 'userData', 'data', 'user', 'userName'));
         }
 
-        return view('lastfm.index', compact('fromDate', 'toDate', 'countWeeklyTracks', 'userCountWeeklyTracks', 'userData', 'data', 'user'));
+        return view('lastfm.index', compact('fromDate', 'toDate', 'countWeeklyTracks', 'userCountWeeklyTracks', 'userData', 'data', 'user', 'userName'));
     }
 
     public function getTopAlbums($from, $to, $limit, $user)
@@ -150,26 +155,27 @@ class LastfmController extends Controller
 
     public function getFriendsLastfmInfo()
     {
-        $users = User::pluck('lastfm');
+        $lastfmUsers = User::pluck('lastfm');
+        $users = User::pluck('name');
         $friendsFeed = array();
-        foreach ($users as $user) {
-            $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
-                'method' => 'user.getRecentTracks',
-                'api_key' => config('services.lastfm.key'),
-                'user' => $user,
-                'limit' => 1,
-                'nowplaying' => true,
-                'format' => 'json'
-            ]);
-            if (!isset(json_decode($recentResponse->body())->message)) {
+        for ($i = 0; $i < count($lastfmUsers); $i++)
+            if (isset($lastfmUsers[$i])) {
+                $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
+                    'method' => 'user.getRecentTracks',
+                    'api_key' => config('services.lastfm.key'),
+                    'user' => $lastfmUsers[$i],
+                    'limit' => 1,
+                    'nowplaying' => true,
+                    'format' => 'json'
+                ]);
                 $recentTracks = json_decode($recentResponse->body())->recenttracks;
                 array_push($friendsFeed, array(
-                    'user' => $user,
+                    'user' => $lastfmUsers[$i],
+                    'name' => $users[$i],
                     'artist' => $recentTracks->track[0]->artist->{'#text'},
                     'song' => $recentTracks->track[0]->name
                 ));
             }
-        }
 
         return $friendsFeed;
     }
