@@ -29,6 +29,8 @@
                 <div class="card-header">
                     <h3>Last week</h3>
                     <h4>{{$fromDate}} - {{$toDate}}</h4>
+
+                    @if(isset($userCountWeeklyTracks->track[0]) || isset($countWeeklyTracks->track[0]))
                     <div class="progress">
                         <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
                              role="progressbar"
@@ -41,6 +43,13 @@
                             {{count($countWeeklyTracks->track)}}
                         </div>
                     </div>
+                    @else
+                        Both users have 0 scrobbles
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                    @endif
 
                 </div>
             </div>
@@ -50,18 +59,27 @@
                 <div class="card-header">
                     <h3>Weekly running</h3>
                     <h4>{{$toDate}} - Now</h4>
-                    <div class="progress">
-                        <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
-                             role="progressbar"
-                             style={{"width:" . count($userData->weeklyRunningTracks->track) / (count($data->weeklyRunningTracks->track) + count($userData->weeklyRunningTracks->track)) * 100 . '%'}}>
-                            {{count($userData->weeklyRunningTracks->track)}}
+
+                    @if(isset($userData->weeklyRunningTracks->track[0]) || isset($data->weeklyRunningTracks->track[0]))
+                        <div class="progress">
+                            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
+                                 role="progressbar"
+                                 style={{"width:" . count($userData->weeklyRunningTracks->track) / (count($data->weeklyRunningTracks->track) + count($userData->weeklyRunningTracks->track)) * 100 . '%'}}>
+                                {{count($userData->weeklyRunningTracks->track)}}
+                            </div>
+                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
+                                 role="progressbar"
+                                 style={{"width:" . count($data->weeklyRunningTracks->track) / (count($data->weeklyRunningTracks->track) + count($userData->weeklyRunningTracks->track)) * 100 . '%'}}>
+                                {{count($data->weeklyRunningTracks->track)}}
+                            </div>
                         </div>
-                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
-                             role="progressbar"
-                             style={{"width:" . count($data->weeklyRunningTracks->track) / (count($data->weeklyRunningTracks->track) + count($userData->weeklyRunningTracks->track)) * 100 . '%'}}>
-                            {{count($data->weeklyRunningTracks->track)}}
+                    @else
+                        Both users have 0 scrobbles
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                 aria-valuemax="100"></div>
                         </div>
-                    </div>
+                    @endif
 
                 </div>
             </div>
@@ -71,18 +89,27 @@
             <div class="card bg-dark">
                 <div class="card-header">
                     <h3>Today</h3>
-                    <div class="progress">
-                        <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
-                             role="progressbar"
-                             style={{"width:" . count($userData->dailyTracks->track) / (count($data->dailyTracks->track) + count($userData->dailyTracks->track)) * 100 . '%'}}>
-                            {{count($userData->dailyTracks->track)}}
+
+                    @if(isset($userData->dailyTracks->track[0]) || isset($data->dailyTracks->track[0]))
+                        <div class="progress">
+                            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
+                                 role="progressbar"
+                                 style={{"width:" . count($userData->dailyTracks->track) / (count($data->dailyTracks->track) + count($userData->dailyTracks->track)) * 100 . '%'}}>
+                                {{count($userData->dailyTracks->track)}}
+                            </div>
+                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
+                                 role="progressbar"
+                                 style={{"width:" . count($data->dailyTracks->track) / (count($data->dailyTracks->track) + count($userData->dailyTracks->track)) * 100 . '%'}}>
+                                {{count($data->dailyTracks->track)}}
+                            </div>
                         </div>
-                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
-                             role="progressbar"
-                             style={{"width:" . count($data->dailyTracks->track) / (count($data->dailyTracks->track) + count($userData->dailyTracks->track)) * 100 . '%'}}>
-                            {{count($data->dailyTracks->track)}}
+                    @else
+                        Both users have 0 scrobbles
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                 aria-valuemax="100"></div>
                         </div>
-                    </div>
+                    @endif
 
                 </div>
             </div>
