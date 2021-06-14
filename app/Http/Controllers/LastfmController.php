@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use function PHPUnit\Framework\isEmpty;
 
 class LastfmController extends Controller
 {
     public function index(Request $request)
     {
+        if (empty(Auth::user()->lastfm))
+            return view('lastfm.index');
         $user = $request->query('user');
         if (empty($user)) {
             $user = Auth::user()->lastfm;
@@ -155,8 +158,8 @@ class LastfmController extends Controller
         $lastfmUsers = User::pluck('lastfm');
         $users = User::pluck('name');
         $friendsFeed = array();
-        for ($i = 0; $i < count($lastfmUsers); $i++)
-            if (isset($lastfmUsers[$i])) {
+        for ($i = 0; $i < count($lastfmUsers); $i++) {
+            if (!empty($lastfmUsers[$i]) && isset($lastfmUsers[$i])) {
                 $recentResponse = Http::get('https://ws.audioscrobbler.com/2.0', [
                     'method' => 'user.getRecentTracks',
                     'api_key' => config('services.lastfm.key'),
@@ -165,15 +168,18 @@ class LastfmController extends Controller
                     'nowplaying' => true,
                     'format' => 'json'
                 ]);
-                $recentTracks = json_decode($recentResponse->body())->recenttracks;
-                array_push($friendsFeed, array(
-                    'user' => $lastfmUsers[$i],
-                    'name' => $users[$i],
-                    'artist' => $recentTracks->track[0]->artist->{'#text'},
-                    'song' => $recentTracks->track[0]->name
-                ));
-            }
 
+                if (isset(json_decode($recentResponse->body())->recenttracks)) {
+                    $recentTracks = json_decode($recentResponse->body())->recenttracks;
+                    array_push($friendsFeed, array(
+                        'user' => $lastfmUsers[$i],
+                        'name' => $users[$i],
+                        'artist' => $recentTracks->track[0]->artist->{'#text'},
+                        'song' => $recentTracks->track[0]->name
+                    ));
+                }
+            }
+        }
         return $friendsFeed;
     }
 }
