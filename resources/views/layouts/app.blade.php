@@ -191,7 +191,7 @@
             document.getElementById("menuToggler").setAttribute("aria-expanded", "true");
         }
     }
-
+    
     window.onload = window.onresize = mobileNav;
 
     //Hides nav on ctrl+q
