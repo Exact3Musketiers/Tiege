@@ -172,12 +172,13 @@ class LastfmController extends Controller
 
                 if (isset(json_decode($recentResponse->body())->recenttracks)) {
                     $recentTracks = json_decode($recentResponse->body())->recenttracks;
-                    array_push($friendsFeed, array(
-                        'user' => $lastfmUsers[$i],
-                        'name' => $users[$i],
-                        'artist' => $recentTracks->track[0]->artist->{'#text'},
-                        'song' => $recentTracks->track[0]->name
-                    ));
+                    if (isset($recentTracks->track[0]))
+                        array_push($friendsFeed, array(
+                            'user' => $lastfmUsers[$i],
+                            'name' => $users[$i],
+                            'artist' => $recentTracks->track[0]->artist->{'#text'},
+                            'song' => $recentTracks->track[0]->name
+                        ));
                 }
             }
         }
