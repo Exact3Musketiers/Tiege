@@ -21,12 +21,9 @@
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
-<div id="app">
-    @auth
+    <div id="app">
         <div class="container-fluid">
             {{--SIDEBAR--}}
-
-
             <div class="row flex-nowrap">
                 <button class="btn btn-primary rounded-circle collapse-sidebar mt-3" id="menuToggler" type="button"
                         data-bs-toggle="collapse"
@@ -46,128 +43,127 @@
                             <div class="profile profile-picture text-center">
 
                                 <div class="text-light fs-1 fw-bold h-50">
-                                    {{ Auth::user()->name }}
+                                    @if(auth()->user() !== null) {{ Auth::user()->name }} @else Gast @endif
                                 </div>
 
                                 <div class="text-muted fs-4 fw-bold">
-                                    @if(Auth::user()->role == 0)
-                                        Admin
+                                    @if(auth()->user() !== null)
+                                        @if(Auth::user()->role == 0)
+                                            Admin
+                                        @else
+                                            Gebruiker
+                                        @endif
                                     @else
-                                        User
+                                        Gebruiker
                                     @endif
                                 </div>
                             </div>
-                            <ul class="list-unstyled ps-0 nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-                                id="profileMenu">
+                            <ul class="list-unstyled ps-0 nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="profileMenu">
                                 <li class="mb-1">
                                     <button class="btn btn-toggle align-items-center rounded collapsed"
-                                            data-bs-toggle="collapse" data-bs-target="#profile-collapse"
-                                            aria-expanded="false" id="options">
+                                        data-bs-toggle="collapse" data-bs-target="#profile-collapse"
+                                        aria-expanded="false" id="options">
                                         <i class="fas fa-cog"></i>
                                         <span class="ms-1">Options</span>
                                     </button>
                                     <div class="collapse" id="profile-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                            <li><a href="{{ route('profile') }}" class="link-dark rounded">Profile</a>
-                                            </li>
-                                            <li><a class="link-dark rounded" href="{{ route('logout') }}"
-                                                   onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                                    {{ __('Logout') }}
-                                                </a>
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                      class="d-none">
-                                                    @csrf
-                                                </form>
-                                            </li>
+                                            @auth
+                                                <li><a href="{{ route('profile') }}" class="link-dark rounded">Profile</a></li>
+                                                <li>
+                                                    <a class="link-dark rounded" href="{{ route('logout') }}"
+                                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                                        {{ __('Logout') }}
+                                                    </a>
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                        class="d-none">
+                                                        @csrf
+                                                    </form>
+                                                </li>
+                                            @endauth
+                                            @guest
+                                                <li><a href="{{ route('login') }}" class="link-dark rounded">Login</a>
+                                            @endguest
                                         </ul>
                                     </div>
                                 </li>
                             </ul>
                         </div>
 
-
                         <div class="card bg-dark mb-auto slide-in-left">
-                            <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-                                id="menu">
-                                @if(Auth::user()->role != 1)
-
+                            <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle align-items-center rounded collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#numbers-collapse"
+                                            aria-expanded="false">
+                                        <i class="far fa-hand-peace"></i>
+                                        <span class="ms-1">Numbers</span>
+                                    </button>
+                                    <div class="collapse" id="numbers-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="numbers">
+                                            <li><a href="{{ route('random.index') }}"
+                                                    class="link-dark rounded">Random</a></li>
+                                            <li><a href="{{ route('currency') }}"
+                                                    class="link-dark rounded">Currency</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle align-items-center rounded collapsed"
+                                            data-bs-toggle="collapse" data-bs-target="#textify-collapse"
+                                            aria-expanded="false">
+                                        <i class="fas fa-font"></i><span
+                                            class="ms-1">Text-ify</span>
+                                    </button>
+                                    <div class="collapse" id="textify-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="textify">
+                                            <li><a href="{{ route('sarcasm') }}"
+                                                    class="link-dark rounded">SaRCasMIfY</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                @auth
                                     <li class="mb-1">
                                         <button class="btn btn-toggle align-items-center rounded collapsed"
-                                                data-bs-toggle="collapse" data-bs-target="#numbers-collapse"
+                                                data-bs-toggle="collapse" data-bs-target="#music-collapse"
                                                 aria-expanded="false">
-                                            <i class="far fa-hand-peace"></i>
-                                            <span class="ms-1">Numbers</span>
+                                            <i class="fas fa-music"></i><span
+                                                class="ms-1">Music</span>
                                         </button>
-                                        <div class="collapse" id="numbers-collapse">
-                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="numbers">
-                                                <li><a href="{{ route('random.index') }}"
-                                                       class="link-dark rounded">Random</a></li>
-                                                <li><a href="{{ route('currency') }}"
-                                                       class="link-dark rounded">Currency</a>
+                                        <div class="collapse" id="music-collapse" id="music">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li><a href="{{ route('lyrics') }}" class="link-dark rounded">Lyrics</a>
+                                                </li>
+                                                <li><a href="{{ route('lastfm') }}" class="link-dark rounded">Lastfm</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
-                                @endif
-                                @if(Auth::user()->role != 1)
-
-                                    <li class="mb-1">
-                                        <button class="btn btn-toggle align-items-center rounded collapsed"
-                                                data-bs-toggle="collapse" data-bs-target="#textify-collapse"
-                                                aria-expanded="false">
-                                            <i class="fas fa-font"></i><span
-                                                class="ms-1">Text-ify</span>
-                                        </button>
-                                        <div class="collapse" id="textify-collapse">
-                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="textify">
-                                                <li><a href="{{ route('sarcasm') }}"
-                                                       class="link-dark rounded">SaRCasMIfY</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                @endif
-                                <li class="mb-1">
-                                    <button class="btn btn-toggle align-items-center rounded collapsed"
-                                            data-bs-toggle="collapse" data-bs-target="#music-collapse"
-                                            aria-expanded="false">
-                                        <i class="fas fa-music"></i><span
-                                            class="ms-1">Music</span>
-                                    </button>
-                                    <div class="collapse" id="music-collapse" id="music">
-                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                            <li><a href="{{ route('lyrics') }}" class="link-dark rounded">Lyrics</a>
-                                            </li>
-                                            <li><a href="{{ route('lastfm') }}" class="link-dark rounded">Lastfm</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
+                                @endauth
                             </ul>
                         </div>
-                        <div
-                            class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2">
-                            <div class="navbar-dark-under pt-3">
-                                <div class="col-12">
-                                    @include('partials.music')
+                        @auth
+                            <div
+                                class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2">
+                                <div class="navbar-dark-under pt-3">
+                                    <div class="col-12">
+                                        @include('partials.music')
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endauth
                     </div>
                 </div>
-                @endauth
                 <div class="col p-0 wrap-col">
                     <main>
                         @yield('content')
                     </main>
                 </div>
-                @auth
             </div>
         </div>
-    @endauth
-
-
-</div>
+    </div>
 </body>
 </html>
 
@@ -191,7 +187,7 @@
             document.getElementById("menuToggler").setAttribute("aria-expanded", "true");
         }
     }
-    
+
     window.onload = window.onresize = mobileNav;
 
     //Hides nav on ctrl+q

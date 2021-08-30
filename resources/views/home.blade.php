@@ -10,7 +10,7 @@
                     <div class="my-3">
                         <div class="card quick-access-box">
                             <div class="card-header h4">
-                                {{ $greeting }} {{ Auth()->user()->name }}!
+                                 {{ $greeting }} @if(auth()->user() !== null) {{ Auth()->user()->name }} @else Gast! @endif
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('home.search') }}" method="POST">
