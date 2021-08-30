@@ -40,7 +40,7 @@ class CurrencyController extends Controller
 
         //https://free.currencyconverterapi.com/
         $convertResponse = Http::get('https://free.currconv.com/api/v7/convert', [
-            'apiKey' => 'f0cb65cb861fcca63810',
+            'apiKey' => config('services.currency.key'),
             'q' => $fromto,
             'compact' => 'y'
         ]);

@@ -1,8 +1,15 @@
-<div id="coinPage" class="jumbotron mx-auto d-grid">
-    <button class="btn btn-primary" id="flipButton" onclick="flipCoin()">Click for heads/tails</button>
-    <div id="hand"></div>
-    <div id="coin"></div>
-    <div id="coinResult" class="display-4 mx-auto"></div>
+<div id="coinPage">
+    <div class="row mt-5">
+        <div class="card bg-dark col-md-12">
+            <div class="card-header">Kop of munt</div>
+            <div class="card-body">
+                <button class="btn btn-primary" id="flipButton" onclick="flipCoin()">Click for heads/tails</button>
+                <div id="hand"></div>
+                <div id="coin"></div>
+                <div id="coinResult" class="display-4 mx-auto"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

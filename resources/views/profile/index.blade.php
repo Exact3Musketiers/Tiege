@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <div>
-        <h1>Profiel</h1>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-            Remove account
-        </button>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="card bg-dark col-md-12">
+                <div class="card-header">Profiel</div>
+                <div class="card-body">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        Remove account
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
