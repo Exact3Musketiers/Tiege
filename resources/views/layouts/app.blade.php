@@ -122,6 +122,7 @@
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="textify">
                                             <li><a href="{{ route('sarcasm') }}"
                                                     class="link-dark rounded">SaRCasMIfY</a></li>
+                                            <li><a href="{{ route('uwu') }}" class="link-dark rounded">UwUify</a></li>
                                         </ul>
                                     </div>
                                 </li>
