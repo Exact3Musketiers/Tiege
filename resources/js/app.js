@@ -1,9 +1,16 @@
+import UwuIfy from './components/Uwu-ify.vue';
+import { createApp } from 'vue'
 require('./bootstrap');
 
-var i = 0;
-counter  = function() {
-    i++;
-    if (i === 10) {
-        document.getElementById('musketier').classList.remove('hidden-input')
-    }
-}
+// var i = 0;
+// counter  = function() {
+//     i++;
+//     if (i === 10) {
+//         document.getElementById('musketier').classList.remove('hidden-input')
+//     }
+// }
+
+let app = createApp({
+    components: { UwuIfy },
+})
+const vm = app.mount('#app')

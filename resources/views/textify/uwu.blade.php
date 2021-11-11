@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row mt-5">
+    {{-- <div class="row mt-5">
         <div class="card bg-dark col-md-12">
             <div class="card-header">UwUify</div>
             <div class="card-body">
@@ -20,10 +20,7 @@
                 <button class="btn btn-primary"">UwUify!</button>
             </div>
         </div>
-    </div>
+    </div> --}}
+    <uwu-ify></uwu-ify>
 </div>
-
-<script>
-
-</script>
 @endsection
