@@ -10,7 +10,7 @@ require('./bootstrap');
 //     }
 // }
 
-let app = createApp({
+createApp({
     components: { UwuIfy },
-})
-const vm = app.mount('#app')
+}).mount('#app')
+
