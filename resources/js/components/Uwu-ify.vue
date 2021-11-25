@@ -37,14 +37,28 @@ export default {
                 .replace(/et/g, 'ewt')
                 .replace(/Et/g, 'Ewt')
                 .replace(/ne/g, 'nye')
-                .replace(/Ne/g, 'Nye');
+                .replace(/Ne/g, 'Nye')
+                .replace(/nu/g, 'nyu')
+                .replace(/Nu/g, 'Nyu')
+                .replace(/ni/g, 'nyi')
+                .replace(/NI/g, 'Nyi')
+                .replace(/haha/g, 'hihi')
+                .replace(/Haha/g, 'Hihi ^-^')
+                .replace(/\!/g, '!!1!')
+                .replace(/\?/g, '?!')
+                .replace(/Ik /g, 'I-Ik UwU ')
+                .replace(/ik /g, 'i-ik ')
+                .replace(/ ik /g, ' i-ik ')
+                .replace(/ Ik /g, ' I-Ik ')
+                .replace(/uh /g, 'u-uh ')
+                .replace(/ uh /g, ' u-uh ');
 
-                console.log(Math.floor(Math.random() * 11));
-                if (Math.floor(Math.random() * 11) === 2) {
-
-                    let place = place = Math.floor(Math.random() * text.length)
-                    text = replaceAt(text, place, text.charAt(place) + '-' + text.charAt(place))
-                }
+                // if (Math.floor(Math.random() * 11) === 2) {
+                //     console.log('yoooo triggerd');
+                //     // text.substring(0,4)+'x'+text.substring(5)
+                //     let place = place = Math.floor(Math.random() * text.length)
+                //     text = this.replaceAt(text, place, text.charAt(place) + '-' + text.charAt(place))
+                // }
 
             return text;
 
