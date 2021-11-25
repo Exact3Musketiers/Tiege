@@ -30,6 +30,7 @@ export default {
 
     computed: {
         textUwuFied: function () {
+            let smileyTextArray = ['UWU', 'OWO', '*aaaargg*', '*wdf!*']
             let text = this.textToUwuIfy.replace(/r|l/g, 'w')
                 .replace(/L|R/g, 'W')
                 .replace(/Na/g, 'Nya')
@@ -53,12 +54,15 @@ export default {
                 .replace(/uh /g, 'u-uh ')
                 .replace(/ uh /g, ' u-uh ');
 
-                // if (Math.floor(Math.random() * 11) === 2) {
-                //     console.log('yoooo triggerd');
-                //     // text.substring(0,4)+'x'+text.substring(5)
-                //     let place = place = Math.floor(Math.random() * text.length)
-                //     text = this.replaceAt(text, place, text.charAt(place) + '-' + text.charAt(place))
-                // }
+            for (var i = 0; i < text.length; i++) {
+                if (text.charAt(i) === '.') {
+                    text = this.replaceAt(text, i, '. ' + smileyTextArray[Math.floor(Math.random() * smileyTextArray.length)])
+                }
+
+                if (text.charAt(i) === ',') {
+                    text = this.replaceAt(text, i, ', ' + smileyTextArray[Math.floor(Math.random() * smileyTextArray.length)])
+                }
+            }
 
             return text;
 
