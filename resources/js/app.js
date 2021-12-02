@@ -12,10 +12,5 @@ require('./bootstrap');
 
 createApp({
     components: { UwuIfy },
-    methods: {
-        saveToClipboard(copyElement) {
-            navigator.clipboard.writeText(copyElement);
-        },
-    }
-}).mount('#app')
+}).mount('#uwu')
 
