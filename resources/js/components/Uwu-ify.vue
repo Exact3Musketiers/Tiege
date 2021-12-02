@@ -11,20 +11,45 @@
                 <div class="input-group mb-3">
                     <textarea class="form-control form-control-lg" id="uwuout" rows="3"
                         placeholder="UwU out" v-model="textUwuFied"></textarea>
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#uwuModel"><i
+                    <button class="btn btn-secondary" type="button" v-on:click="saveToClipboard"><i
                             class="far fa-copy"></i></button>
                 </div>
                 <!-- <button class="btn btn-primary">UwUify!</button> -->
             </div>
         </div>
     </div>
+<div class="alert alert-primary d-flex align-items-center" role="alert" v-if="showNotification">
+    <i class="fs-5 fad fa-copy flex-shrink-0 me-2"></i>
+  <div>
+    Text gekopieewd. *aaaargg* UwU
+  </div>
+</div>
 </template>
 
+<style>
+.xd {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+@keyframes example {
+  0%   {left:0px; top:0px;}
+  25%  {left:200px; top:0px;}
+  50%  {left:200px; top:200px;}
+  75%  {left:0px; top:200px;}
+  100% {left:400px; top:300px;}
+}
+</style>
 <script>
 export default {
     data() {
         return {
             textToUwuIfy: '',
+            showNotification: false,
+            copyElement: '',
         };
     },
 
@@ -73,6 +98,18 @@ export default {
         replaceAt(str,index,chr) {
             if(index > str.length-1) return str;
             return str.substring(0,index) + chr + str.substring(index+1);
+        },
+
+        saveToClipboard() {
+            this.showNotification = true;
+
+            let itemToCopy = document.getElementById("uwuout").value;
+            // copyText.select();
+            // copyText.setSelectionRange(0, 99999);
+            // console.log(copyText.value);
+            // window.navigator.clipboard.writeText(copyText.value);
+
+            this.$parent.saveToClipboard(itemToCopy);
         },
     },
 

@@ -219,8 +219,8 @@
         if (split[3] == "")
             document.getElementById("home").classList.add('active');
         else {
-            document.getElementById(split[3]).parentNode.children[0].classList.add('active');
-            document.getElementById(split[3]).classList.add('show');
+            // document.getElementById(split[3]).parentNode.children[0].classList.add('active');
+            // document.getElementById(split[3]).classList.add('show');
             if (hrefSelector.length > 0)
                 document.getElementById(hrefSelector[0].classList.add('active'));
         }
