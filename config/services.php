@@ -42,5 +42,8 @@ return [
     'lastfm' => [
         'key' => env('AUDIOSCROBBLER_KEY'),
     ],
+    'steam' => [
+        'key' => env('STEAM_KEY'),
+    ],
 
 ];
