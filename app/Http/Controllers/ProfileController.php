@@ -9,56 +9,19 @@ use Illuminate\Support\Facades\Auth;
 class ProfileController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(){
-        return view('profile.index');
-    }
-    public function delete(){
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $profile)
     {
-        //
+        if ($profile->getKey() !== Auth::user()->id)
+        {
+            abort(403);
+        }
+
+        return view('profile.edit', compact('profile'));
     }
 
     /**
@@ -68,9 +31,22 @@ class ProfileController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $profile)
     {
-        //
+        if ($profile->getKey() !== Auth::user()->id)
+        {
+            abort(403);
+        }
+
+        // dd($request);
+
+        $validated = $request->validate([
+            'steamid' => ['required', 'min:3', 'max:255'],
+        ]);
+// dd($profile, $validated);
+
+        $profile->update($validated);
+        return back();
     }
 
     /**
@@ -78,9 +54,14 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(User $profile)
     {
-        User::destroy(Auth::user()->id);
+        if ($profile->getKey() !== Auth::user()->id)
+        {
+            abort(403);
+        }
+
+        $profile->destroy();
         return view('auth.login');
     }
 

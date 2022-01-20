@@ -4,7 +4,29 @@
     <div class="container">
         <div class="row mt-5">
             <div class="card bg-dark col-md-12">
-                <div class="card-header">Profiel</div>
+                <div class="card-header">Voeg Steam toe aan Profiel</div>
+                <hr>
+                <div class="card-body">
+                    @error('form')
+                        @dd($errors)
+                    @enderror
+                    <form action="{{ route('profile.update', $profile) }}" method="post">
+                        @method('patch')
+                        @csrf
+                        <div class="mb-3">
+                            <label for="steamid" class="form-label">Voeg je Steamid toe</label>
+                            <input type="number" class="form-control" name="steamid" value="{{ old('steamid', (isset($profile->steamid)) ? $profile->steamid : '') }}" id="steamid" aria-describedby="steamid" placeholder="bijv.: 1234567890">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sla op</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="card bg-dark col-md-12">
+                <div class="card-header">Profiel Verwijderen</div>
+                <hr>
                 <div class="card-body">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
@@ -26,7 +48,7 @@
                         You will not be able to reverse deleting your account.
                         Are you sure?
                     </div>
-                    <form method="POST" action="{{ route('profile.destroy')}}">
+                    <form method="POST" action="{{ route('profile.destroy', $profile)}}">
                         @csrf
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-danger" typeof="submit">Delete account</button>
