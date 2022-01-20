@@ -17,6 +17,6 @@ class SteamController extends Controller
         {
             dd(Steam::getGames($user));
         }
-        return view('steam.index', compact($user));
+        return view('steam.show', compact($user));
     }
 }
