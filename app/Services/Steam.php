@@ -44,7 +44,7 @@ class Steam
         return $steamResponse->json();
     }
 
-    public static function getGames($user)
+    public static function getSteamData($user)
     {
         return self::getRecentGames($user);
     }
