@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 
 class Steam
 {
-    protected static function getRecentGames($user)
+    public static function getRecentGames($user)
     {
         // Get steam response
         $steamResponse = Http::get('http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/', [
@@ -18,6 +18,8 @@ class Steam
             'steamid' => $user->steamid,
             'format' => 'json'
         ]);
+
+        $games = [];
         if (!empty($steamResponse['response'])) {
             if ($steamResponse['response']['total_count'] > 0) {
                 // select recent game data
@@ -27,22 +29,17 @@ class Steam
                 // Modify array to have correct data
                 array_walk($games, function(&$game) use($unwantedData) {
                     $game = Arr::except($game, $unwantedData);
-                    $game['img_icon_url'] = 'http://media.steampowered.com/steamcommunity/public/images/apps/'.$game['appid'].'/'.$game['img_icon_url'].'.jpg';
-                    $game['img_logo_url'] = 'http://media.steampowered.com/steamcommunity/public/images/apps/'.$game['appid'].'/'.$game['img_logo_url'].'.jpg';
+                    $game['img_icon_url'] = self::createImageURL($game, 'img_icon_url');
+                    $game['img_logo_url'] = self::createImageURL($game, 'img_logo_url');
                     return $game;
                 });
-            } else {
-                $games = 'Er zijn geen recente games gevonden.';
             }
-        } else {
-            $games = 'Privé';
         }
-
 
         return $games;
     }
 
-    protected static function getPlayerSummary($user)
+    public static function getPlayerSummary($user)
     {
         // Get steam response
         $steamResponse = Http::get('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/', [
@@ -70,7 +67,7 @@ class Steam
         return $users;
     }
 
-    protected static function getOwnedGames($user, $startingPlaytime, $endingPlaytime)
+    public static function getOwnedGames($user)
     {
         $steamResponse = Http::get('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/', [
             'key' => config('services.steam.key'),
@@ -78,41 +75,40 @@ class Steam
             'format' => 'json'
         ]);
 
+        $games = [];
         if (!empty($steamResponse['response'])) {
             if ($steamResponse['response']['game_count'] > 0) {
                 // select recent game data
                 $games = $steamResponse['response']['games'];
                 // Select unwanted data
                 $unwantedData = ['playtime_windows_forever', 'playtime_mac_forever', 'playtime_linux_forever'];
-                array_walk($games, function(&$game) use($unwantedData, $startingPlaytime, $endingPlaytime) {
+                array_walk($games, function(&$game) use($unwantedData) {
                     $game = Arr::except($game, $unwantedData);
-                    $game['selected_game'] = false;
-
-                    if ($game['playtime_forever'] >= $startingPlaytime && $game['playtime_forever'] <= $endingPlaytime) {
-                        $game['selected_game'] = true;
-                        dump($game);
-                    }
                     return $game;
                 });
-                die();
-            } else {
-                $games = 'Er zijn geen games gevonden.';
             }
-        } else {
-            $games = 'Privé';
         }
-dd($games);
+
         return $games;
     }
 
-
-    public static function getSteamData($user)
+    public static function getGameInfo($gameid)
     {
-        return self::getOwnedGames($user, 250, 300);
+        $steamResponse = Http::get('http://store.steampowered.com/api/appdetails/', [
+            'appids' => $gameid,
+            'format' => 'json',
+        ]);
+
+        return $steamResponse->json();
     }
 
     public static function minutesToHours(int $minutes)
     {
         return floor($minutes / 60).' uur '.($minutes % 60).' min ';
+    }
+
+    public static function createImageURL($game, $type)
+    {
+        return 'http://media.steampowered.com/steamcommunity/public/images/apps/'.$game['appid'].'/'.$game[$type].'.jpg';
     }
 }
