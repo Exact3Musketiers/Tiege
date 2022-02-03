@@ -111,4 +111,26 @@ class Steam
     {
         return 'http://media.steampowered.com/steamcommunity/public/images/apps/'.$game['appid'].'/'.$game[$type].'.jpg';
     }
+
+    //! wherebetween laravel collection
+    public static function getGamesToPlay($games, $startingPlaytime = 15, $endingPlaytime = 60)
+    {
+        $selectedGames = [];
+        for ($i=0; $i < count($games); $i++) {
+            if ($games[$i]['playtime_forever'] >= $startingPlaytime && $games[$i]['playtime_forever'] <= $endingPlaytime) {
+                $selectedGames[$i] = $games[$i];
+            }
+        }
+
+        return $selectedGames;
+    }
+
+    public static function selectGame($user)
+    {
+        $randomGame = collect(self::getGamesToPlay(self::getOwnedGames($user), 15, 60))->random();
+        $randomGameInfo = self::getGameInfo($randomGame['appid']);
+        $randomGameInfo[$randomGame['appid']]['data']['playtime_forever'] = $randomGame['playtime_forever'];
+
+        return $randomGameInfo;
+    }
 }

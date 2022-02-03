@@ -4,8 +4,8 @@
     <div class="container">
         <div class="row pt-5">
             <div class="card bg-dark col-md-12">
-                <p>joooo</p>
-                <img src="http://media.steampowered.com/steamcommunity/public/images/apps/{appid}/{hash}.jpg" alt="">
+                <p>Hier is de game die je moet gaan spelen:</p>
+                @dump($selectedGame)
             </div>
         </div>
     </div>
