@@ -6,6 +6,9 @@
             <div class="card bg-dark col-md-12">
                 <p>Hier is de game die je moet gaan spelen:</p>
                 @dump($selectedGame)
+                @dump($recentGames)
+                @dump($playerSummary)
+                @dump($ownedGames)
             </div>
         </div>
     </div>
