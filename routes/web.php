@@ -26,6 +26,7 @@ Route::resource('/numbers/random', App\Http\Controllers\RandomController::class)
 Route::post('/currencyFetch', [App\Http\Controllers\CurrencyController::class, 'fetch'])->name('currency.fetch');
 
 Route::get('/s', [App\Http\Controllers\SarcasmController::class, 'index'])->name('sarcasm');
+Route::get('/UwU', [App\Http\Controllers\PagesController::class, 'uwu'])->name('uwu');
 
 Route::middleware('auth')->group(function () {
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');

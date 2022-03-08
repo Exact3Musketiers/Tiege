@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,17 +19,17 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
+
 <body>
     <div id="app">
         <div class="container-fluid">
             {{--SIDEBAR--}}
             <div class="row flex-nowrap">
                 <button class="btn btn-primary rounded-circle collapse-sidebar mt-3" id="menuToggler" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseSidebar" aria-expanded="true" aria-controls="collapseSidebar"
-                        onclick="toggleMenu()">
+                    data-bs-toggle="collapse" data-bs-target="#collapseSidebar" aria-expanded="true"
+                    aria-controls="collapseSidebar" onclick="toggleMenu()">
                     <i class="fas"></i>
                 </button>
                 <div class="sidebar-behind collapse show mt-5" id="collapseSidebar">
@@ -48,17 +49,18 @@
 
                                 <div class="text-muted fs-4 fw-bold">
                                     @if(auth()->user() !== null)
-                                        @if(Auth::user()->role == 0)
-                                            Admin
-                                        @else
-                                            Gebruiker
-                                        @endif
+                                    @if(Auth::user()->role == 0)
+                                    Admin
                                     @else
-                                        Gebruiker
+                                    Gebruiker
+                                    @endif
+                                    @else
+                                    Gebruiker
                                     @endif
                                 </div>
                             </div>
-                            <ul class="list-unstyled ps-0 nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="profileMenu">
+                            <ul class="list-unstyled ps-0 nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                                id="profileMenu">
                                 <li class="mb-1">
                                     <button class="btn btn-toggle align-items-center rounded collapsed"
                                         data-bs-toggle="collapse" data-bs-target="#profile-collapse"
@@ -74,17 +76,17 @@
                                                     <a class="link-dark rounded" href="{{ route('logout') }}"
                                                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
-                                                        {{ __('Logout') }}
-                                                    </a>
-                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                        class="d-none">
-                                                        @csrf
-                                                    </form>
-                                                </li>
+                                                    {{ __('Logout') }}
+                                                </a>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                    class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </li>
                                             @endauth
                                             @guest
-                                                <li><a href="{{ route('login') }}" class="link-dark rounded">Login</a>
-                                            @endguest
+                                            <li><a href="{{ route('login') }}" class="link-dark rounded">Login</a>
+                                                @endguest
                                         </ul>
                                     </div>
                                 </li>
@@ -92,11 +94,12 @@
                         </div>
 
                         <div class="card bg-dark mb-auto slide-in-left">
-                            <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                            <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                                id="menu">
                                 <li class="mb-1">
                                     <button class="btn btn-toggle align-items-center rounded collapsed"
-                                            data-bs-toggle="collapse" data-bs-target="#numbers-collapse"
-                                            aria-expanded="false">
+                                        data-bs-toggle="collapse" data-bs-target="#numbers-collapse"
+                                        aria-expanded="false">
                                         <i class="far fa-hand-peace"></i>
                                         <span class="ms-1">Numbers</span>
                                     </button>
@@ -104,55 +107,53 @@
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="numbers">
                                             <li><a href="{{ route('random.index') }}"
                                                     class="link-dark rounded">Random</a></li>
-                                            <li><a href="{{ route('currency') }}"
-                                                    class="link-dark rounded">Currency</a>
+                                            <li><a href="{{ route('currency') }}" class="link-dark rounded">Currency</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
                                 <li class="mb-1">
                                     <button class="btn btn-toggle align-items-center rounded collapsed"
-                                            data-bs-toggle="collapse" data-bs-target="#textify-collapse"
-                                            aria-expanded="false">
-                                        <i class="fas fa-font"></i><span
-                                            class="ms-1">Text-ify</span>
+                                        data-bs-toggle="collapse" data-bs-target="#textify-collapse"
+                                        aria-expanded="false">
+                                        <i class="fas fa-font"></i><span class="ms-1">Text-ify</span>
                                     </button>
                                     <div class="collapse" id="textify-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="textify">
                                             <li><a href="{{ route('sarcasm') }}"
                                                     class="link-dark rounded">SaRCasMIfY</a></li>
+                                            <li><a href="{{ route('uwu') }}" class="link-dark rounded">UwUify</a></li>
                                         </ul>
                                     </div>
                                 </li>
                                 @auth
-                                    <li class="mb-1">
-                                        <button class="btn btn-toggle align-items-center rounded collapsed"
-                                                data-bs-toggle="collapse" data-bs-target="#music-collapse"
-                                                aria-expanded="false">
-                                            <i class="fas fa-music"></i><span
-                                                class="ms-1">Music</span>
-                                        </button>
-                                        <div class="collapse" id="music-collapse" id="music">
-                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                                <li><a href="{{ route('lyrics') }}" class="link-dark rounded">Lyrics</a>
-                                                </li>
-                                                <li><a href="{{ route('lastfm') }}" class="link-dark rounded">Lastfm</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle align-items-center rounded collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#music-collapse"
+                                        aria-expanded="false">
+                                        <i class="fas fa-music"></i><span class="ms-1">Music</span>
+                                    </button>
+                                    <div class="collapse" id="music-collapse" id="music">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                            <li><a href="{{ route('lyrics') }}" class="link-dark rounded">Lyrics</a>
+                                            </li>
+                                            <li><a href="{{ route('lastfm') }}" class="link-dark rounded">Lastfm</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                                 @endauth
                             </ul>
                         </div>
                         @auth
-                            <div
-                                class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2">
-                                <div class="navbar-dark-under pt-3">
-                                    <div class="col-12">
-                                        @include('partials.music')
-                                    </div>
+                        <div
+                            class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2">
+                            <div class="navbar-dark-under pt-3">
+                                <div class="col-12">
+                                    @include('partials.music')
                                 </div>
                             </div>
+                        </div>
                         @endauth
                     </div>
                 </div>
@@ -165,6 +166,7 @@
         </div>
     </div>
 </body>
+
 </html>
 
 <script>
@@ -217,8 +219,8 @@
         if (split[3] == "")
             document.getElementById("home").classList.add('active');
         else {
-            document.getElementById(split[3]).parentNode.children[0].classList.add('active');
-            document.getElementById(split[3]).classList.add('show');
+            // document.getElementById(split[3]).parentNode.children[0].classList.add('active');
+            // document.getElementById(split[3]).classList.add('show');
             if (hrefSelector.length > 0)
                 document.getElementById(hrefSelector[0].classList.add('active'));
         }
@@ -239,4 +241,3 @@
 
     });
 </script>
-
