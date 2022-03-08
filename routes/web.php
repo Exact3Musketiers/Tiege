@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
     Route::get('/music/lastfm/compare', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm.compare');
     Route::get('/user/{user}/steam', [App\Http\Controllers\SteamController::class, 'show'])->name('steam.show');
+    Route::get('/user/{user}/steam/reset', [App\Http\Controllers\SteamController::class, 'getNewGame'])->name('steam.getNewGame');
 
     Route::resource('profile', App\Http\Controllers\ProfileController::class)->only(['edit', 'update', 'destroy']);
 

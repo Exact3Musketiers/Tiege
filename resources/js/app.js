@@ -6,5 +6,3 @@ require('./bootstrap');
 createApp({
     components: { UwuIfy },
 }).mount('#uwu')
-
-

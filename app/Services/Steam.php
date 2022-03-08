@@ -135,9 +135,9 @@ class Steam
         return $selectedGames;
     }
 
-    public static function selectGame($user, $ownedGames)
+    public static function selectGame($user, $ownedGames, $min, $max)
     {
-        $randomGame = collect(self::getGamesToPlay($ownedGames, 15, 60))->random();
+        $randomGame = collect(self::getGamesToPlay($ownedGames, $min, $max))->random();
 // dd($randomGame);
         // $randomGameInfo = self::getGameInfo($randomGame['appid']);
         // $randomGameInfo[$randomGame['appid']]['data']['playtime_forever'] = $randomGame['playtime_forever'];

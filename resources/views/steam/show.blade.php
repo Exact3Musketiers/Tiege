@@ -29,7 +29,6 @@
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{ $percentagePlayed }}%" aria-valuenow="{{ $percentagePlayed }}" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                {{-- @dump($playerSummary) --}}
                             </div>
                         </div>
                     </div>
@@ -40,13 +39,22 @@
                                 <img src="{{ $selectedGameInfo['header_image'] }}" class="img-fluid w-100 rounded-start" alt="...">
                         </div>
                         <div class="col-md-8">
-                            <div class="card-body">
+                            <div class="card-body pb-0">
                                 <h5 class="card-title">{{ $selectedGameInfo['name'] }} | speeltijd: {{ $selectedGameInfo['playtime_forever'] }}</h5>
                                 <p class="card-text mb-0"> {{ $selectedGameInfo['short_description'] }} </p>
-                                {{-- @dump($selectedGameInfo) --}}
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-primary w-100">Geef me een ander spel</button>
+                        <Submit-button></Submit-button>
+                        <form action="{{ route('steam.getNewGame', $user) }}" class="p-3">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary border-primary">Tussen de</span>
+                                <input type="number" name="min" class="form-control" placeholder="Minimum minuten gespeeld" aria-label="Username" value="{{ old('min') ?? cache('user.'.$user->getKey().'.minutes', ['min' => null])['min'] }}">
+                                <span class="input-group-text bg-primary border-primary">en de</span>
+                                <input type="number" name="max" class="form-control" placeholder="Maximum minuten gespeeld" aria-label="Server" value="{{ old('max') ?? cache('user.'.$user->getKey().'.minutes', ['max' => null])['max'] }}">
+                                <span class="input-group-text bg-primary border-primary">minuten</span>
+                              </div>
+                            <button type="submit" class="btn btn-outline-primary w-100">Geef me een ander spel</button>
+                        </form>
                     </div>
                 </div>
 
