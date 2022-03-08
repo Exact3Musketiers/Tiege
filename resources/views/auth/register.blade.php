@@ -98,4 +98,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    var i = 0;
+    function counter() {
+        i++;
+        if (i === 10) {
+            document.getElementById('musketier').classList.remove('hidden-input')
+        }
+    }
+</script>
 @endsection
