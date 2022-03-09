@@ -30,7 +30,7 @@ class Steam
                 array_walk($games, function(&$game) use($unwantedData) {
                     $game = Arr::except($game, $unwantedData);
                     $game['img_icon_url'] = self::createImageURL($game, 'img_icon_url');
-                    $game['img_logo_url'] = self::createImageURL($game, 'img_logo_url');
+                    $game['img_logo_url'] = 'https://cdn.cloudflare.steamstatic.com/steam/apps/'.$game['appid'].'/header.jpg';
                     return $game;
                 });
             }
@@ -89,7 +89,7 @@ class Steam
                 });
             }
         }
-// dd($games);
+
         return $games;
     }
 
@@ -119,7 +119,11 @@ class Steam
 
     public static function createImageURL($game, $type)
     {
-        return 'http://media.steampowered.com/steamcommunity/public/images/apps/'.$game['appid'].'/'.$game[$type].'.jpg';
+        $image = '';
+        if (array_key_exists($type, $game)) {
+            $image = 'http://media.steampowered.com/steamcommunity/public/images/apps/'.$game['appid'].'/'.$game[$type].'.jpg';
+        }
+        return $image;
     }
 
     //! wherebetween laravel collection
@@ -137,10 +141,11 @@ class Steam
 
     public static function selectGame($user, $ownedGames, $min, $max)
     {
-        $randomGame = collect(self::getGamesToPlay($ownedGames, $min, $max))->random();
-// dd($randomGame);
-        // $randomGameInfo = self::getGameInfo($randomGame['appid']);
-        // $randomGameInfo[$randomGame['appid']]['data']['playtime_forever'] = $randomGame['playtime_forever'];
+        $gamesToPlay = self::getGamesToPlay($ownedGames, $min, $max);
+        $randomGame = [];
+        if ($gamesToPlay) {
+            $randomGame = collect($gamesToPlay)->random();
+        }
 
         return $randomGame;
     }
