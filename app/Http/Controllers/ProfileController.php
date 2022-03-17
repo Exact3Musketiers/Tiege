@@ -61,7 +61,7 @@ class ProfileController extends Controller
             abort(403);
         }
 
-        $profile->destroy();
+        $profile->delete();
         return view('auth.login');
     }
 
