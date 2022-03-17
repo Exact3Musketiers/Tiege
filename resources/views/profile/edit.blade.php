@@ -8,7 +8,7 @@
                 <hr>
                 <div class="card-body">
                     @error('form')
-                        @dd($errors)
+                        {{-- @dd($errors) --}}
                     @enderror
                     <form action="{{ route('profile.update', $profile) }}" method="post">
                         @method('patch')
@@ -49,6 +49,7 @@
                         Are you sure?
                     </div>
                     <form method="POST" action="{{ route('profile.destroy', $profile)}}">
+                        @method('DELETE')
                         @csrf
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-danger" typeof="submit">Delete account</button>
