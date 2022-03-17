@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Arr;
 
 use App\Services\Steam;
 use App\Models\User;
+use App\Models\SteamReview;
 
 
 class SteamController extends Controller
@@ -19,8 +21,41 @@ class SteamController extends Controller
         return view('steam.index', compact('users'));
     }
 
+    public function store(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'review' => ['required', 'string']
+        ]);
+
+        $wantedData = ['steam_appid', 'name', 'playtime_forever'];
+        $steam_data = Arr::only(cache('user.'.$user->getKey().'.selectedGameInfo'), $wantedData);
+        $user_id = ['user_id' => $user->getKey()];
+
+        SteamReview::create($validated + $steam_data + $user_id);
+
+        return back();
+    }
+
+    public function update(Request $request, User $user, SteamReview $steamReview)
+    {
+        $validated = $request->validate([
+            'review' => ['required', 'string']
+        ]);
+
+        $steamReview->update($validated);
+
+        return back();
+    }
+
     public function show(Request $request, User $user)
     {
+        $selectedGameInfo = [];
+        $recentGames = [];
+        $playerSummary = [];
+        $ownedGames = [];
+        $percentagePlayed = 0;
+        $steamReview = new SteamReview;
+
         if(isset($user->steamid))
         {
             if (request()->has('refresh')) {
@@ -35,19 +70,19 @@ class SteamController extends Controller
             $recentGames = Cache::remember('user.'.$user->getKey().'.recentGames', 3600, function () use($user) {
                 return collect(Steam::getRecentGames($user));
             });
-            $playerSummary = Cache::remember('user.'.$user->getKey().'.playerSummary', 3600, function () use($user) {
+            $playerSummary = Cache::remember('user.'.$user->getKey().'.playerSummary', 86500, function () use($user) {
                 return collect(Steam::getPlayerSummary($user)[0]);
             });
             $ownedGames = Cache::remember('user.'.$user->getKey().'.ownedGames', 3600, function () use($user) {
                 return collect(Steam::getOwnedGames($user));
             });
-            $selectedGame = Cache::remember('user.'.$user->getKey().'.selectedGame', 3600, function () use($user, $ownedGames) {
+            $selectedGame = Cache::remember('user.'.$user->getKey().'.selectedGame', 86500, function () use($user, $ownedGames) {
                 return Steam::selectGame($user, $ownedGames, 0, 60);
             });
-            $selectedGameInfo = [];
-            $percentagePlayed = 0;
+
+
             if (!empty($selectedGame)) {
-                $selectedGameInfo = Cache::remember('user.'.$user->getKey().'.selectedGameInfo', 3600, function () use($selectedGame) {
+                $selectedGameInfo = Cache::remember('user.'.$user->getKey().'.selectedGameInfo', 86500, function () use($selectedGame) {
                     return Steam::getGameInfo($selectedGame);
                 });
                 $percentagePlayed = Cache::remember('user.'.$user->getKey().'.percentagePlayed', 3600, function () use($ownedGames) {
@@ -55,6 +90,7 @@ class SteamController extends Controller
                 });
             }
 
+            $steamReview = SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->first();
             // dd($selectedGameInfo);
 
             // if (is_null($request->cookie('selectedGame'))) {
@@ -63,7 +99,7 @@ class SteamController extends Controller
 
             // dd($request->cookie('selectedGame'));
         }
-        return view('steam.show', compact('user', 'selectedGameInfo', 'recentGames', 'playerSummary', 'ownedGames', 'percentagePlayed'));
+        return view('steam.show', compact('user', 'selectedGameInfo', 'recentGames', 'playerSummary', 'ownedGames', 'percentagePlayed', 'steamReview'));
     }
 
     public function getNewGame(Request $request, User $user)
@@ -73,7 +109,7 @@ class SteamController extends Controller
             'max' => ['gte:min']
         ]);
 
-        $ownedGames = Cache::remember('user.'.$user->getKey().'.ownedGames', 3600, function () use($user) {
+        $ownedGames = Cache::remember('user.'.$user->getKey().'.ownedGames', 86500, function () use($user) {
             return collect(Steam::getOwnedGames($user));
         });
 
@@ -84,17 +120,17 @@ class SteamController extends Controller
         $min = $request->min;
         $max = $request->max;
 
-        Cache::remember('user.'.$user->getKey().'.minutes', 3600, function () use($min, $max) {
+        Cache::remember('user.'.$user->getKey().'.minutes', 86500, function () use($min, $max) {
             return ['min' => $min, 'max' => $max];
         });
 
         $selectedGameInfo = [];
 
-        $selectedGame = Cache::remember('user.'.$user->getKey().'.selectedGame', 3600, function () use($user, $ownedGames, $validated) {
+        $selectedGame = Cache::remember('user.'.$user->getKey().'.selectedGame', 86500, function () use($user, $ownedGames, $validated) {
             return Steam::selectGame($user, $ownedGames, $validated['min'], $validated['max']);
         });
         if (!empty($selectedGame)) {
-            $selectedGameInfo = Cache::remember('user.'.$user->getKey().'.selectedGameInfo', 3600, function () use($selectedGame) {
+            $selectedGameInfo = Cache::remember('user.'.$user->getKey().'.selectedGameInfo', 86500, function () use($selectedGame) {
                 return Steam::getGameInfo($selectedGame);
             });
         }

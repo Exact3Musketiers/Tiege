@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@if (isset($user->steamid))
 <div style="
     @if (!empty($selectedGameInfo['background']))
         background-image:url('{{ $selectedGameInfo['background'] }}');
@@ -50,7 +51,7 @@
                                     <h5 class="card-title text-center">Dit spel heeft geen naam</h5>
                                 @endif
                                 @if (isset($selectedGameInfo['short_description']))
-                                    <p class="card-title">{{ $selectedGameInfo['short_description'] }}}</p>
+                                    <p class="card-title">{{ $selectedGameInfo['short_description'] }}</p>
                                 @else
                                     <p class="card-title">Dit spel heeft geen beschrijving</p>
                                 @endif
@@ -68,7 +69,6 @@
                         </form>
                     </div>
                 </div>
-
                 <div class="card text-white bg-dark mt-4">
                     <div class="row g-0">
 
@@ -76,11 +76,26 @@
                             @if (!isset($selectedGameInfo['name']) || $user->getKey() !== Auth()->user()->id)
                             <h5 class="card-title">Voor dit spel kan je geen feedback geven</h5>
                             @else
-                                <div class="mb-3">
-                                    <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
-                                    <textarea class="form-control" name="feedback" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}..."></textarea>
-                                </div>
-                                <button class="btn btn-outline-primary w-100">Verstuur</button>
+                                @if (isset($steamReview))
+                                    <form action="{{ route('steam.update', [$user, $steamReview]) }}" method="post">
+                                        @method('PATCH')
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
+                                            <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}...">{{ $steamReview->review }}</textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-primary w-100">update</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('steam.store', $user) }}" method="post">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
+                                            <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}..."></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-primary w-100">Verstuur</button>
+                                    </form>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -110,4 +125,16 @@
         </div>
     </div>
 </div>
+@else
+<div class="container pt-5" >
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card text-white bg-dark">
+               <h1>Check of je je steam account hebt gekoppeld</h1>
+               <a href="{{ route('profile.edit', $user) }}">Check het hier</a>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 @endsection
