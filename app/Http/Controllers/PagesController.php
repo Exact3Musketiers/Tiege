@@ -10,4 +10,9 @@ class PagesController extends Controller
     {
         return view('textify.uwu');
     }
+
+    public function policy()
+    {
+        return view('policy');
+    }
 }

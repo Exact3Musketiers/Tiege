@@ -167,6 +167,9 @@
                             </div>
                         </div>
                         @endauth
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ">
+                            <li><a href="{{ route('policy') }}" class="link-dark rounded text-light">policy</a></li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col p-0 wrap-col">

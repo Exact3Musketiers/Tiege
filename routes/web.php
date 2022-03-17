@@ -19,6 +19,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::post('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('home.search');
 
 Route::get('/numbers/currency', [App\Http\Controllers\CurrencyController::class, 'index'])->name('currency');
+Route::get('/policy', [App\Http\Controllers\PagesController::class, 'policy'])->name('policy');
 
 
 Route::resource('/numbers/random', App\Http\Controllers\RandomController::class);
