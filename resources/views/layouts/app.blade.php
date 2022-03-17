@@ -126,6 +126,18 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <li class="mb-1">
+                                    <button class="btn btn-toggle align-items-center rounded collapsed"
+                                        data-bs-toggle="collapse" data-bs-target="#game-collapse"
+                                        aria-expanded="false">
+                                        <i class="fas fa-gamepad"></i><span class="ms-1">Games</span>
+                                    </button>
+                                    <div class="collapse" id="game-collapse">
+                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="game">
+                                            <li><a href="{{ route('steam.index') }}" class="link-dark rounded">Steam</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
                                 @auth
                                 <li class="mb-1">
                                     <button class="btn btn-toggle align-items-center rounded collapsed"

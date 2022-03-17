@@ -32,8 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
     Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
     Route::get('/music/lastfm/compare', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm.compare');
-    Route::get('/user/{user}/steam', [App\Http\Controllers\SteamController::class, 'show'])->name('steam.show');
-    Route::get('/user/{user}/steam/reset', [App\Http\Controllers\SteamController::class, 'getNewGame'])->name('steam.getNewGame');
+    Route::get('/steam', [App\Http\Controllers\SteamController::class, 'index'])->name('steam.index');
+    Route::get('steam/user/{user}', [App\Http\Controllers\SteamController::class, 'show'])->name('steam.show');
+    Route::get('steam/user/{user}/store', [App\Http\Controllers\SteamController::class, 'show'])->name('steam.store');
+    Route::get('steam/user/{user}/reset', [App\Http\Controllers\SteamController::class, 'getNewGame'])->name('steam.getNewGame');
 
     Route::resource('profile', App\Http\Controllers\ProfileController::class)->only(['edit', 'update', 'destroy']);
 

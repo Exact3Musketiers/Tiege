@@ -13,6 +13,12 @@ use App\Models\User;
 
 class SteamController extends Controller
 {
+    public function index()
+    {
+        $users = User::whereNotNull('steamid')->get();
+        return view('steam.index', compact('users'));
+    }
+
     public function show(Request $request, User $user)
     {
         if(isset($user->steamid))
