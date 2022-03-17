@@ -389,4 +389,50 @@ select, input {
     }
 }
 
+.hidden-icon {
+    transform: translateX(-11.5px);
+
+    .icon {
+        opacity: 0;
+        transform: translateX(0);
+        animation-name: fadeOutPlay;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in;
+        animation-duration: 330ms;
+        padding-right: 5px;
+    }
+}
+.hidden-icon:hover {
+    .icon {
+        opacity: 1;
+        transform: translateX(0);
+        animation-name: fadeInPlay;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in;
+        animation-duration: 330ms;
+    }
+}
+
+
+@keyframes fadeInPlay {
+	0% {
+		opacity: 0;
+        transform: translateX(-10px);
+	}
+	100% {
+		opacity: 1;
+        transform: translateX(0);
+	}
+}
+@keyframes fadeOutPlay {
+	0% {
+		opacity: 1;
+        transform: translateX(0px);
+	}
+	100% {
+		opacity: 0;
+        transform: translateX(-10px);
+	}
+}
+
 
