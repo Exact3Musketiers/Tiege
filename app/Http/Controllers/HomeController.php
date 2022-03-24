@@ -36,7 +36,8 @@ class HomeController extends Controller
         $morning = Carbon::now()->isBetween($six,  $twelve);
         $afternoon = Carbon::now()->isBetween($twelve,  $eighteen);
         $evening = Carbon::now()->isBetween($eighteen,  $zero);
-        $night = Carbon::now()->between($zero,  $six);
+        $night = Carbon::now()->isBetween($twelve,  $eighteen);
+
         $daypart = '';
         // Get current daypart
         if ($morning === true) {
