@@ -33,7 +33,7 @@
                                 <p>Handige spulletjes</p>
                                 <a href="https://gmail.com"><i
                                         class="quick-access-logo pe-4 fas fa-envelope"></i></a>
-                                <a href="https://translate.google.com"><i
+                                <a href="https://deepl.com"><i
                                         class="quick-access-logo pe-4 fas fa-language"></i></a>
                                 <a href="https://maps.google.com"><i
                                         class="quick-access-logo pe-4 fas fa-globe-europe"></i></a>

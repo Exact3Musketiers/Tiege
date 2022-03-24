@@ -73,30 +73,35 @@
                     <div class="row g-0">
 
                         <div class="card-body m-0">
-                            @if (!isset($selectedGameInfo['name']) || $user->getKey() !== Auth()->user()->id)
-                            <h5 class="card-title">Voor dit spel kan je geen feedback geven</h5>
-                            @else
-                                @if (isset($steamReview))
-                                    <form action="{{ route('steam.update', [$user, $steamReview]) }}" method="post">
-                                        @method('PATCH')
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
-                                            <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}...">{{ $steamReview->review }}</textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-outline-primary w-100">update</button>
-                                    </form>
+                            @auth
+                                @if (!isset($selectedGameInfo['name']) || $user->getKey() !== Auth()->user()->id)
+                                    <h5 class="card-title">Voor dit spel kan je geen feedback geven</h5>
                                 @else
-                                    <form action="{{ route('steam.store', $user) }}" method="post">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
-                                            <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}..."></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-outline-primary w-100">Verstuur</button>
-                                    </form>
+                                    @if (isset($steamReview))
+                                        <form action="{{ route('steam.update', [$user, $steamReview]) }}" method="post">
+                                            @method('PATCH')
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
+                                                <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}...">{{ $steamReview->review }}</textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-primary w-100">update</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('steam.store', $user) }}" method="post">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
+                                                <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}..."></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-primary w-100">Verstuur</button>
+                                        </form>
+                                    @endif
                                 @endif
-                            @endif
+                            @endauth
+                            @guest
+                                <h5 class="card-title">Je kan alleen feedback geven als je bent ingelogd.</h5>
+                            @endguest
                         </div>
                     </div>
                 </div>
@@ -130,8 +135,8 @@
     <div class="row">
         <div class="col-lg-8">
             <div class="card text-white bg-dark">
-               <h1>Check of je je steam account hebt gekoppeld</h1>
-               <a href="{{ route('profile.edit', $user) }}">Check het hier</a>
+                <h1>Check of je je steam account hebt gekoppeld</h1>
+                <a href="{{ route('profile.edit', $user) }}">Check het hier</a>
             </div>
         </div>
     </div>
