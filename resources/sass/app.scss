@@ -389,6 +389,12 @@ select, input {
     }
 }
 
+.list-group {
+    a:hover {
+        color: $white;
+    }
+}
+
 .hidden-icon {
     transform: translateX(-11.5px);
 
