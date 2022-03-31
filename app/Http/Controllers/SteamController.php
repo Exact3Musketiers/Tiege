@@ -90,9 +90,9 @@ class SteamController extends Controller
                 });
             }
 
-            $steamReview = [];
+            $steamReview = new SteamReview;
             if (array_key_exists('appid', cache('user.'.$user->getKey().'.selectedGame'))) {
-                SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->first();
+                $steamReview = SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->first();
             }
         }
         return view('steam.show', compact('user', 'selectedGameInfo', 'recentGames', 'playerSummary', 'ownedGames', 'percentagePlayed', 'steamReview'));
