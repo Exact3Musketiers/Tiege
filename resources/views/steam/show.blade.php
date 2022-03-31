@@ -77,7 +77,7 @@
                                 @if (!isset($selectedGameInfo['name']) || $user->getKey() !== Auth()->user()->id)
                                     <h5 class="card-title">Voor dit spel kan je geen feedback geven</h5>
                                 @else
-                                    @if ($steamReview->count() > 0)
+                                    @if (isset($steamReview))
                                         <form action="{{ route('steam.update', [$user, $steamReview]) }}" method="post">
                                             @method('PATCH')
                                             @csrf
