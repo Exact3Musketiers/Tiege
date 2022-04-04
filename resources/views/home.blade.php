@@ -65,8 +65,9 @@
 
                                     @endforeach
                                     <div class="m-0">
-                                            <span class="float-start"><a href="#"
-                                                                         class="text-start">Lees meer</a></span>
+                                        <span class="float-start">
+                                            <a href="#" class="text-start">Lees meer</a>
+                                        </span>
                                         <span class="float-end">Geüpdatet: {{ $news['updatedAt'] }}</span>
                                     </div>
                                 @endif
@@ -98,7 +99,19 @@
                             @endif
                         </div>
                     </div>
-                    <div class="card quick-access-box mb-3">
+
+                    <div class="p-0 m-0 bg-white">
+                        <div class="card bg-light text-dark mb-3">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ $steamReview->steam_appid }}/header.jpg" class="card-img light-img" alt="{{ $steamReview->name }}">
+                            <div class="card-img-overlay">
+                                <strong><h5 class="card-title">{{ $steamReview->user->name }} vindt dit van <em>{{ $steamReview->name }}</em></h5></strong>
+                                <p class="card-text">{{ $steamReview->review }}</p>
+                                <p class="card-footer text-center">{{ $steamReview->playtime_forever }} Gespeeld</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="card quick-access-box mb-3">
                         <div class="card-header h4">
                             Meme of the day
                         </div>
@@ -106,7 +119,7 @@
                             <img src="{{ asset("images/sarcasm.jpg" )}}" class="card-img rounded" alt="...">
 
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
 

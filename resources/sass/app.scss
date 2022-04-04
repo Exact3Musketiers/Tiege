@@ -419,6 +419,10 @@ select, input {
     }
 }
 
+.light-img {
+    filter: opacity(0.1);
+}
+
 
 @keyframes fadeInPlay {
 	0% {

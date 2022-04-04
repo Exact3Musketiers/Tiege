@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
+use App\Models\SteamReview;
+
 class HomeController extends Controller
 {
     /**
@@ -77,8 +79,11 @@ class HomeController extends Controller
         // Get news
         $news = $this->readNews(6);
 
+        $steamReview = SteamReview::all()->random(1)->first();
+        $steamReview->load('user');
+
         // Return with greeting and weather
-        return view('home', compact('greeting', 'weather', 'news'));
+        return view('home', compact('greeting', 'weather', 'news', 'steamReview'));
     }
 
     /**
