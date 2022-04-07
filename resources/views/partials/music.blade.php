@@ -12,7 +12,7 @@
             <hr>
         @endif
     @endif
-    <h4>Friendsfeed:</h4>
+    {{-- <h4>Friendsfeed:</h4>
     <hr>
     @foreach($musicFeed['friendsTracks'] as $friendMusic)
         <div class="row mb-lg-2">
@@ -29,7 +29,7 @@
                 </div>
             @endif
         </div>
-    @endforeach
+    @endforeach --}}
 </div>
 
 
