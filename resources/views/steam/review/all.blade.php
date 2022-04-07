@@ -38,13 +38,15 @@
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">{{ $review->playtime_forever }} Gespeeld
-                            @if ($review->user->getKey() === auth()->user()->getKey())
-                                <span class="float-end">
-                                    <a class="" href="{{ route('steam.review.edit', [auth()->user()->getKey(), $review]) }}">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                </span>
-                            @endif
+                            @auth
+                                @if ($review->user->getKey() === auth()->user()->getKey())
+                                    <span class="float-end">
+                                        <a class="" href="{{ route('steam.review.edit', [auth()->user()->getKey(), $review]) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </span>
+                                @endif
+                            @endauth
                         </small>
                     </div>
                 </div>
