@@ -38,6 +38,10 @@ class SteamReviewController extends Controller
 
     public function store(Request $request, User $user)
     {
+        if ($user->getKey() !== auth()->user()->getKey()) {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'review' => ['required', 'string', 'min:3']
         ]);
@@ -54,6 +58,10 @@ class SteamReviewController extends Controller
 
     public function update(Request $request, User $user, SteamReview $steamReview)
     {
+        if ($user->getKey() !== auth()->user()->getKey()) {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'review' => ['required', 'string', 'min:3']
         ]);
