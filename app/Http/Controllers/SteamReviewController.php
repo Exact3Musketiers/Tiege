@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SteamReview;
 use App\Models\User;
+use Illuminate\Support\Arr;
 
 class SteamReviewController extends Controller
 {
@@ -33,5 +34,35 @@ class SteamReviewController extends Controller
         }
 
         return view('steam.review.edit', compact('user', 'review'));
+    }
+
+    public function store(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'review' => ['required', 'string', 'min:3']
+        ]);
+
+        $validated['recomended'] = $request->has('recomended');
+        $wantedData = ['steam_appid', 'name', 'playtime_forever'];
+        $steam_data = Arr::only(cache('user.'.$user->getKey().'.selectedGameInfo'), $wantedData);
+        $user_id = ['user_id' => $user->getKey()];
+
+        SteamReview::create($validated + $steam_data + $user_id);
+
+        return back();
+    }
+
+    public function update(Request $request, User $user, SteamReview $steamReview)
+    {
+        $validated = $request->validate([
+            'review' => ['required', 'string', 'min:3']
+        ]);
+
+        $validated['recomended'] = $request->has('recomended');
+
+        $steamReview->update($validated);
+
+
+        return back();
     }
 }

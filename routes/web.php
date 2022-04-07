@@ -39,8 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
     Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
     Route::get('/music/lastfm/compare', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm.compare');
-    Route::post('steam/user/{user}/store', [App\Http\Controllers\SteamController::class, 'store'])->name('steam.store');
-    Route::patch('steam/user/{user}/update/{steamReview}', [App\Http\Controllers\SteamController::class, 'update'])->name('steam.update');
+
+    Route::post('steam/user/{user}/store', [App\Http\Controllers\SteamReviewController::class, 'store'])->name('steam.store');
+    Route::patch('steam/user/{user}/update/{steamReview}', [App\Http\Controllers\SteamReviewController::class, 'update'])->name('steam.update');
 
     Route::resource('profile', App\Http\Controllers\ProfileController::class)->only(['edit', 'update', 'destroy']);
 
