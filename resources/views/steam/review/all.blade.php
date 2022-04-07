@@ -10,7 +10,7 @@
                 @auth
                     <hr class="m-0">
                     <div class="card-body">
-                        <a href="{{ route('steam.review.index', auth()->user()->getKey()) }}">Jou eigen reviews bekijken</a>
+                        <a href="{{ route('steam.review.index', auth()->user()->getKey()) }}">Jouw eigen reviews bekijken</a>
                     </div>
                 @endauth
             </div>
