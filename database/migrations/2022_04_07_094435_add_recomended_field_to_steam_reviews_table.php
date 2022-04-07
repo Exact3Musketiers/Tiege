@@ -14,7 +14,7 @@ class AddRecomendedFieldToSteamReviewsTable extends Migration
     public function up()
     {
         Schema::table('steam_reviews', function (Blueprint $table) {
-            $table->boolean('recomended');
+            $table->boolean('recomended')->after('name');
         });
 
         DB::table('steam_reviews')->update([
