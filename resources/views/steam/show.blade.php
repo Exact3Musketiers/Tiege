@@ -78,12 +78,21 @@
                                     <h5 class="card-title">Voor dit spel kan je geen feedback geven</h5>
                                 @else
                                     @if (isset($steamReview))
-                                        <form action="{{ route('steam.update', [$user, $steamReview]) }}" method="post">
-                                            @method('PATCH')
-                                            @csrf
+                                    <form action="{{ route('steam.update', [$user, $steamReview]) }}" method="post">
+                                        @method('PATCH')
+                                        @csrf
+                                        @include('includes._errors')
+                                            <div class="mb-3">
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label" for="recomendedSwitch">aanbevelen</label>
+                                                    <input class="form-check-input" type="checkbox" name="recomended" id="recomendedSwitch"
+                                                        @if ((empty(old()) && $steamReview->recomended) || array_key_exists('recomended', old())) checked @endif
+                                                    >
+                                                </div>
+                                            </div>
                                             <div class="mb-3">
                                                 <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
-                                                <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}...">{{ $steamReview->review }}</textarea>
+                                                <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}...">{{ old('review') ?? $steamReview->review }}</textarea>
                                             </div>
                                             <button type="submit" class="btn btn-outline-primary w-100">update</button>
                                         </form>
@@ -91,9 +100,18 @@
                                         <form action="{{ route('steam.store', $user) }}" method="post">
                                             @csrf
                                             <div class="mb-3">
-                                                <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
-                                                <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}..."></textarea>
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label" for="recomendedSwitch">aanbevelen</label>
+                                                    <input class="form-check-input" type="checkbox" name="recomended" id="recomendedSwitch"
+                                                        @if (array_key_exists('recomended', old())) checked @endif
+                                                    >
+                                                </div>
                                             </div>
+                                            <div class="mb-3">
+                                                <label for="feedback" class="form-label">Wat vond je van {{ $selectedGameInfo['name'] }}?</label>
+                                                <textarea class="form-control" name="review" id="feedback" rows="3" placeholder="Ik vind {{ $selectedGameInfo['name'] }}...">{{ old('review') }}</textarea>
+                                            </div>
+
                                             <button type="submit" class="btn btn-outline-primary w-100">Verstuur</button>
                                         </form>
                                     @endif

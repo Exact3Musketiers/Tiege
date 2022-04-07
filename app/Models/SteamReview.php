@@ -11,7 +11,7 @@ class SteamReview extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'steam_appid', 'name', 'playtime_forever', 'review'];
+    protected $fillable = ['user_id', 'steam_appid', 'name', 'playtime_forever', 'review', 'recomended'];
 
     public function user()
     {
