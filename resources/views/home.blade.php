@@ -65,9 +65,6 @@
 
                                     @endforeach
                                     <div class="m-0">
-                                        <span class="float-start">
-                                            <a href="#" class="text-start">Lees meer</a>
-                                        </span>
                                         <span class="float-end">Geüpdatet: {{ $news['updatedAt'] }}</span>
                                     </div>
                                 @endif
@@ -100,16 +97,35 @@
                         </div>
                     </div>
 
-                    <div class="p-0 m-0 bg-white">
-                        <div class="card bg-light text-dark mb-3">
-                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ $steamReview->steam_appid }}/header.jpg" class="card-img light-img" alt="{{ $steamReview->name }}">
-                            <div class="card-img-overlay">
-                                <strong><h5 class="card-title">{{ $steamReview->user->name }} vindt dit van <em>{{ $steamReview->name }}</em></h5></strong>
-                                <p class="card-text">{{ $steamReview->review }}</p>
-                                <p class="card-footer text-center">{{ $steamReview->playtime_forever }} Gespeeld</p>
-                            </div>
+                    <div class="card quick-access-box mb-3">
+                        <img class="top-image" src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ $steamReview->steam_appid }}/header.jpg" class="card-img-top" alt="{{ $steamReview->name }}">
+                        <div class="score">
+                            <h1 class="
+                                @if ($steamReview->recomended)bg-success
+                                @else bg-danger
+                                @endif text-white text-center mb-0 py-1 border-top h2">
+                                @if ($steamReview->recomended):)
+                                @else):
+                                @endif
+                            </h1>
+                        </div>
+                        {{-- @if ($steamReview->recomended)
+                        @else
+                            <h1 class="bg-danger text-white text-center mb-0 y-1">:(</h1>
+                        @endif --}}
+                        <div class="card-body">
+                          <h5 class="card-title">{{ $steamReview->name }}</h5>
+                          <p class="card-text">"<em>{{ $steamReview->review }}</em>"</p>
+                          <p class="card-text">- {{ $steamReview->user->name }}</p>
+                        </div>
+                        <div class="card-footer">
+                          <small class="text-muted">{{ $steamReview->playtime_forever }} Gespeeld</small>
                         </div>
                     </div>
+
+                    <a href="#" class="btn btn-primary card quick-access-box mb-3">
+                        <p class="m-0">Bekijk alle reviews</p>
+                    </a>
 
                     {{-- <div class="card quick-access-box mb-3">
                         <div class="card-header h4">

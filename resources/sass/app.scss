@@ -72,6 +72,11 @@ select, input {
         }
     }
 
+    .top-image {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
     .quick-access-logo {
         font-size: 50px;
         padding-bottom: 10px;
@@ -417,10 +422,6 @@ select, input {
         animation-timing-function: ease-in;
         animation-duration: 330ms;
     }
-}
-
-.light-img {
-    filter: opacity(0.1);
 }
 
 
