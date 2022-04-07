@@ -11,7 +11,7 @@
                    Wij maken gebruik van de steam api voor het weergeven van publiekelijk toegankelijke data.
                    Wij hebben alleen toegang tot publieke data. Van de data die we binnenkrijgen slaan we alleen
                    data op wanneer dit wordt uitgevoerd door de gebruiker. De gebruiker kan dit alleen doen voor
-                   data die aan hun accout is gekoppeld.
+                   data die aan hun account is gekoppeld.
                 </p>
                <p>
                    De data die we opslaan is het volgende:
