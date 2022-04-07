@@ -105,14 +105,10 @@
                                 @else bg-danger
                                 @endif text-white text-center mb-0 py-1 border-top h2">
                                 @if ($steamReview->recomended):)
-                                @else):
+                                @else:(
                                 @endif
                             </h1>
                         </div>
-                        {{-- @if ($steamReview->recomended)
-                        @else
-                            <h1 class="bg-danger text-white text-center mb-0 y-1">:(</h1>
-                        @endif --}}
                         <div class="card-body">
                           <h5 class="card-title">{{ $steamReview->name }}</h5>
                           <p class="card-text">"<em>{{ $steamReview->review }}</em>"</p>
@@ -123,7 +119,7 @@
                         </div>
                     </div>
 
-                    <a href="#" class="btn btn-primary card quick-access-box mb-3">
+                    <a href="{{ route('steam.review.all') }}" class="btn btn-primary card quick-access-box mb-3">
                         <p class="m-0">Bekijk alle reviews</p>
                     </a>
 

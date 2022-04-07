@@ -33,6 +33,8 @@ Route::get('/steam', [App\Http\Controllers\SteamController::class, 'index'])->na
 Route::get('steam/user/{user}', [App\Http\Controllers\SteamController::class, 'show'])->name('steam.show');
 Route::get('steam/user/{user}/reset', [App\Http\Controllers\SteamController::class, 'getNewGame'])->name('steam.getNewGame');
 
+route::get('/steam/reviews', [App\Http\Controllers\SteamReviewController::class, 'all'])->name('steam.review.all');
+
 Route::middleware('auth')->group(function () {
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
     Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
@@ -41,6 +43,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('steam/user/{user}/update/{steamReview}', [App\Http\Controllers\SteamController::class, 'update'])->name('steam.update');
 
     Route::resource('profile', App\Http\Controllers\ProfileController::class)->only(['edit', 'update', 'destroy']);
+
+    route::get('/steam/reviews/{user}', [App\Http\Controllers\SteamReviewController::class, 'index'])->name('steam.review.index');
+    route::get('/steam/reviews/{user}/review/{review}', [App\Http\Controllers\SteamReviewController::class, 'edit'])->name('steam.review.edit');
+
 
 
     // Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');

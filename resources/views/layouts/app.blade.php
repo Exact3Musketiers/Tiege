@@ -135,6 +135,7 @@
                                     <div class="collapse" id="game-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="game">
                                             <li><a href="{{ route('steam.index') }}" class="link-dark rounded">Steam</a></li>
+                                            <li><a href="{{ route('steam.review.all') }}" class="link-dark rounded">reviews</a></li>
                                         </ul>
                                     </div>
                                 </li>
