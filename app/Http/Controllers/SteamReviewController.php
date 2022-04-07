@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SteamReview;
 use App\Models\User;
+use App\Services\Steam;
 use Illuminate\Support\Arr;
 
 class SteamReviewController extends Controller
@@ -67,10 +68,9 @@ class SteamReviewController extends Controller
         ]);
 
         $validated['recomended'] = $request->has('recomended');
+        $validated['playtime_forever'] = Steam::minutesToHours(collect(Steam::getOwnedGames($user))->where('appid', '=', $steamReview->steam_appid)->first()['playtime_forever']);
 
         $steamReview->update($validated);
-
-
         return back();
     }
 }
