@@ -29,6 +29,8 @@
                                 <a href="https://twitch.tv"><i class="quick-access-logo pe-4 fab fa-twitch"></i></a>
                                 <a href="https://reddit.com"><i
                                         class="quick-access-logo pe-4 fab fa-reddit"></i></a>
+                                <a href="https://monkeytype.com"><i
+                                        class="quick-access-logo pe-4 fas fa-i-cursor"></i></a>
                                 <hr>
                                 <p>Handige spulletjes</p>
                                 <a href="https://gmail.com"><i
