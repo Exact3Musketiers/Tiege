@@ -38,6 +38,7 @@ class MusicServiceProvider extends ServiceProvider
             //         'recentTracks' => app('App\Http\Controllers\LastfmController')->getRecentTracks(Auth::user()->lastfm),
             //         'friendsTracks' => app('App\Http\Controllers\LastfmController')->getFriendsLastfmInfo()
             //     ];
+            $musicFeed = [];
 
             if (!empty(Auth::user()->lastfm))
                 $musicFeed = [
