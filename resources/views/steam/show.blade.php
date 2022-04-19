@@ -20,16 +20,21 @@
                 <div class="card text-white bg-dark">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="{{ $playerSummary['avatarfull'] }}" class="img-fluid w-100 rounded-start" alt="...">
+                            <img src="@if(!$playerSummary->isEmpty()){{ $playerSummary['avatarfull'] }} @else {{ asset('/images/placeholder-square.jpeg') }} @endif" class="img-fluid w-100 rounded-start" alt="...">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <a href="{{ $playerSummary['profileurl'] }}"><h5 class="card-title">{{ $playerSummary['personaname'] }}</h5></a>
-                                <p class="card-text mb-0">Eigenaar van {{ count($ownedGames) }} games!</p>
-                                <p class="card-text">{{ $playerSummary['personaname'] }} heeft {{ $percentagePlayed }}% van die games gespeeld.</p>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{ $percentagePlayed }}%" aria-valuenow="{{ $percentagePlayed }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                                @if(!$playerSummary->isEmpty())
+                                    <a href="{{ $playerSummary['profileurl'] }}"><h5 class="card-title">{{ $playerSummary['personaname'] }}</h5></a>
+                                    <p class="card-text mb-0">Eigenaar van {{ count($ownedGames) }} games!</p>
+                                    <p class="card-text">{{ $playerSummary['personaname'] }} heeft {{ $percentagePlayed }}% van die games gespeeld.</p>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:{{ $percentagePlayed }}%" aria-valuenow="{{ $percentagePlayed }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                @else
+                                    <h5 class="card-title">Oei!</h5>
+                                    <p class="card-text">Het ziet er naar uit dat het steam id dat je hebt opgegeven incorrect is</p>
+                                @endif
                             </div>
                         </div>
                     </div>

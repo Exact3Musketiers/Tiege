@@ -47,23 +47,26 @@ class Steam
             'steamids' => $user->steamid,
             'format' => 'json'
         ]);
+        $users[0] = null;
+        if(array_key_exists(0, $steamResponse->json()['response']['players']))
+        {
+            // Select players
+            $users = $steamResponse['response']['players'];
+            // Select unwanted data
+            $unwantedData = ['avatarmedium', 'avatar', 'avatarhash', 'primaryclanid', 'personastateflags', 'loccityid', 'locstatecode', 'loccountrycode'];
+            // Modify array to have correct data
+            array_walk($users, function(&$user) use($unwantedData) {
+                $user = Arr::except($user, $unwantedData);
 
-        // Select players
-        $users = $steamResponse['response']['players'];
-        // Select unwanted data
-        $unwantedData = ['avatarmedium', 'avatar', 'avatarhash', 'primaryclanid', 'personastateflags', 'loccityid', 'locstatecode', 'loccountrycode'];
-        // Modify array to have correct data
-        array_walk($users, function(&$user) use($unwantedData) {
-            $user = Arr::except($user, $unwantedData);
-
-            if ($user['communityvisibilitystate'] !== 3) {
-                $user['lastlogoff'] = 'Privé';
-                $user['realname'] = 'Privé';
-                $user['timecreated'] = 'Privé';
-            }
-            return $user;
-        });
-
+                if ($user['communityvisibilitystate'] !== 3) {
+                    $user['lastlogoff'] = 'Privé';
+                    $user['realname'] = 'Privé';
+                    $user['timecreated'] = 'Privé';
+                }
+                return $user;
+            });
+        }
+// dd($users);
         return $users;
     }
 
