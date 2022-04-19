@@ -128,6 +128,31 @@
                         </div>
                     </div>
                 </div>
+                @if ($allReviews->isNotEmpty())
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="card text-white bg-dark">
+                                <div class="card-header">Anderen zeggen dit:</div>
+                            </div>
+                        </div>
+                        @foreach ($allReviews as $review)
+                        <div class="col-md-4 mt-2">
+                            <div class="card bg-dark
+                                @if ($review->recomended)
+                                    border-success
+                                @else
+                                    border-danger
+                                @endif  mb-3 h-100">
+                                <div class="card-header">{{ $review->user->name }}</div>
+                                <hr class="m-0">
+                                <div class="card-body pt-2">
+                                    <p class="card-text">{{ $review->review }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
             <div class="col-lg-4 mb-5">
                 <div class="card text-white bg-dark">

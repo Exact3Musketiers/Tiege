@@ -31,6 +31,7 @@ class SteamController extends Controller
         $ownedGames = [];
         $percentagePlayed = 0;
         $steamReview = new SteamReview;
+        $allReviews = new SteamReview;
 
         if(isset($user->steamid))
         {
@@ -53,7 +54,7 @@ class SteamController extends Controller
                 return collect(Steam::getOwnedGames($user));
             });
             $selectedGame = Cache::remember('user.'.$user->getKey().'.selectedGame', 86500, function () use($user, $ownedGames) {
-                return Steam::selectGame($user, $ownedGames, 0, 60);
+                return Steam::selectGame($user, $ownedGames, 0, 1500000);
             });
 
 
@@ -66,12 +67,15 @@ class SteamController extends Controller
                 });
             }
 
-            $steamReview = new SteamReview;
+            // $steamReview = new SteamReview;
             if (array_key_exists('appid', cache('user.'.$user->getKey().'.selectedGame'))) {
-                $steamReview = SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->first();
+                $steamReview = SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->whereUserId($user->getKey())->first();
+                $allReviews = SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->where('user_id', '!=', $user->getKey())->get();
             }
+
+
         }
-        return view('steam.show', compact('user', 'selectedGameInfo', 'recentGames', 'playerSummary', 'ownedGames', 'percentagePlayed', 'steamReview'));
+        return view('steam.show', compact('user', 'selectedGameInfo', 'recentGames', 'playerSummary', 'ownedGames', 'percentagePlayed', 'steamReview', 'allReviews'));
     }
 
     public function getNewGame(Request $request, User $user)
