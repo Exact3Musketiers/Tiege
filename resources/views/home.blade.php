@@ -98,32 +98,35 @@
                             @endif
                         </div>
                     </div>
+                    @if (!empty($steamReview))
+                        <div class="card quick-access-box mb-3">
+                            <img class="top-image" src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ $steamReview->steam_appid }}/header.jpg" class="card-img-top" alt="{{ $steamReview->name }}">
+                            <div class="score">
+                                <h1 class="
+                                    @if ($steamReview->recomended)bg-success
+                                    @else bg-danger
+                                    @endif text-white text-center mb-0 py-1 border-top h2">
+                                    @if ($steamReview->recomended):)
+                                    @else:(
+                                    @endif
+                                </h1>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $steamReview->name }}</h5>
+                                <p class="card-text">"<em>{{ $steamReview->review }}</em>"</p>
+                                <p class="card-text">- {{ $steamReview->user->name }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">{{ $steamReview->playtime_forever }} Gespeeld</small>
+                            </div>
+                        </div>
 
-                    <div class="card quick-access-box mb-3">
-                        <img class="top-image" src="https://cdn.cloudflare.steamstatic.com/steam/apps/{{ $steamReview->steam_appid }}/header.jpg" class="card-img-top" alt="{{ $steamReview->name }}">
-                        <div class="score">
-                            <h1 class="
-                                @if ($steamReview->recomended)bg-success
-                                @else bg-danger
-                                @endif text-white text-center mb-0 py-1 border-top h2">
-                                @if ($steamReview->recomended):)
-                                @else:(
-                                @endif
-                            </h1>
-                        </div>
-                        <div class="card-body">
-                          <h5 class="card-title">{{ $steamReview->name }}</h5>
-                          <p class="card-text">"<em>{{ $steamReview->review }}</em>"</p>
-                          <p class="card-text">- {{ $steamReview->user->name }}</p>
-                        </div>
-                        <div class="card-footer">
-                          <small class="text-muted">{{ $steamReview->playtime_forever }} Gespeeld</small>
-                        </div>
-                    </div>
+                        <a href="{{ route('steam.review.all') }}" class="btn btn-primary card quick-access-box mb-3">
+                            <p class="m-0">Bekijk alle reviews</p>
+                        </a>
+                    @endif
 
-                    <a href="{{ route('steam.review.all') }}" class="btn btn-primary card quick-access-box mb-3">
-                        <p class="m-0">Bekijk alle reviews</p>
-                    </a>
+
 
                     {{-- <div class="card quick-access-box mb-3">
                         <div class="card-header h4">

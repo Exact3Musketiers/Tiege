@@ -79,8 +79,13 @@ class HomeController extends Controller
         // Get news
         $news = $this->readNews(6);
 
-        $steamReview = SteamReview::all()->random(1)->first();
-        $steamReview->load('user');
+        $steamReview = [];
+
+        if (SteamReview::all()->isNotEmpty())
+        {
+            $steamReview = SteamReview::all()->random(1)->first();
+            $steamReview->load('user');
+        }
 
         // Return with greeting and weather
         return view('home', compact('greeting', 'weather', 'news', 'steamReview'));
