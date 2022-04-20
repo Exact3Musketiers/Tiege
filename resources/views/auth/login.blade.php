@@ -2,7 +2,7 @@
 
 @section('content')
 <div>
-    <a href="{{ route('home') }}"><i class="far fa-arrow-square-left icon-back-big"></i></a>
+    <a href="{{ route('home') }}"><i class="far fa-arrow-square-left icon-back-big mb-3"></i></a>
     <h2>INLOGGEN</h2>
     <form method="POST" action="{{ route('login') }}">
     @csrf
@@ -44,18 +44,14 @@
         </div>
 
         <div class="form-group mb-3">
-            <hr>
             <div class="form-check">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember"
-                        id="remember" {{ old('remember') ? 'checked' : '' }}>
+                <input class="form-check-input" type="checkbox" name="remember"
+                    id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                    <label class="form-check-label" for="remember">
-                        Onthoud Mij
-                    </label>
-                </div>
+                <label class="form-check-label" for="remember">
+                    Onthoud Mij
+                </label>
             </div>
-            <hr>
         </div>
 
         <div class="form-group mb-0">

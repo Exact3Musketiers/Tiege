@@ -2,7 +2,7 @@
 
 @section('content')
 <div>
-    <a href="{{ route('login') }}"><i class="far fa-arrow-square-left icon-back-big"></i></a>
+    <a href="{{ route('login') }}"><i class="far fa-arrow-square-left icon-back-big mb-3"></i></a>
     <h2 class="user-select-none" onclick="counter()">REGISTREREN</h2>
     <form method="POST" action="{{ route('register') }}">
         @csrf
