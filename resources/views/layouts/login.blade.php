@@ -26,7 +26,7 @@
     <div class="row w-100 h-100 m-0">
         <div class="col-xs-12 col-md-6 bg-dark h-100">
             <div class="row h-100 align-items-center justify-content-center">
-                <div class="col-md-8 fs-5">
+                <div class="col-md-8 fs-5 bg-dark">
                     @yield('content')
                 </div>
             </div>
