@@ -43,7 +43,7 @@
                         <div class="card bg-dark slide-in-left">
                             <div class="profile profile-picture text-center">
 
-                                <div class="text-light fs-1 fw-bold h-50">
+                                <div class="profile-text text-light fs-1 fw-bold h-50">
                                     @if(auth()->user() !== null) {{ Auth::user()->name }} @else Gast @endif
                                 </div>
 
