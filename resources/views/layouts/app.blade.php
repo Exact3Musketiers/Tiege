@@ -27,23 +27,23 @@
         <div class="container-fluid">
             {{--SIDEBAR--}}
             <div class="row flex-nowrap">
-                <button class="btn btn-primary rounded-circle collapse-sidebar mt-3" id="menuToggler" type="button"
+                <button class="btn btn-primary collapse-sidebar mt-3" id="menuToggler" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapseSidebar" aria-expanded="true"
                     aria-controls="collapseSidebar" onclick="toggleMenu()">
-                    <i class="fas"></i>
+                    <i class="fas py-1"></i>
                 </button>
-                <div class="sidebar-behind collapse show mt-5" id="collapseSidebar">
+                <div class="sidebar-behind collapse show" id="collapseSidebar">
                     <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sb-with sidebar text-center">
-                        <div class="fs-2 card bg-dark slide-in-blurred-top">
+                        <div class="fs-2 card me-1 bg-dark slide-in-blurred-top mt-5">
                             <a class="slide-rotate-hor-top text-decoration-none" href="{{route('home')}}">
                                 <div class="rainbow rainbow_text_animated">Tige.site</div>
                             </a>
                         </div>
 
-                        <div class="card bg-dark slide-in-left">
+                        <div class="card bg-tertiary-dark me-1 slide-in-left">
                             <div class="profile profile-picture text-center">
 
-                                <div class="text-light fs-1 fw-bold h-50">
+                                <div class="profile-text text-light fs-1 fw-bold h-50">
                                     @if(auth()->user() !== null) {{ Auth::user()->name }} @else Gast @endif
                                 </div>
 
@@ -93,7 +93,7 @@
                             </ul>
                         </div>
 
-                        <div class="card bg-dark mb-auto slide-in-left">
+                        <div class="card bg-tertiary-dark me-1 mb-auto slide-in-left">
                             <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                                 id="menu">
                                 <li class="mb-1">
@@ -158,19 +158,24 @@
                                 @endauth
                             </ul>
                         </div>
-                        @auth
-                        <div
-                            class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3 pt-2">
-                            <div class="navbar-dark-under pt-3">
-                                <div class="col-12">
-                                    @include('partials.music')
-                                </div>
-                            </div>
-                        </div>
-                        @endauth
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ">
-                            <li><a href="{{ route('policy') }}" class="link-dark rounded text-light">policy</a></li>
+                        <hr>
+                        <ul class="btn-toggle-nav list-unstyled fw-normal small ">
+                            <li class=""><a href="{{ route('policy') }}" class="link-dark rounded text-light">policy</a></li>
                         </ul>
+                        <hr>
+                        @auth
+                            @if (auth()->user()->lastfm != null)
+                                <div
+                                    class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3">
+                                    <div class="navbar-dark-under py-3">
+                                        <div class="col-12">
+                                            @include('partials.music')
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endauth
+
                     </div>
                 </div>
                 <div class="col p-0 wrap-col">

@@ -9,7 +9,6 @@
             <h3>{{ $musicFeed['recentTracks']->track[0]->name }}</h3>
             <h6>{{ $musicFeed['recentTracks']->track[0]->album->{'#text'} }}</h6>
             <a href="{{route('lyrics')}}">See lyrics</a>
-            <hr>
         @endif
     @endif
     {{-- <h4>Friendsfeed:</h4>
