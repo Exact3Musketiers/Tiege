@@ -154,3 +154,61 @@
     -webkit-animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     animation: slide-in-elliptic-top-fwd 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
+
+.animateDrum {
+    animation-name: mirror-drum;
+    animation-duration: 2000ms;
+}
+
+@keyframes mirror-drum {
+    0% {
+        transform: scale(1, 1);
+    }
+    10% {
+        transform: scale(-1, 1);
+    }
+    20% {
+        transform: scale(1, 1);
+    }
+    30% {
+        transform: scale(-1, 1);
+    }
+    40% {
+        transform: scale(1, 1);
+    }
+    50% {
+        transform: scale(-1, 1);
+    }
+    60% {
+        transform: scale(1, 1);
+    }
+    70% {
+        transform: scale(-1, 1);
+    }
+    80% {
+        transform: scale(1, 1);
+    }
+    90% {
+        transform: scale(-1, 1);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+.rollDice {
+    animation-name: spin-dice;
+    animation-duration: 2000ms;
+}
+
+@keyframes spin-dice {
+    0% {
+        opacity: 0;
+        transform:translateX(-150px);
+    }
+    100% {
+        opacity: 1;
+        transform:translateX(0px) rotate(360deg);
+    }
+
+}

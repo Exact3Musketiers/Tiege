@@ -365,7 +365,6 @@ select, input {
 
 //Coin
 #coinPage {
-    height: 320px;
 
     .btn {
         height: 40px;
@@ -377,6 +376,27 @@ select, input {
 
     #coin {
         color: #FFD700FF;
+    }
+
+    .hot-arena {
+        height: 244.2px;
+        border: #c72148 solid 3px;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 320px)
+    {
+        .x1 .x2 {padding: 50%;}
+    }
+
+    @media (min-width: 321px) and (max-width: 800px)
+    {
+        .x1 .x2 {padding: 25%;}
+    }
+
+    @media (min-width: 801px)
+    {
+        .x1 .x2 {padding: 12.5%;}
     }
 
     .animateHand {
@@ -403,6 +423,27 @@ select, input {
             margin-top: -50px;
             transform: rotate(-50deg)
         }
+    }
+}
+
+#rngPage {
+    .rng-arena {
+        height: 94.5px;
+        // width: max-content;
+        border: #c72148 solid 3px;
+        border-radius: 10px;
+    }
+}
+
+#dicePage {
+    i {
+        font-size: 70px;
+    }
+    .dice-arena {
+        height: 94.5px;
+        // width: max-content;
+        border: #c72148 solid 3px;
+        border-radius: 10px;
     }
 }
 

@@ -1,12 +1,16 @@
 <div id="coinPage">
-    <div class="row mt-5">
+    <div class="row mt-3">
         <div class="card bg-dark col-md-12">
-            <div class="card-header">Kop of munt</div>
             <div class="card-body">
-                <button class="btn btn-primary" id="flipButton" onclick="flipCoin()">Click for heads/tails</button>
-                <div id="hand"></div>
-                <div id="coin"></div>
-                <div id="coinResult" class="display-4 mx-auto"></div>
+                <div class="text-center pb-3">
+                    <button class="btn btn-primary w-100" id="flipButton" onclick="flipCoin()">Click for heads/tails</button>
+                </div>
+                <div class="hot-arena d-flex flex-column justify-content-center">
+                    <div id="announcer"><h1 class="text-center fs-large">Kop of Munt</h1></div>
+                    <div id="hand"></div>
+                    <div id="coin"></div>
+                    <div id="coinResult" class="display-4 mx-auto text-center"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -20,6 +24,8 @@
         let coin = document.getElementById('coin');
         let flipButton = document.getElementById('flipButton');
 
+        document.getElementById('announcer').innerHTML = '';
+
         coinResult.innerHTML = '';
         hand.classList.add('animateHand');
         hand.innerHTML = '<i class="fas fa-hand-lizard display-3"></i>';
@@ -31,9 +37,9 @@
 
             setTimeout(() => {
                 if (Math.floor(Math.random() * (1 - 0 + 1)) + 0 == 1)
-                    coinResult.innerHTML = '<img src="{{asset("images/heads.png")}}"><p class="text-center">Heads</p>';
+                    coinResult.innerHTML = '<img class="text-center" src="{{asset("images/heads.png")}}"><p class="text-center">Heads</p>';
                 else
-                    coinResult.innerHTML = '<img src="{{asset("images/tails.png")}}"><p class="text-center">Tails</p>';
+                    coinResult.innerHTML = '<img class="text-center" src="{{asset("images/tails.png")}}"><p class="text-center">Tails</p>';
                 coin.innerHTML = '';
                 hand.innerHTML = '';
                 flipButton.disabled = false;
