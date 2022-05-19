@@ -333,6 +333,7 @@ select, input {
     }
     .sidebar, .sidebar-behind {
         width: 100vw;
+        background-color: $dark-secondary;
     }
     .sidebar {
         max-width: 100% !important;
@@ -351,7 +352,7 @@ select, input {
 
 //Lyrics
 #lyricsbox {
-    background-color: #313334;
+    background-color: $dark-tertiary;
 
     .lyrics-sentence {
         font-size: 18px;
