@@ -70,7 +70,7 @@ class SteamController extends Controller
             // $steamReview = new SteamReview;
             if (array_key_exists('appid', cache('user.'.$user->getKey().'.selectedGame'))) {
                 $steamReview = SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->whereUserId($user->getKey())->first();
-                $allReviews = SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->where('user_id', '!=', $user->getKey())->get();
+                $allReviews = SteamReview::whereSteamAppid(cache('user.'.$user->getKey().'.selectedGame')['appid'])->get();
             }
 
 
