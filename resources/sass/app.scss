@@ -380,7 +380,8 @@ select, input {
 
     .hot-arena {
         height: 244.2px;
-        border: #c72148 solid 3px;
+        background-color: $dark-tertiary;
+
         border-radius: 10px;
     }
 
@@ -430,7 +431,8 @@ select, input {
     .rng-arena {
         height: 94.5px;
         // width: max-content;
-        border: #c72148 solid 3px;
+        background-color: $dark-tertiary;
+
         border-radius: 10px;
     }
 }
@@ -442,7 +444,9 @@ select, input {
     .dice-arena {
         height: 94.5px;
         // width: max-content;
-        border: #c72148 solid 3px;
+        background-color: $dark-tertiary;
+
+
         border-radius: 10px;
     }
 }
