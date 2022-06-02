@@ -31,7 +31,7 @@
             alert('Niet vergeten een getal in te vullen')
             return;
         }
-        if (input1.value >= input2.value) {
+        if (parseInt(input1.value) >= parseInt(input2.value)) {
             alert('Het eerste getal kan niet hoger zijn dan het laatste getal')
             return;
         }
@@ -44,7 +44,7 @@
         setTimeout(() => {
             drum.innerHTML = '';
 
-            let random = Math.floor(Math.random() * (input2.value - input1.value + 1)) + parseInt(input1.value);
+            let random = Math.floor(Math.random() * (parseInt(input2.value) - parseInt(input1.value) + 1)) + parseInt(input1.value);
             numberText.innerHTML = random;
 
             rngButton.disabled = false;
