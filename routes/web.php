@@ -35,6 +35,8 @@ Route::get('steam/user/{user}/reset', [App\Http\Controllers\SteamController::cla
 
 route::get('/steam/reviews', [App\Http\Controllers\SteamReviewController::class, 'all'])->name('steam.review.all');
 
+Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['index']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
     Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
