@@ -80,7 +80,7 @@ class Wiki
             $wiki = preg_replace('/\|(.*?)\n/', '', $wiki);
             $wiki = preg_replace('/{{(.*?)\n}}/', '', $wiki);
             $wiki = preg_replace('/{{(.*?)}}/', '', $wiki);
-            $wiki = preg_replace('/{{(.*?)}}/', '', $wiki);
+            // $wiki = preg_replace('/{{(.*?)}}/', '', $wiki);
             // $wiki = preg_replace('/{{Infobox/', '', $wiki);
 
             return $wiki;
