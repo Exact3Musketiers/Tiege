@@ -7,15 +7,21 @@ use Illuminate\Http\Request;
 
 class Wiki
 {
-    public static function getWikiPage($page = 'https://en.wikipedia.org/wiki/Special:Random')
+    public static function getRandomPage()
     {
-        $page = str_replace(
+        return str_replace(
             'https://nl.wikipedia.org/wiki/',
             '',
             Http::get(
                 'https://nl.wikipedia.org/wiki/Special:Random'
             )->handlerStats()['url']
         );
+    }
+
+    public static function getWikiPage($page = 'https://en.wikipedia.org/wiki/Special:Random')
+    {
+        $page = self::getRandomPage();
+
         // $page = str_replace(
         //     'https://nl.wikipedia.org/wiki/',
         //     '',
