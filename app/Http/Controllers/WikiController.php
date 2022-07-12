@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Services\Wiki;
 use App\Models\User;
+use App\Models\WikiPath;
 
 class WikiController extends Controller
 {
@@ -28,10 +29,10 @@ class WikiController extends Controller
             }
             // Load page a and b into cache
             $w1 = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function () {
-                return str_replace('_', ' ', Wiki::getRandomPage());
+                return urldecode(str_replace('_', ' ', Wiki::getRandomPage()));
             });
             $w2 = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function () {
-                return str_replace('_', ' ', Wiki::getRandomPage());
+                return urldecode(str_replace('_', ' ', Wiki::getRandomPage()));
             });
             // Return with cached pages
             $wiki = [$w1, $w2];
@@ -76,9 +77,15 @@ class WikiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(User $user)
     {
-        //
+        $wiki = WikiPath::create([
+            'user_id' => Auth::user()->getKey(),
+            'start' => cache('user.'.$user->getKey().'.wiki_page_1'),
+            'end' => cache('user.'.$user->getKey().'.wiki_page_2'),
+        ]);
+
+        return redirect(route('wiki.show', [$wiki]));
     }
 
     /**
@@ -87,9 +94,10 @@ class WikiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(WikiPath $wikipath)
     {
-        //
+        // dd($wikipath);
+        return view('wiki.show', compact('wikipath'));
     }
 
     /**

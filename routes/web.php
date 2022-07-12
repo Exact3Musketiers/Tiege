@@ -35,7 +35,7 @@ Route::get('steam/user/{user}/reset', [App\Http\Controllers\SteamController::cla
 
 route::get('/steam/reviews', [App\Http\Controllers\SteamReviewController::class, 'all'])->name('steam.review.all');
 
-Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['index', 'store']);
+Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['index', 'store', 'show']);
 route::get('/wiki/refresh', [App\Http\Controllers\WikiController::class, 'refreshPage'])->name('wiki.refresh');
 
 Route::middleware('auth')->group(function () {
