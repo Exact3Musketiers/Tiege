@@ -19,38 +19,44 @@ class WikiController extends Controller
     public function index(User $user)
     {
         $wiki = [];
+        // Check if use is signed in
         if (Auth::check()) {
+            // If the rquest has the word reload delte all cookies
             if (request()->has('reload')) {
                 Cache::forget('user.'.$user->getKey().'.wiki_page_1');
                 Cache::forget('user.'.$user->getKey().'.wiki_page_2');
             }
+            // Load page a and b into cache
             $w1 = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function () {
                 return str_replace('_', ' ', Wiki::getRandomPage());
             });
             $w2 = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function () {
                 return str_replace('_', ' ', Wiki::getRandomPage());
             });
-
+            // Return with cached pages
             $wiki = [$w1, $w2];
         }
         return view('wiki.index', compact('wiki'));
     }
 
+    // Refresh one of the pages required for the game
     public function refreshPage(Request $request, User $user)
     {
+        // Check if the request is legit
         $validated = $request->validate([
             'page' => [
                 'required',
                 Rule::in(['a','b']),
             ],
         ]);
-
+        // Refresh page a or be
         if ($validated['page'] === 'a') {
             Cache::forget('user.'.$user->getKey().'.wiki_page_1');
         }
         if ($validated['page'] === 'b') {
             Cache::forget('user.'.$user->getKey().'.wiki_page_2');
         }
+        // Return to wiki
         return redirect(route('wiki.index'));
     }
 
