@@ -94,10 +94,9 @@ class WikiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(WikiPath $wikipath)
+    public function show(WikiPath $wiki)
     {
-        // dd($wikipath);
-        return view('wiki.show', compact('wikipath'));
+        return view('wiki.show', compact('wiki'));
     }
 
     /**

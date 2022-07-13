@@ -3,7 +3,7 @@
 @section('content')
 <div class="w-100">
     <nav aria-label="breadcrumb">
-        {{-- <h1>{{ $wikipath->start }} <i class="fas fa-long-arrow-alt-right"></i> {{ $wikiPath->end }}</h1> --}}
+        <h1>{{ $wiki->start }} <i class="fas fa-long-arrow-alt-right"></i> {{ $wiki->end }}</h1>
       </nav>
 </div>
 <div class="container">
