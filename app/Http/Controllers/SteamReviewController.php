@@ -46,11 +46,10 @@ class SteamReviewController extends Controller
         $validated = $request->validate([
             'review' => ['required', 'string', 'min:3']
         ]);
+
         $validated['recomended'] = $request->has('recomended');
-        $validated['playtime_forever'] = Steam::minutesToHours(collect(Steam::getOwnedGames($user))->where('appid', '=', $steamReview->steam_appid)->first()['playtime_forever']);
         $wantedData = ['steam_appid', 'name', 'playtime_forever'];
         $steam_data = Arr::only(cache('user.'.$user->getKey().'.selectedGameInfo'), $wantedData);
-        dd($steam_data);
         $user_id = ['user_id' => $user->getKey()];
 
         SteamReview::create($validated + $steam_data + $user_id);
