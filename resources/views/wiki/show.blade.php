@@ -8,7 +8,7 @@
 </div>
 <div class="container">
     <div class="py-3">
-        a
+        {!! $body !!}
     </div>
 </div>
 @endsection

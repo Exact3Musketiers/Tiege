@@ -28,14 +28,12 @@ class WikiController extends Controller
                 Cache::forget('user.'.$user->getKey().'.wiki_page_2');
             }
             // Load page a and b into cache
-            $w1 = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function () {
+            $wiki[0] = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function () {
                 return urldecode(str_replace('_', ' ', Wiki::getRandomPage()));
             });
-            $w2 = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function () {
+            $wiki[1] = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function () {
                 return urldecode(str_replace('_', ' ', Wiki::getRandomPage()));
             });
-            // Return with cached pages
-            $wiki = [$w1, $w2];
         }
         return view('wiki.index', compact('wiki'));
     }
@@ -47,16 +45,11 @@ class WikiController extends Controller
         $validated = $request->validate([
             'page' => [
                 'required',
-                Rule::in(['a','b']),
+                Rule::in(['1','2']),
             ],
         ]);
         // Refresh page a or be
-        if ($validated['page'] === 'a') {
-            Cache::forget('user.'.$user->getKey().'.wiki_page_1');
-        }
-        if ($validated['page'] === 'b') {
-            Cache::forget('user.'.$user->getKey().'.wiki_page_2');
-        }
+        Cache::forget('user.'.$user->getKey().'.wiki_page_' . $validated['page']);
         // Return to wiki
         return redirect(route('wiki.index'));
     }
@@ -94,9 +87,16 @@ class WikiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(WikiPath $wiki)
+    public function show(WikiPath $wiki, Request $request)
     {
-        return view('wiki.show', compact('wiki'));
+        $page = Wiki::wikiURL($wiki->start);
+
+        if ($request->has('pg')) {
+            $page = Wiki::wikiURL($request['pg']);
+        }
+
+        $body = Wiki::getWikiPage($page, $wiki->getKey());
+        return view('wiki.show', compact('wiki', 'body'));
     }
 
     /**

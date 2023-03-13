@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
 
 class Wiki
 {
@@ -19,11 +18,12 @@ class Wiki
         );
     }
 
-    public static function getWikiPage($page = 'https://en.wikipedia.org/wiki/Special:Random')
-    {
-        // Get a random page
-        $page = self::getRandomPage();
+    public static function wikiURL($page) {
+        return str_replace(' ', '_', $page);
+    }
 
+    public static function getWikiPage($page = 'https://en.wikipedia.org/wiki/Special:Random', $pageId = null)
+    {
         // Get all wanted data from page
         $wiki = Http::get('https://nl.wikipedia.org/w/api.php', [
             'format' => 'json',
@@ -34,6 +34,11 @@ class Wiki
             'formatversion' => '2'
         ]);
 
+        // Check if the api throws an error
+        if (array_key_exists('error', $wiki->json())) {
+            return '<h1>Oeps, daar ging iets mis</h1><p><a href="'.url()->previous().'">Ga weer terug naar waar je was.</a></p>';
+        }
+
         // Get title and body of the page
         $title = $wiki->json()['parse']['title'];
         $wiki = $wiki->json()['parse']['wikitext'];
@@ -43,9 +48,9 @@ class Wiki
         // Make links
         $wiki = preg_replace_callback(
             '/\[\[(.*?)\]\]/',
-            function ($matches) {
+            function ($matches) use ($pageId) {
                 $exploded = explode('|', $matches[1]);
-                return '<a href="https://nl.wikipedia.org/wiki/'.str_replace(' ', '_', $exploded[0]).'">'.$exploded[0].'</a>';
+                return '<a href="'.route('wiki.show', ['wiki' => $pageId]).'?pg='.str_replace(' ', '_', $exploded[0]).'">'.$exploded[0].'</a>';
             },
             $wiki
         );
