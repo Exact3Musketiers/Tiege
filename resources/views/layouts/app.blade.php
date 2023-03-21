@@ -71,9 +71,9 @@
                                     <div class="collapse" id="profile-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                             @auth
-                                                <li><a href="{{ route('profile.edit', Auth::user()) }}" class="link-dark rounded">Profile</a></li>
+                                                <li><a href="{{ route('profile.edit', Auth::user()) }}" class="rounded">Profile</a></li>
                                                 <li>
-                                                    <a class="link-dark rounded" href="{{ route('logout') }}"
+                                                    <a class="rounded" href="{{ route('logout') }}"
                                                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                                                     {{ __('Logout') }}
@@ -85,7 +85,7 @@
                                             </li>
                                             @endauth
                                             @guest
-                                            <li><a href="{{ route('login') }}" class="link-dark rounded">Login</a>
+                                            <li><a href="{{ route('login') }}" class="rounded">Login</a>
                                                 @endguest
                                         </ul>
                                     </div>
@@ -106,8 +106,8 @@
                                     <div class="collapse" id="numbers-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="numbers">
                                             <li><a href="{{ route('random.index') }}"
-                                                    class="link-dark rounded">Random</a></li>
-                                            <li><a href="{{ route('currency') }}" class="link-dark rounded">Currency</a>
+                                                    class="rounded">Random</a></li>
+                                            <li><a href="{{ route('currency') }}" class="rounded">Currency</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -121,8 +121,8 @@
                                     <div class="collapse" id="textify-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="textify">
                                             <li><a href="{{ route('sarcasm') }}"
-                                                    class="link-dark rounded">SaRCasMIfY</a></li>
-                                            <li><a href="{{ route('uwu') }}" class="link-dark rounded">UwUify</a></li>
+                                                    class="rounded">SaRCasMIfY</a></li>
+                                            <li><a href="{{ route('uwu') }}" class="rounded">UwUify</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -134,8 +134,8 @@
                                     </button>
                                     <div class="collapse" id="game-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="game">
-                                            <li><a href="{{ route('steam.index') }}" class="link-dark rounded">Steam</a></li>
-                                            <li><a href="{{ route('steam.review.all') }}" class="link-dark rounded">reviews</a></li>
+                                            <li><a href="{{ route('steam.index') }}" class="rounded">Steam</a></li>
+                                            <li><a href="{{ route('steam.review.all') }}" class="rounded">reviews</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -148,9 +148,9 @@
                                     </button>
                                     <div class="collapse" id="music-collapse" id="music">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                            <li><a href="{{ route('lyrics') }}" class="link-dark rounded">Lyrics</a>
+                                            <li><a href="{{ route('lyrics') }}" class="rounded">Lyrics</a>
                                             </li>
-                                            <li><a href="{{ route('lastfm') }}" class="link-dark rounded">Lastfm</a>
+                                            <li><a href="{{ route('lastfm') }}" class="rounded">Lastfm</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -160,7 +160,7 @@
                         </div>
                         <hr>
                         <ul class="btn-toggle-nav list-unstyled fw-normal small ">
-                            <li class=""><a href="{{ route('policy') }}" class="link-dark rounded text-light">policy</a></li>
+                            <li class=""><a href="{{ route('policy') }}" class="rounded text-light">policy</a></li>
                         </ul>
                         <hr>
                         @auth
