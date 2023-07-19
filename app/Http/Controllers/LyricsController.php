@@ -45,15 +45,6 @@ class LyricsController extends Controller
 
     public function formatSongDetails($item)
     {
-        return
-            preg_replace("(((?<=feat)(.*$))|-feat)", '',
-                preg_replace('/-Remastered-[0-9]*/', '',
-                    preg_replace('/-[0-9]*-Remaster/', '',
-                        preg_replace('/(--)/', '-',
-                            preg_replace('/(---)/', '-',
-                                str_replace(' ', '-',
-                                    preg_replace("/[_.!`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", '-',
-                                        preg_replace("/[-_!#%,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/", '',
-                                            $item))))))));
+        return preg_replace('/(?<=feat.*)|-feat|-Remastered-\d*|-?\d*-Remaster|--+|[_.!`\'#%&,:;<>=@{}~$()\*\+\/\\\?\[\]\^\|]+/u', '-', $item);
     }
 }
