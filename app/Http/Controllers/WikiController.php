@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Services\Wiki;
 use App\Models\User;
 use App\Models\WikiPath;
+use Illuminate\Support\Facades\URL;
 
 class WikiController extends Controller
 {
@@ -35,6 +36,8 @@ class WikiController extends Controller
                 return urldecode(str_replace('_', ' ', Wiki::getRandomPage()));
             });
         }
+
+        
         return view('wiki.index', compact('wiki'));
     }
 
