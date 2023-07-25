@@ -30,10 +30,10 @@ class WikiController extends Controller
             }
             // Load page a and b into cache
             $wiki[0] = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function () {
-                return urldecode(str_replace('_', ' ', Wiki::getRandomPage()));
+                return Wiki::getRandomPage();
             });
             $wiki[1] = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function () {
-                return urldecode(str_replace('_', ' ', Wiki::getRandomPage()));
+                return Wiki::getRandomPage();
             });
         }
 
@@ -96,6 +96,10 @@ class WikiController extends Controller
 
         if ($request->has('pg')) {
             $page = Wiki::wikiURL($request['pg']);
+        }
+$count = 10;
+        if ($page == $wiki->end) {
+            return view('wiki.victory', compact('wiki', 'count'));
         }
 
         $body = Wiki::getWikiPage($page, $wiki->getKey());

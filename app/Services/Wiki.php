@@ -10,13 +10,9 @@ class Wiki
     // Get the end of a random wikipedia page url
     public static function getRandomPage()
     {
-        return str_replace(
-            'https://nl.wikipedia.org/wiki/',
-            '',
-            Http::get(
-                'https://nl.wikipedia.org/wiki/Special:Random'
-            )->handlerStats()['url']
-        );
+        $wiki = json_decode(file_get_contents('files/wikipedia.json'), true);
+        $random = rand(0, count($wiki) - 1);
+        return $wiki[$random]['article'];
     }
 
     public static function wikiURL($page) {
