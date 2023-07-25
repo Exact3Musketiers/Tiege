@@ -21,21 +21,6 @@
                 </h1>
             </div>
 
-            <div id="user">
-                <h1>Pagina A: <span class="badge bg-primary">{{ $wiki[0] }}</span>
-                    <form class="d-inline" action="{{ route('wiki.refresh') }}">
-                        <input type="text" class="bg-primary border-0 rounded px-3 fw-bold fs-1" name="page" value="1">
-                        <button class="btn btn-lg btn-danger"><i class="fas fa-sync-alt"></i></button>
-                    </form>
-                </h1>
-                <h1>Pagina B: <span class="badge bg-primary">{{ $wiki[1] }}</span>
-                    <form class="d-inline" action="{{ route('wiki.refresh') }}">
-                        <input type="text" class="bg-primary border-0 rounded px-3 py-2 fw-bold fs-2" name="page" value="2">
-                        <button class="btn btn-lg btn-danger"><i class="fas fa-sync-alt"></i></button>
-                    </form>
-                </h1>
-            </div>
-
             <div class="pt-3">
                 <form method="POST" action="{{ route('wiki.store') }}">
                     @csrf
