@@ -41,7 +41,7 @@ class Wiki
         $wiki = $wiki->json()['parse']['wikitext'];
 
         // Add title
-        $wiki = '<h1>'.$title.'</h1><hr>'.$wiki;
+        $wiki = '<h1>'.$title.'</h1><hr />'.$wiki;
         // Make links
         $wiki = preg_replace_callback(
             '/\[\[(.*?)\]\]/',
@@ -63,7 +63,7 @@ class Wiki
         $wiki = preg_replace_callback(
             '/==(.*?)==/',
             function ($matches) {
-                return '<h2 class="pt-3">'.$matches[1].'</h2><hr>';
+                return '<h2 class="pt-3">'.$matches[1].'</h2><hr />';
             },
             $wiki
         );
