@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Services\Wiki;
 use App\Models\User;
 use App\Models\WikiPath;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class WikiController extends Controller
 {
@@ -90,19 +90,36 @@ class WikiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(WikiPath $wiki, Request $request)
+    public function show(WikiPath $wiki, User $user, Request $request)
     {
         $page = Wiki::wikiURL($wiki->start);
 
         if ($request->has('pg')) {
             $page = Wiki::wikiURL($request['pg']);
         }
-$count = 10;
-        if ($page == $wiki->end) {
+
+        $count = Cache::get('user.'.$user->getKey().'.count') ?? 0;
+        
+        Cache::forget('user.'.$user->getKey().'.count');
+
+        $count = Cache::remember('user.'.$user->getKey().'.count', 3600, function () use ($count) {
+            return $count + 1;
+        });
+        
+        if (str::lower($page) == str::replace(' ', '_', Str::lower($wiki->end))) {
+            Cache::forget('user.'.$user->getKey().'.count');
+
+            if (is_null($wiki->click_count)) {
+                $wiki->update(['click_count' => $count]);
+            } else {
+                $count = $wiki->click_count;
+            }
+            
             return view('wiki.victory', compact('wiki', 'count'));
         }
 
-        $body = Wiki::getWikiPage($page, $wiki->getKey());
+        $body = Wiki::getWikiPage($page, $wiki->getKey());    
+
         return view('wiki.show', compact('wiki', 'body'));
     }
 
