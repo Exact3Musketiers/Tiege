@@ -9,6 +9,8 @@
 <div class="container">
     <div class="py-3">
         {!! $body !!}
+        </small>
     </div>
 </div>
+
 @endsection
