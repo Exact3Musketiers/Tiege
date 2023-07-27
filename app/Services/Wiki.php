@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\URL;
 
 class Wiki
 {
@@ -39,18 +38,29 @@ class Wiki
         // Get title and body of the page
         $title = $wiki->json()['parse']['title'];
         $wiki = $wiki->json()['parse']['wikitext'];
-
+// dd($wiki);
         // Add title
         $wiki = '<h1>'.$title.'</h1><hr />'.$wiki;
+
+        // Make links
+        $wiki = preg_replace_callback(
+            '/(?:\[\[Bestand:)(.*?)(?:\|.*?\]\]\n)/',
+            function ($matches) {
+                return '<div><img src="https://en.wikipedia.org/wiki/Special:Filepath/'.self::wikiURL($matches[1]).'" class="rounded float-end ms-3" width="260px" /></div>';
+            },
+            $wiki
+        );
+
         // Make links
         $wiki = preg_replace_callback(
             '/\[\[(.*?)\]\]/',
             function ($matches) use ($pageId) {
                 $exploded = explode('|', $matches[1]);
-                return '<a href="'.route('wiki.show', ['wiki' => $pageId]).'?pg='.str_replace(' ', '_', $exploded[0]).'">'.$exploded[0].'</a>';
+                return '<a href="'.route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($exploded[0]).'">'.$exploded[0].'</a>';
             },
             $wiki
         );
+
         // Create H3s
         $wiki = preg_replace_callback(
             '/===(.*?)===/',
@@ -59,6 +69,7 @@ class Wiki
             },
             $wiki
         );
+
         // Create heading 2s
         $wiki = preg_replace_callback(
             '/==(.*?)==/',
@@ -69,6 +80,16 @@ class Wiki
         );
 
         $wiki = preg_replace_callback(
+            '/(?:{{Zie hoofdartikel\|)(.*?)(?:}})/s',
+            function ($matches) use($pageId) {
+                return '<span>Zie hoofdartikel: </span><a href="'.route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($matches[1]).'">'.$matches[1].'</a>';
+            },
+            $wiki
+        );
+        
+        $wiki = preg_replace('/(?:{{Zie ook\|)(.*?)(?:}})/s', '$1', $wiki);
+        
+        $wiki = preg_replace_callback(
             '/(?:{{Kolommen lijst.*?inhoud=\n\* )(.*?)(?:}})/s',
             function ($matches) {
                 $items = explode('* ',$matches[1]);
@@ -76,9 +97,43 @@ class Wiki
             },
             $wiki
         );
+        
+        $wiki = str_replace([
+                    '{|', 
+                    "\n|-\n|", 
+                    "\n| style=\"padding-left: 1em;\" |", 
+                    "\n|}\n"
+                ], [
+                    '<div class="row row-cols-2"><div class="col"><ul', 
+                    '><li class="ps-3 py-0">', 
+                    '</div><div class="col">', 
+                    '</ul></div></div>'
+                ], $wiki
+            );
+
+        $wiki = preg_replace_callback(
+            '/(\*\*)(.*?)(?:\n)/s',
+            function ($matches) {
+                return '</li><ul><li class="ps-3 py-0">'.$matches[2].'</ul></li>';
+            },
+            $wiki
+        );
+
+        $wiki = preg_replace_callback(
+            '/(\* )(.*?)(?:\n)/s',
+            function ($matches) {
+                return '</li><li>'.$matches[2].'</li>';
+            },
+            $wiki
+        );
+
         // dd($wiki);
-        // preg_match_all(, $wiki, $match);
+
+
+        $wiki = preg_replace('/({{Bron\?.*?}})/s', '', $wiki);
         // dd($match);
+        
+        $wiki = str_replace(["'''", "''"], '', $wiki);
 
         // Remove quotes around title
         // $wiki = preg_replace('/\'\'\'\'\'/', '', $wiki);
