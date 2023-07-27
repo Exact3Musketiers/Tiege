@@ -67,15 +67,30 @@ class Wiki
             },
             $wiki
         );
+
+        $wiki = preg_replace_callback(
+            '/(?:{{Kolommen lijst.*?inhoud=\n\* )(.*?)(?:}})/s',
+            function ($matches) {
+                $items = explode('* ',$matches[1]);
+                return '<div class="row row-cols-2 row-cols-md-3"><div class="col">'.implode("</div>\n<div class=\"col\">", $items).'</div></div>';
+            },
+            $wiki
+        );
+        // dd($wiki);
+        // preg_match_all(, $wiki, $match);
+        // dd($match);
+
         // Remove quotes around title
-        $wiki = preg_replace('/\'\'\'\'\'/', '', $wiki);
-        $wiki = preg_replace('/\'\'\'/', '', $wiki);
+        // $wiki = preg_replace('/\'\'\'\'\'/', '', $wiki);
+        // $wiki = preg_replace('/\'\'\'/', '', $wiki);
         // Remove info boxes
-        $wiki = preg_replace('/\|(.*?)\n/', '', $wiki);
-        $wiki = preg_replace('/{{(.*?)\n}}/', '', $wiki);
-        $wiki = preg_replace('/{{(.*?)}}/', '', $wiki);
+        // $wiki = preg_replace('/\|(.*?)\n/', '', $wiki);
+        // $wiki = preg_replace('/{{(.*?)\n}}/', '', $wiki);
+        // $wiki = preg_replace('/{{(.*?)}}/', '', $wiki);
         // $wiki = preg_replace('/{{(.*?)}}/', '', $wiki);
         // $wiki = preg_replace('/{{Infobox/', '', $wiki);
+        // $wiki = preg_replace('/{{Zie hoofdartikel/', '', $wiki);
+        // $wiki = preg_replace('/{{Zie ook/', '', $wiki);
 
         return $wiki;
     }
