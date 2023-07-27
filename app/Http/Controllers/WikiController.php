@@ -106,7 +106,7 @@ class WikiController extends Controller
             return $count + 1;
         });
         
-        if (str::lower($page) == str::replace(' ', '_', Str::lower($wiki->end))) {
+        if (Str::lower($page) == Str::replace(' ', '_', Str::lower($wiki->end))) {
             Cache::forget('user.'.$user->getKey().'.count');
 
             if (is_null($wiki->click_count)) {
