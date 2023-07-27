@@ -120,7 +120,7 @@ class WikiController extends Controller
 
         $body = Wiki::getWikiPage($page, $wiki->getKey());    
 
-        return view('wiki.show', compact('wiki', 'body'));
+        return view('wiki.show', compact('wiki', 'body', 'count'));
     }
 
     /**
