@@ -38,15 +38,45 @@ class Wiki
         // Get title and body of the page
         $title = $wiki->json()['parse']['title'];
         $wiki = $wiki->json()['parse']['wikitext'];
+// die($wiki);
 // dd($wiki);
         // Add title
         $wiki = '<h1>'.$title.'</h1><hr />'.$wiki;
 
-        // Make links
+
+        // Make infobox images
+        $wiki = preg_replace_callback(
+            '/(?:afbeelding.*?= )(.*?\.jpg)/',
+            function ($matches) {
+                return 'Afbeelding</div><div class="col px-0"><img src="https://en.wikipedia.org/wiki/Special:Filepath/'.self::wikiURL($matches[1]).'" class="rounded img-fluid" />';
+            },
+            $wiki
+        );
+        
+        // Make infobox images
+        $wiki = preg_replace_callback(
+            '/(?:handtekening.*?= )(.*?\.svg)/',
+            function ($matches) {
+                return 'Afbeelding</div><div class="col px-0"><img src="https://en.wikipedia.org/wiki/Special:Filepath/'.self::wikiURL($matches[1]).'" class="rounded img-fluid" />';
+            },
+            $wiki
+        );
+
+        // Make infobox
+        $wiki = preg_replace_callback(
+            '/(?:{{Infobox.*?\| )(.*?)(?:\n}}\n?)/s',
+            function ($matches) {
+                $matches = str_replace(["\n|", ' = '], '</div><div class="col px-0">', $matches);
+                return '<div class="row row-cols-2 float-none float-lg-end border rounded ms-3 mb-3 px-2" style="width:300px; clear:right;"><div class="col px-0">'.$matches[1].'</div></div>';
+            },
+            $wiki
+        );
+
+        // Make images
         $wiki = preg_replace_callback(
             '/(?:\[\[Bestand:)(.*?)(?:\|.*?\]\]\n)/',
             function ($matches) {
-                return '<div><img src="https://en.wikipedia.org/wiki/Special:Filepath/'.self::wikiURL($matches[1]).'" class="rounded float-end ms-3" width="260px" /></div>';
+                return '<div><img src="https://en.wikipedia.org/wiki/Special:Filepath/'.self::wikiURL($matches[1]).'" class="rounded float-end ms-3 img-fluid" width="260px" style="clear:right;" /></div>';
             },
             $wiki
         );
@@ -61,7 +91,7 @@ class Wiki
             $wiki
         );
 
-        // Create H3s
+        // Create heading 3s
         $wiki = preg_replace_callback(
             '/===(.*?)===/',
             function ($matches) {
@@ -79,6 +109,7 @@ class Wiki
             $wiki
         );
 
+        // Create parent article links
         $wiki = preg_replace_callback(
             '/(?:{{Zie hoofdartikel\|)(.*?)(?:}})/s',
             function ($matches) use($pageId) {
@@ -87,8 +118,10 @@ class Wiki
             $wiki
         );
         
+        // Create see also links
         $wiki = preg_replace('/(?:{{Zie ook\|)(.*?)(?:}})/s', '$1', $wiki);
         
+        // Create column list
         $wiki = preg_replace_callback(
             '/(?:{{Kolommen lijst.*?inhoud=\n\* )(.*?)(?:}})/s',
             function ($matches) {
@@ -120,32 +153,19 @@ class Wiki
         );
 
         $wiki = preg_replace_callback(
-            '/(\* )(.*?)(?:\n)/s',
+            '/(\*)(.*?)(?:\n)/s',
             function ($matches) {
                 return '</li><li>'.$matches[2].'</li>';
             },
             $wiki
         );
 
-        // dd($wiki);
-
-
-        $wiki = preg_replace('/({{Bron\?.*?}})/s', '', $wiki);
-        // dd($match);
+        // Remove tables, book links, bron, ref
+        $wiki = preg_replace_array(['/({{Tabel.*?\n\|.*?\n}}\n)/s', '/(<div style="overflow-x:auto;">.*?<\/div>)/s', '/(\[http:\/\/books.*?\])/s', '/({{Bron.*?}})/s', '/({{Citeer.*?}})/s', '/(<ref.*?<\/ref>)/s'], [''], $wiki);
         
-        $wiki = str_replace(["'''", "''"], '', $wiki);
-
-        // Remove quotes around title
-        // $wiki = preg_replace('/\'\'\'\'\'/', '', $wiki);
-        // $wiki = preg_replace('/\'\'\'/', '', $wiki);
-        // Remove info boxes
-        // $wiki = preg_replace('/\|(.*?)\n/', '', $wiki);
-        // $wiki = preg_replace('/{{(.*?)\n}}/', '', $wiki);
-        // $wiki = preg_replace('/{{(.*?)}}/', '', $wiki);
-        // $wiki = preg_replace('/{{(.*?)}}/', '', $wiki);
-        // $wiki = preg_replace('/{{Infobox/', '', $wiki);
-        // $wiki = preg_replace('/{{Zie hoofdartikel/', '', $wiki);
-        // $wiki = preg_replace('/{{Zie ook/', '', $wiki);
+        // Remove a bunch of stuff
+        $wiki = str_replace(["'''", "''", "<small>", "</small>", "]]"], '', $wiki);
+        $wiki = str_replace('{{Zie dp}}', '<a href="https://nl.wikipedia.org/wiki/'.self::wikiURL($page).'_(doorverwijspagina)">Zie doorverwijspagina</a><br /><br />', $wiki);
 
         return $wiki;
     }
