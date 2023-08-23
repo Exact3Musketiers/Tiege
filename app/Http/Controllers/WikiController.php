@@ -21,7 +21,7 @@ class WikiController extends Controller
     public function index(User $user)
     {
         $wiki = [];
-        // Check if use is signed in
+        // Check if user is signed in
         if (Auth::check()) {
             // If the rquest has the word reload delte all cookies
             if (request()->has('reload')) {
@@ -30,10 +30,12 @@ class WikiController extends Controller
             }
             // Load page a and b into cache
             $wiki[0] = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function () {
-                return Wiki::getRandomPage();
+                $page = Wiki::getRandomPage();
+                return [$page, Wiki::getWikiDescription($page)];
             });
             $wiki[1] = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function () {
-                return Wiki::getRandomPage();
+                $page = Wiki::getRandomPage();
+                return [$page, Wiki::getWikiDescription($page)];
             });
         }
 

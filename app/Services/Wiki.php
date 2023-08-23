@@ -18,6 +18,18 @@ class Wiki
         return str_replace(' ', '_', $page);
     }
 
+    public static function getWikiDescription($page) {
+        // Get all wanted data from page
+        $wiki = Http::get('https://nl.wikipedia.org/api/rest_v1/page/summary/'.$page);
+
+        // Check if the api throws an error
+        if (array_key_exists('error', $wiki->json())) {
+            return '<h1>Oeps, daar ging iets mis</h1><p><a href="'.url()->previous().'">Ga weer terug naar waar je was.</a></p>';
+        }
+
+        return $wiki->json()['extract'];
+    }
+
     public static function getWikiPage($page = 'https://en.wikipedia.org/wiki/Special:Random', $pageId = null)
     {
         // Get all wanted data from page

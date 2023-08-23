@@ -6,19 +6,25 @@
         <h1>Welkom op Wiki Search</h1>
         <p>Bij dit spel moet je van Wikipedia pagina A naar Wikipedia pagina B navigeren in zo min mogelijk stappen. Je komt aan bij het doel door op de links te klikken en zo naar een volgende pagina te gaan. Aan het einde wordt je score opgeslagen zoen kunnen andere mensen het sneller proberen te doen.</p>
         @auth
-            <div id="random">
-                <h1>Pagina A: <span class="badge bg-primary">{{ $wiki[0] }}</span>
+            <div class="bg-dark rounded p-3 mb-3">
+                <h1>Pagina A: <span class="badge bg-primary">{{ $wiki[0][0] }}</span>
                     <form class="d-inline" action="{{ route('wiki.refresh') }}">
                         <input type="hidden" name="page" value="1">
                         <button class="btn btn-lg btn-danger"><i class="fas fa-sync-alt"></i></button>
                     </form>
                 </h1>
-                <h1>Pagina B: <span class="badge bg-primary">{{ $wiki[1] }}</span>
+                <hr>
+                <p class="m-0">{{ $wiki[0][1] }}</p>
+            </div>
+            <div class="bg-dark rounded p-3">
+                <h1>Pagina B: <span class="badge bg-primary">{{ $wiki[1][0] }}</span>
                     <form class="d-inline" action="{{ route('wiki.refresh') }}">
                         <input type="hidden" name="page" value="2">
                         <button class="btn btn-lg btn-danger"><i class="fas fa-sync-alt"></i></button>
                     </form>
                 </h1>
+                <hr>
+                <p>{{ $wiki[1][1] }}</p>
             </div>
 
             <div class="pt-3">
