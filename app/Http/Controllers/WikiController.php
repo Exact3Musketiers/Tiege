@@ -85,8 +85,8 @@ class WikiController extends Controller
     {
         $wiki = WikiPath::create([
             'user_id' => Auth::user()->getKey(),
-            'start' => cache('user.'.$user->getKey().'.wiki_page_1'),
-            'end' => cache('user.'.$user->getKey().'.wiki_page_2'),
+            'start' => cache('user.'.$user->getKey().'.wiki_page_1')[0],
+            'end' => cache('user.'.$user->getKey().'.wiki_page_2')[0],
         ]);
 
         return redirect(route('wiki.show', [$wiki]));
