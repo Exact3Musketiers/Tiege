@@ -37,6 +37,12 @@ class WikiController extends Controller
                 $page = Wiki::getRandomPage();
                 return [$page, Wiki::getWikiDescription($page)];
             });
+            // If a duplicate is generated refresh
+            if ($wiki[0] === $wiki[1]) {
+                Cache::forget('user.'.$user->getKey().'.wiki_page_2');
+
+                return redirect(route('wiki.index'));
+            }
         }
 
         
