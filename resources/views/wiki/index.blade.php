@@ -41,6 +41,49 @@
             <a href="{{ route('register') }}" class="">Of maak hier een account</a>
         @endguest
     </div>
+
+    <h1>Leaderboard</h1>
+    @foreach ($scores as $key => $items)
+        @php
+            $name = explode('_', $key)
+        @endphp
+        <h2 class="text-secondary fs-5">
+            <a class="text-light" data-bs-toggle="collapse" href="#collapse_{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
+                {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
+            </a>
+            <span>Totaal: {{ count($items) }}</span>
+            <span class="float-end">
+                <button class="btn btn-link text-primary">
+                    Ook proberen
+                </button>
+            </span>
+        </h2>
+        <div class="collapse w-100" id="collapse_{{ $loop->iteration }}">    
+            <div class="table-responsive w-100">
+                <table class="table table-dark align-middle">
+                    <thead>
+                        <tr class="align-middle">
+                            <th>#</th>
+                            <th>Naam</th>
+                            <th>Kliks</th>
+                            <th>Datum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($items as $score)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $score->user->name }}</td>
+                                <td>{{ $score->click_count }}</td>
+                                <td>{{ date_format($score->created_at, "d-m-Y") }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+    @endforeach
 </div>
 <script>
     

@@ -45,8 +45,18 @@ class WikiController extends Controller
             }
         }
 
-        
-        return view('wiki.index', compact('wiki'));
+        // Create a leaderboard
+        $scores = WikiPath::with('user')
+                    ->whereNotNull('click_count')
+                    ->orderBy('created_at', 'DESC')
+                    ->orderBy('click_count', 'ASC')
+                    ->get();
+
+        $scores = $scores->mapToGroups(function ($item, $key) {
+            return [$item['start'].'_'.$item['end'] => $item];
+        });
+// dd($scores);
+        return view('wiki.index', compact('wiki', 'scores'));
     }
 
     // Refresh one of the pages required for the game
