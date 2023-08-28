@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class Wiki
 {
@@ -44,17 +45,37 @@ class Wiki
 
         // Check if the api throws an error
         if (array_key_exists('error', $wiki->json())) {
+            Session::put('toErrorPage', true);
             return '<h1>Oeps, daar ging iets mis</h1><p><a href="'.url()->previous().'">Ga weer terug naar waar je was.</a></p>';
         }
 
+// dd($wiki);
         // Get title and body of the page
         $title = $wiki->json()['parse']['title'];
         $wiki = $wiki->json()['parse']['wikitext'];
-// die($wiki);
+
+        if (strpos($wiki, '#REDIRECT') !== false || strpos($wiki, '#DOORVERWIJZING') !== false) {
+            Session::put('throughRedirectPage', true);
+
+            $explode = explode('[[', $wiki);
+            $page = str_replace(']]', '', $explode[1]);
+
+            // return header("location: " . route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($page));
+            return redirect(route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($page));
+        }
 // dd($wiki);
+// die($wiki);
+        $wiki = preg_replace([
+            '/(style=".*?;")/', 
+            '/(colspan=".*?")/',
+            '/(rowspan=".*?")/',
+            '/(bgcolor=".*?")/',
+        ], '', $wiki);
+
+
         // Add title
         $wiki = '<h1>'.$title.'</h1><hr />'.$wiki;
-
+// dd($wiki);
 
         // Make infobox images
         $wiki = preg_replace_callback(
@@ -73,17 +94,20 @@ class Wiki
             },
             $wiki
         );
-
+// dd($wiki);
         // Make infobox
         $wiki = preg_replace_callback(
             '/(?:{{Infobox.*?\| )(.*?)(?:\n}}\n?)/s',
             function ($matches) {
-                $matches = str_replace(["\n|", ' = '], '</div><div class="col px-0">', $matches);
+                // dd($matches);
+                $matches = str_replace(["\n|", ' = ', ' =', '= '], '</div><div class="col px-0">', $matches);
+
+
                 return '<div class="row row-cols-2 float-none float-lg-end border rounded ms-3 mb-3 px-2" style="width:300px; clear:right;"><div class="col px-0">'.$matches[1].'</div></div>';
             },
             $wiki
         );
-
+// dd($wiki);
         // Make images
         $wiki = preg_replace_callback(
             '/(?:\[\[Bestand:)(.*?)(?:\|.*?\]\]\n)/',
@@ -99,6 +123,15 @@ class Wiki
             function ($matches) use ($pageId) {
                 $exploded = explode('|', $matches[1]);
                 return '<a href="'.route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($exploded[0]).'">'.$exploded[0].'</a>';
+            },
+            $wiki
+        );
+
+        // Create heading 3s
+        $wiki = preg_replace_callback(
+            '/====(.*?)====/',
+            function ($matches) {
+                return '<h4 class="pt-3">'.$matches[1].'</h4>';
             },
             $wiki
         );
@@ -133,6 +166,7 @@ class Wiki
         // Create see also links
         $wiki = preg_replace('/(?:{{Zie ook\|)(.*?)(?:}})/s', '$1', $wiki);
         
+        
         // Create column list
         $wiki = preg_replace_callback(
             '/(?:{{Kolommen lijst.*?inhoud=\n\* )(.*?)(?:}})/s',
@@ -142,19 +176,23 @@ class Wiki
             },
             $wiki
         );
-        
+// dd($wiki);
         $wiki = str_replace([
                     '{|', 
                     "\n|-\n|", 
-                    "\n| style=\"padding-left: 1em;\" |", 
-                    "\n|}\n"
+                    "\n|- \n|", 
+                    "\n|  |", 
+                    "|}",
+                    "",
                 ], [
-                    '<div class="row row-cols-2"><div class="col"><ul', 
+                    '<div class="row row-cols-2 w-100"><div class="col w-100"><ul', 
+                    '><li class="ps-3 py-0">', 
                     '><li class="ps-3 py-0">', 
                     '</div><div class="col">', 
-                    '</ul></div></div>'
+                    '</ul></div></div>',
                 ], $wiki
             );
+            // dd($wiki);
 
         $wiki = preg_replace_callback(
             '/(\*\*)(.*?)(?:\n)/s',
@@ -173,7 +211,7 @@ class Wiki
         );
 
         // Remove tables, book links, bron, ref
-        $wiki = preg_replace_array(['/({{Tabel.*?\n\|.*?\n}}\n)/s', '/(<div style="overflow-x:auto;">.*?<\/div>)/s', '/(\[http:\/\/books.*?\])/s', '/({{Bron.*?}})/s', '/({{Citeer.*?}})/s', '/(<ref.*?<\/ref>)/s'], [''], $wiki);
+        $wiki = preg_replace_array(['/({{Tabel.*?\n\|.*?\n}}\n)/s', '/(<div style="overflow-x:auto;">.*?<\/div>)/s', '/(\[http:\/\/books.*?\])/s', '/({{Bron.*?}})/s', '/({{Citeer.*?}})/s'], [''], $wiki);
         
         // Remove a bunch of stuff
         $wiki = str_replace(["'''", "''", "<small>", "</small>", "]]"], '', $wiki);

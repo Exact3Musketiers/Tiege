@@ -132,8 +132,18 @@ class WikiController extends Controller
         if ($request->has('pg')) {
             $page = Wiki::wikiURL($request['pg']);
         }
-
+        
         $count = Cache::get('user.'.$user->getKey().'.count') ?? 0;
+
+        if ($request->session()->get('throughRedirectPage')) {
+            $count = $count - 1;
+            $request->session()->forget('throughRedirectPage');
+        }
+        
+        if ($request->session()->get('toErrorPage')) {
+            $count = $count - 2;
+            $request->session()->forget('toErrorPage');
+        }
         
         Cache::forget('user.'.$user->getKey().'.count');
 
