@@ -73,7 +73,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($items as $score)
+                            @foreach ($items->sortBy('click_count') as $score)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $score->user->name }}</td>

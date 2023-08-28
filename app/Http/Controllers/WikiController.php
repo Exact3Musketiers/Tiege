@@ -49,7 +49,6 @@ class WikiController extends Controller
         $scores = WikiPath::with('user')
                     ->whereNotNull('click_count')
                     ->orderBy('created_at', 'DESC')
-                    ->orderBy('click_count', 'ASC')
                     ->get();
 
         $scores = $scores->mapToGroups(function ($item, $key) {
