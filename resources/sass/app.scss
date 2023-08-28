@@ -532,3 +532,13 @@ select, input {
     background-image: url(/images/confetti.gif);
     min-height: 100vh;
 }
+
+a[aria-expanded="true"] > .fa-chevron-down {
+    transform: rotate(540deg);
+    transition: transform .5s;
+}
+
+a[aria-expanded="false"] > .fa-chevron-down {
+    transform: rotate(0deg);
+    transition: transform .5s;
+}

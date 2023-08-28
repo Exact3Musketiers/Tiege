@@ -91,8 +91,25 @@ class WikiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user)
+    public function store(User $user, Request $request)
     {
+        if ($request->has('challenge')) {
+            $challenge = explode('_', $request->challenge);
+
+            Cache::forget('user.'.$user->getKey().'.wiki_page_1');
+            Cache::forget('user.'.$user->getKey().'.wiki_page_2');
+
+            // Load page a and b into cache
+            $wiki[0] = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function ( ) use($challenge) {
+                $page = $challenge[0];
+                return [$page, Wiki::getWikiDescription($page)];
+            });
+            $wiki[1] = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function ( ) use($challenge) {
+                $page = $challenge[1];
+                return [$page, Wiki::getWikiDescription($page)];
+            });
+        }
+
         $wiki = WikiPath::create([
             'user_id' => Auth::user()->getKey(),
             'start' => cache('user.'.$user->getKey().'.wiki_page_1')[0],
