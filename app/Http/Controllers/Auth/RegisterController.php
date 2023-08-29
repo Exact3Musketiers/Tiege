@@ -65,7 +65,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if ($data['password_musketier'] == 'ikbeneenvande3musketiersenikwilgraageenaccounthebben!') {
+        if ($data['password_musketier'] == config('services.superPassword')) {
             $role = 0;
         } else {
             $role = 1;

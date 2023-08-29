@@ -46,4 +46,6 @@ return [
         'key' => env('STEAM_KEY'),
     ],
 
+    'superPassword' => env('SUPER_PASSWORD'),
+
 ];
