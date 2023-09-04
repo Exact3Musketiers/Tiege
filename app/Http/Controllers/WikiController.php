@@ -144,6 +144,11 @@ class WikiController extends Controller
             $request->session()->forget('toErrorPage');
         }
         
+        if ($request->session()->get('urlTampering')) {
+            $count = $count + 4;
+            $request->session()->forget('urlTampering');
+        }
+        
         Cache::forget('user.'.$user->getKey().'.count');
 
         $count = Cache::remember('user.'.$user->getKey().'.count', 3600, function () use ($count) {

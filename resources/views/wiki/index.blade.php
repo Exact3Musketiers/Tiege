@@ -42,51 +42,54 @@
         @endguest
     </div>
 
-    <h1>Leaderboard</h1>
-    @foreach ($scores as $key => $items)
-        @php
-            $name = explode('_', $key)
-        @endphp
-        <div class="bg-dark rounded p-2 mb-1 d-flex justify-content-between align-items-center">
-            <h2 class="text-secondary fs-5 mb-0 ">
-                <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
-                    <i class="fas fa-chevron-down"></i></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
-                </a>
-            </h2>
-            <form method="POST" action="{{ route('wiki.store', ['challenge' => $key]) }}">
-                @csrf
-                <button class="btn btn-link text-primary">Ook proberen</button>
-            </form>
-            </span>
-        </div>
-        <div class="collapse w-100" id="collapse_{{ $loop->iteration }}">    
-            <div class="bg-dark rounded p-3 mb-3">
-                <div class="table-responsive w-100">
-                    <table class="table table-dark align-middle caption-top">
-                        <caption>Totaal: {{ count($items) }}</caption>
-                        <thead>
-                            <tr class="align-middle">
-                                <th>#</th>
-                                <th>Naam</th>
-                                <th>Kliks</th>
-                                <th>Datum</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($items->sortBy('click_count') as $score)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $score->user->name }}</td>
-                                    <td>{{ $score->click_count }}</td>
-                                    <td>{{ date_format($score->created_at, "d-m-Y") }}</td>
+    <div class="mb-3">
+        <h1>Leaderboard</h1>
+
+        @foreach ($scores as $key => $items)
+            @php
+                $name = explode('_', $key)
+            @endphp
+            <div class="bg-dark rounded p-2 mb-1 d-flex justify-content-between align-items-center">
+                <h2 class="text-secondary fs-5 mb-0 ">
+                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
+                        <i class="fas fa-chevron-down"></i></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
+                    </a>
+                </h2>
+                <form method="POST" action="{{ route('wiki.store', ['challenge' => $key]) }}">
+                    @csrf
+                    <button class="btn btn-link text-primary">Ook proberen</button>
+                </form>
+                </span>
+            </div>
+            <div class="collapse w-100" id="collapse_{{ $loop->iteration }}">    
+                <div class="bg-dark rounded p-3 mb-3">
+                    <div class="table-responsive w-100">
+                        <table class="table table-dark align-middle caption-top">
+                            <caption>Totaal: {{ count($items) }}</caption>
+                            <thead>
+                                <tr class="align-middle">
+                                    <th>#</th>
+                                    <th>Naam</th>
+                                    <th>Kliks</th>
+                                    <th>Datum</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($items->sortBy('click_count') as $score)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $score->user->name }}</td>
+                                        <td>{{ $score->click_count }}</td>
+                                        <td>{{ date_format($score->created_at, "d-m-Y") }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
 </div>
 <script>
     

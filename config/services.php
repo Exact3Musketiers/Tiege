@@ -47,5 +47,7 @@ return [
     ],
 
     'superPassword' => env('SUPER_PASSWORD'),
+    
+    'salt' => env('SALT'),
 
 ];

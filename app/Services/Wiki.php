@@ -18,6 +18,10 @@ class Wiki
     public static function wikiURL($page) {
         return str_replace(' ', '_', $page);
     }
+    
+    public static function hashPage($page) {
+        return md5(self::wikiURL($page.config('services.salt')));
+    }
 
     public static function getWikiDescription($page) {
         // Get all wanted data from page
@@ -49,7 +53,7 @@ class Wiki
             return '<h1>Oeps, daar ging iets mis</h1><p><a href="'.url()->previous().'">Ga weer terug naar waar je was.</a></p>';
         }
 
-// dd($wiki);
+
         // Get title and body of the page
         $title = $wiki->json()['parse']['title'];
         $wiki = $wiki->json()['parse']['wikitext'];
@@ -60,11 +64,9 @@ class Wiki
             $explode = explode('[[', $wiki);
             $page = str_replace(']]', '', $explode[1]);
 
-            // return header("location: " . route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($page));
-            return redirect(route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($page));
+            return header("location: " . route('wiki.show', ['wiki' => $pageId , 'pg' => self::wikiURL($page), 'hash' => self::hashPage($page)]));
         }
-// dd($wiki);
-// die($wiki);
+
         $wiki = preg_replace([
             '/(style=".*?;")/', 
             '/(colspan=".*?")/',
@@ -75,7 +77,6 @@ class Wiki
 
         // Add title
         $wiki = '<h1>'.$title.'</h1><hr />'.$wiki;
-// dd($wiki);
 
         // Make infobox images
         $wiki = preg_replace_callback(
@@ -94,20 +95,17 @@ class Wiki
             },
             $wiki
         );
-// dd($wiki);
+
         // Make infobox
         $wiki = preg_replace_callback(
             '/(?:{{Infobox.*?\| )(.*?)(?:\n}}\n?)/s',
             function ($matches) {
-                // dd($matches);
                 $matches = str_replace(["\n|", ' = ', ' =', '= '], '</div><div class="col px-0">', $matches);
-
-
                 return '<div class="row row-cols-2 float-none float-lg-end border rounded ms-3 mb-3 px-2" style="width:300px; clear:right;"><div class="col px-0">'.$matches[1].'</div></div>';
             },
             $wiki
         );
-// dd($wiki);
+
         // Make images
         $wiki = preg_replace_callback(
             '/(?:\[\[Bestand:)(.*?)(?:\|.*?\]\]\n)/',
@@ -122,7 +120,7 @@ class Wiki
             '/\[\[(.*?)\]\]/',
             function ($matches) use ($pageId) {
                 $exploded = explode('|', $matches[1]);
-                return '<a href="'.route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($exploded[0]).'">'.$exploded[0].'</a>';
+                return '<a href="'.route('wiki.show', ['wiki' => $pageId, 'pg' => self::wikiURL($exploded[0]), 'hash' => self::hashPage($exploded[0])]).'">'.$exploded[0].'</a>';
             },
             $wiki
         );
@@ -158,7 +156,7 @@ class Wiki
         $wiki = preg_replace_callback(
             '/(?:{{Zie hoofdartikel\|)(.*?)(?:}})/s',
             function ($matches) use($pageId) {
-                return '<span>Zie hoofdartikel: </span><a href="'.route('wiki.show', ['wiki' => $pageId]).'?pg='.self::wikiURL($matches[1]).'">'.$matches[1].'</a>';
+                return '<span>Zie hoofdartikel: </span><a href="'.route('wiki.show', ['wiki' => $pageId, 'pg' => self::wikiURL($matches[1]), 'hash' => self::hashPage($matches[1])]).'">'.$matches[1].'</a>';
             },
             $wiki
         );
@@ -176,7 +174,7 @@ class Wiki
             },
             $wiki
         );
-// dd($wiki);
+
         $wiki = str_replace([
                     '{|', 
                     "\n|-\n|", 
@@ -192,7 +190,6 @@ class Wiki
                     '</ul></div></div>',
                 ], $wiki
             );
-            // dd($wiki);
 
         $wiki = preg_replace_callback(
             '/(\*\*)(.*?)(?:\n)/s',
@@ -210,7 +207,7 @@ class Wiki
             $wiki
         );
 
-        // Remove tables, book links, bron, ref
+        // Remove tables, book links, bron
         $wiki = preg_replace_array(['/({{Tabel.*?\n\|.*?\n}}\n)/s', '/(<div style="overflow-x:auto;">.*?<\/div>)/s', '/(\[http:\/\/books.*?\])/s', '/({{Bron.*?}})/s', '/({{Citeer.*?}})/s'], [''], $wiki);
         
         // Remove a bunch of stuff
