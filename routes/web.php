@@ -36,10 +36,12 @@ Route::get('steam/user/{user}/reset', [App\Http\Controllers\SteamController::cla
 
 route::get('/steam/reviews', [App\Http\Controllers\SteamReviewController::class, 'all'])->name('steam.review.all');
 
-route::get('/wiki/refresh', [App\Http\Controllers\WikiController::class, 'refreshPage'])->name('wiki.refresh');
-Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['index', 'store', 'show'])->middleware(HasValidHash::class);
+route::get('/wiki', [App\Http\Controllers\WikiController::class, 'index'])->name('wiki.index');
 
 Route::middleware('auth')->group(function () {
+    route::get('/wiki/refresh', [App\Http\Controllers\WikiController::class, 'refreshPage'])->name('wiki.refresh');
+    Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['store', 'show'])->middleware(HasValidHash::class);
+    
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
     Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
     Route::get('/music/lastfm/compare', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm.compare');

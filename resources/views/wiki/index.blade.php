@@ -55,11 +55,12 @@
                         <i class="fas fa-chevron-down"></i></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
                     </a>
                 </h2>
-                <form method="POST" action="{{ route('wiki.store', ['challenge' => $key]) }}">
-                    @csrf
-                    <button class="btn btn-link text-primary">Ook proberen</button>
-                </form>
-                </span>
+                @auth
+                    <form method="POST" action="{{ route('wiki.store', ['challenge' => $key]) }}">
+                        @csrf
+                        <button class="btn btn-link text-primary">Ook proberen</button>
+                    </form>
+                @endauth
             </div>
             <div class="collapse w-100" id="collapse_{{ $loop->iteration }}">    
                 <div class="bg-dark rounded p-3 mb-3">
