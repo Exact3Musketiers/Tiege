@@ -64,7 +64,7 @@ class Wiki
             $explode = explode('[[', $wiki);
             $page = str_replace(']]', '', $explode[1]);
 
-            return header("location: " . route('wiki.show', ['wiki' => $pageId , 'pg' => self::wikiURL($page), 'hash' => self::hashPage($page)]));
+            return redirect(route('wiki.show', ['wiki' => $pageId , 'pg' => self::wikiURL($page), 'hash' => self::hashPage($page)]));
         }
 
         $wiki = preg_replace([
