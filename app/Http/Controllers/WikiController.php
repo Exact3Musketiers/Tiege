@@ -18,28 +18,33 @@ class WikiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index(User $user, Request $request)
     {
         $wiki = [];
         // Check if user is signed in
         if (Auth::check()) {
             // If the rquest has the word reload delte all cookies
             if (request()->has('reload')) {
-                Cache::forget('user.'.$user->getKey().'.wiki_page_1');
-                Cache::forget('user.'.$user->getKey().'.wiki_page_2');
+                $request->session()->forget('user.'.$user->getKey().'.wiki_page_1');
+                $request->session()->forget('user.'.$user->getKey().'.wiki_page_2');
             }
             // Load page a and b into cache
-            $wiki[0] = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function () {
-                $page = Wiki::getRandomPage();
-                return [$page, Wiki::getWikiDescription($page)];
-            });
-            $wiki[1] = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function () {
-                $page = Wiki::getRandomPage();
-                return [$page, Wiki::getWikiDescription($page)];
-            });
+            if (!$request->session()->has('wiki_page_1')) {
+                $page1 = Wiki::getRandomPage();
+                $request->session()->put('wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]);
+            }
+            
+            if (!$request->session()->has('wiki_page_2')) {
+                $page2 = Wiki::getRandomPage();
+                $request->session()->put('wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]);
+            }
+
+            $wiki[0] = $request->session()->get('wiki_page_1');
+            $wiki[1] = $request->session()->get('wiki_page_2');
+
             // If a duplicate is generated refresh
             if ($wiki[0] === $wiki[1]) {
-                Cache::forget('user.'.$user->getKey().'.wiki_page_2');
+                $request->session()->forget('user.'.$user->getKey().'.wiki_page_2');
 
                 return redirect(route('wiki.index'));
             }
@@ -54,7 +59,7 @@ class WikiController extends Controller
         $scores = $scores->mapToGroups(function ($item, $key) {
             return [$item['start'].'_'.$item['end'] => $item];
         });
-// dd($scores);
+
         return view('wiki.index', compact('wiki', 'scores'));
     }
 
@@ -69,7 +74,7 @@ class WikiController extends Controller
             ],
         ]);
         // Refresh page a or be
-        Cache::forget('user.'.$user->getKey().'.wiki_page_' . $validated['page']);
+        $request->session()->forget('wiki_page_' . $validated['page']);
         // Return to wiki
         return redirect(route('wiki.index'));
     }
@@ -95,24 +100,20 @@ class WikiController extends Controller
         if ($request->has('challenge')) {
             $challenge = explode('_', $request->challenge);
 
-            Cache::forget('user.'.$user->getKey().'.wiki_page_1');
-            Cache::forget('user.'.$user->getKey().'.wiki_page_2');
+            $request->session()->forget('wiki_page_1');
+            $request->session()->forget('wiki_page_2');
+            $page1 = $challenge[0];
+            $page2 = $challenge[1];
 
-            // Load page a and b into cache
-            $wiki[0] = Cache::remember('user.'.$user->getKey().'.wiki_page_1', 3600, function ( ) use($challenge) {
-                $page = $challenge[0];
-                return [$page, Wiki::getWikiDescription($page)];
-            });
-            $wiki[1] = Cache::remember('user.'.$user->getKey().'.wiki_page_2', 3600, function ( ) use($challenge) {
-                $page = $challenge[1];
-                return [$page, Wiki::getWikiDescription($page)];
-            });
+            // Load page a and b into the session
+            $wiki[0] = $request->session()->put('wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]);
+            $wiki[1] = $request->session()->put('wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]);
         }
 
         $wiki = WikiPath::create([
             'user_id' => Auth::user()->getKey(),
-            'start' => cache('user.'.$user->getKey().'.wiki_page_1')[0],
-            'end' => cache('user.'.$user->getKey().'.wiki_page_2')[0],
+            'start' => $request->session()->get('wiki_page_1')[0],
+            'end' => $request->session()->get('wiki_page_2')[0],
         ]);
 
         return redirect(route('wiki.show', [$wiki]));
@@ -132,7 +133,7 @@ class WikiController extends Controller
             $page = Wiki::wikiURL($request['pg']);
         }
         
-        $count = Cache::get('user.'.$user->getKey().'.count') ?? 0;
+        $count = $request->session()->get('click_count') ?? 0;
 
         if ($request->session()->get('throughRedirectPage')) {
             $count = $count - 1;
@@ -149,14 +150,13 @@ class WikiController extends Controller
             $request->session()->forget('urlTampering');
         }
         
-        Cache::forget('user.'.$user->getKey().'.count');
+        $request->session()->forget('click_count');
 
-        $count = Cache::remember('user.'.$user->getKey().'.count', 3600, function () use ($count) {
-            return $count + 1;
-        });
+        $request->session()->put('click_count', $count + 1);
+        $count = $request->session()->get('click_count');
         
         if (Str::lower($page) == Str::replace(' ', '_', Str::lower($wiki->end))) {
-            Cache::forget('user.'.$user->getKey().'.count');
+            $request->session()->forget('click_count');
 
             if (is_null($wiki->click_count)) {
                 $wiki->update(['click_count' => $count]);
