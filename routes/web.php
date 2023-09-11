@@ -40,6 +40,7 @@ route::get('/wiki', [App\Http\Controllers\WikiController::class, 'index'])->name
 
 Route::middleware('auth')->group(function () {
     route::get('/wiki/refresh', [App\Http\Controllers\WikiController::class, 'refreshPage'])->name('wiki.refresh');
+    route::post('/wiki/generate', [App\Http\Controllers\WikiController::class, 'generateLink'])->name('wiki.generate');
     Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['store', 'show'])->middleware(HasValidHash::class);
     
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');

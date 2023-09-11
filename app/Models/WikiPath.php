@@ -9,7 +9,7 @@ class WikiPath extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'start', 'end', 'click_count'];
+    protected $fillable = ['user_id', 'start', 'end', 'click_count', 'shared_info'];
 
     public function user()
     {

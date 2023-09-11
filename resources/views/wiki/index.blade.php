@@ -1,3 +1,6 @@
+@php
+    use App\Services\Wiki;
+@endphp
 @extends('layouts.app')
 
 @section('content')
@@ -8,23 +11,41 @@
         @auth
             <div class="bg-dark rounded p-3 mb-3">
                 <h1>Pagina A: <span class="badge bg-primary">{{ $wiki[0][0] }}</span>
-                    <form class="d-inline" action="{{ route('wiki.refresh') }}">
-                        <input type="hidden" name="page" value="1">
-                        <button class="btn btn-lg btn-danger"><i class="fas fa-sync-alt"></i></button>
-                    </form>
+                    @if (!session()->has('sharable_link'))
+                        <form class="d-inline" action="{{ route('wiki.refresh') }}">
+                            <input type="hidden" name="page" value="1">
+                            <button class="btn btn-lg btn-danger"><i class="fas fa-sync-alt"></i></button>
+                        </form>
+                    @endif
                 </h1>
                 <hr>
                 <p class="m-0">{{ $wiki[0][1] }}</p>
             </div>
             <div class="bg-dark rounded p-3">
                 <h1>Pagina B: <span class="badge bg-primary">{{ $wiki[1][0] }}</span>
-                    <form class="d-inline" action="{{ route('wiki.refresh') }}">
-                        <input type="hidden" name="page" value="2">
-                        <button class="btn btn-lg btn-danger"><i class="fas fa-sync-alt"></i></button>
-                    </form>
+                    @if (!session()->has('sharable_link'))
+                        <form class="d-inline" action="{{ route('wiki.refresh') }}">
+                            <input type="hidden" name="page" value="2">
+                            <button class="btn btn-lg btn-danger"><i class="fas fa-sync-alt"></i></button>
+                        </form>
+                    @endif
                 </h1>
                 <hr>
                 <p>{{ $wiki[1][1] }}</p>
+            </div>
+
+            <div>
+                @if (session()->has('sharable_link'))
+                    @if(request()->has('shared'))
+                        <div class="bg-primary rounded p-3 mt-3 d-flex flex-row align-items-center justify-content-between">gemaakt door: {{ $owner[0] }}</div>
+                        @endif
+                        <div class="bg-dark rounded p-3 mt-3 d-flex flex-row align-items-center justify-content-between"><p class="text-truncate p-0 m-0">https://tige.site/wiki?shared={{ session()->get('sharable_link') }}</p> <a class="btn btn-sm btn-primary text-light ms-2"><i class="far fa-copy"></i></a></div>
+                @else
+                    <form method="POST" action="{{ route('wiki.generate') }}" class=" d-inline">
+                        @csrf
+                        <button class="btn btn-link fs-4 link-primary px-0"><strong>Genereer een deelbare link</strong></button>
+                    </form>
+                @endif
             </div>
 
             <div class="pt-3">
@@ -33,6 +54,7 @@
                     <button class="btn btn-success fs-4 px-5"><strong>start!</strong></button>
                 </form>
             </div>
+
         @endauth
         @guest
             <p><strong>Om te spelen moet je een account hebben zodat we de scores kunnen opslaan.</strong></p>
@@ -50,16 +72,18 @@
                 $name = explode('_', $key)
             @endphp
             <div class="bg-dark rounded p-2 mb-1 d-flex justify-content-between align-items-center">
-                <h2 class="text-secondary fs-5 mb-0 ">
+                <h2 class="text-secondary fs-5 mb-0 py-2">
                     <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
                         <i class="fas fa-chevron-down"></i></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
                     </a>
                 </h2>
                 @auth
-                    <form method="POST" action="{{ route('wiki.store', ['challenge' => $key]) }}">
-                        @csrf
-                        <button class="btn btn-link text-primary">Ook proberen</button>
-                    </form>
+                    @if (!session()->has('sharable_link'))
+                        <form method="POST" action="{{ route('wiki.store', ['challenge' => $key]) }}">
+                            @csrf
+                            <button class="btn btn-link link-primary">Ook proberen</button>
+                        </form>
+                    @endif
                 @endauth
             </div>
             <div class="collapse w-100" id="collapse_{{ $loop->iteration }}">    

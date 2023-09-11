@@ -18,6 +18,10 @@ class Wiki
     public static function wikiURL($page) {
         return str_replace(' ', '_', $page);
     }
+
+    public static function unWikiURL($page) {
+        return str_replace('_', ' ', $page);
+    }
     
     public static function hashPage($page) {
         return md5(self::wikiURL($page.config('services.salt')));
