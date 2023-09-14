@@ -30,23 +30,6 @@ class WikiController extends Controller
             }
             
             $owner = '';
-            
-            if ($request->has('shared')) {
-                $request->session()->forget('wiki_page_1');
-                $request->session()->forget('wiki_page_2');
-
-                $info = str_replace(' ', '+', $request->get('shared'));
-                $request->session()->put('sharable_link', $info);
-
-                $explode = explode('+', $info);
-
-                $owner = User::whereId($explode[1])->pluck('name');
-
-                $options = explode('-', $explode[2]);
-
-                $request->session()->put('wiki_page_1', [Wiki::unWikiURL($options[0]), Wiki::getWikiDescription($options[0])]);
-                $request->session()->put('wiki_page_2', [Wiki::unWikiURL($options[1]), Wiki::getWikiDescription($options[1])]);
-            }
 
             // Load page a and b into cache
             if (!$request->session()->has('wiki_page_1')) {
@@ -99,21 +82,6 @@ class WikiController extends Controller
         return redirect(route('wiki.index'));
     }
 
-    // Generate a link to share with other players
-    public function generateLink(Request $request)
-    {
-        $page1 = Wiki::wikiURL($request->session()->get('wiki_page_1')[0]);
-        $page2 = Wiki::wikiURL($request->session()->get('wiki_page_2')[0]);
-
-        $string = Str::random(6);
-
-        $info = $string.'+'.auth()->user()->getKey().'+'.$page1.'-'.$page2;
-
-        $request->session()->put('sharable_link', $info);
-
-        return back();
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -146,16 +114,6 @@ class WikiController extends Controller
         }
 
         $store = [];
-        
-        if ($request->session()->has('sharable_link')) {
-            $info = $request->session()->get('sharable_link');
-
-            $explode = explode('+', $info);
-
-            $store = [
-                'shared_info' => $explode[0].'-'.$explode[1]
-            ];
-        }
 
         $wiki = WikiPath::create([
             'user_id' => Auth::user()->getKey(),
@@ -204,20 +162,11 @@ class WikiController extends Controller
         
         if (Str::lower($page) == Str::replace(' ', '_', Str::lower($wiki->end))) {
             $request->session()->forget('click_count');
-            
 
             if (is_null($wiki->click_count)) {
                 $wiki->update(['click_count' => $count]);
             } else {
                 $count = $wiki->click_count;
-            }
-
-            if (! is_null($wiki->sharable_info) && $request->session()->has('sharable_link')) {
-                $info = $request->session()->get('sharable_link');
-                $info = explode('+', $info);
-
-                WikiPath::whereSharableInfo('');
-                $request->session()->forget('sharable_link');
             }
             
             return view('wiki.victory', compact('wiki', 'count'));

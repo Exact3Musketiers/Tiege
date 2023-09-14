@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('start');
             $table->string('end');
-            $table->string('shared_info')->nullable();
             $table->integer('click_count')->nullable();
             $table->timestamps();
         });
