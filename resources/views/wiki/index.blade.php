@@ -29,10 +29,15 @@
                 <hr>
                 <p>{{ $wiki[1][1] }}</p>
             </div>
-            <div class="pt-3">
+            <div class="pt-3 d-flex flex-row align-items-center">
                 <form method="POST" action="{{ route('wiki.store') }}">
                     @csrf
-                    <button class="btn btn-success fs-4 px-5"><strong>start!</strong></button>
+                    <button class="btn btn-success fs-4 px-2"><strong>Start, alleen!</strong></button>
+                </form>
+                <h1 class="px-2">of</h1>
+                <form method="POST" action="{{ route('challenge.store') }}">
+                    @csrf
+                    <button class="btn btn-success fs-4 px-2"><strong>Start, met vrienden!</strong></button>
                 </form>
             </div>
         @endauth

@@ -9,10 +9,15 @@ class WikiPath extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'start', 'end', 'click_count', 'shared_info'];
+    protected $fillable = ['user_id', 'start', 'end', 'click_count', 'wiki_challenge_id', 'finished'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function wikiChallenges()
+    {
+        return $this->belongsTo(wikiChallenges::class);
     }
 }

@@ -28,8 +28,6 @@ class WikiController extends Controller
                 $request->session()->forget('wiki_page_1');
                 $request->session()->forget('wiki_page_2');
             }
-            
-            $owner = '';
 
             // Load page a and b into cache
             if (!$request->session()->has('wiki_page_1')) {
@@ -55,7 +53,7 @@ class WikiController extends Controller
 
         // Create a leaderboard
         $scores = WikiPath::with('user')
-                    ->whereNotNull('click_count')
+                    ->whereFinished(true)
                     ->orderBy('created_at', 'DESC')
                     ->get();
 
@@ -63,7 +61,7 @@ class WikiController extends Controller
             return [$item['start'].'_'.$item['end'] => $item];
         });
 
-        return view('wiki.index', compact('wiki', 'scores', 'owner'));
+        return view('wiki.index', compact('wiki', 'scores'));
     }
 
     // Refresh one of the pages required for the game
@@ -117,6 +115,7 @@ class WikiController extends Controller
 
         $wiki = WikiPath::create([
             'user_id' => Auth::user()->getKey(),
+            'wiki_challenge_id' => $request->query('challenge_id'),
             'start' => $request->session()->get('wiki_page_1')[0],
             'end' => $request->session()->get('wiki_page_2')[0],
         ] + $store);
@@ -140,6 +139,9 @@ class WikiController extends Controller
         
         $count = $request->session()->get('click_count') ?? 0;
 
+        $wiki->update(['click_count' => $count]);
+            
+
         if ($request->session()->get('throughRedirectPage')) {
             $count = $count - 1;
             $request->session()->forget('throughRedirectPage');
@@ -162,13 +164,8 @@ class WikiController extends Controller
         
         if (Str::lower($page) == Str::replace(' ', '_', Str::lower($wiki->end))) {
             $request->session()->forget('click_count');
-
-            if (is_null($wiki->click_count)) {
-                $wiki->update(['click_count' => $count]);
-            } else {
-                $count = $wiki->click_count;
-            }
-            
+            $wiki->update(['finished' => true]);
+            $count = $wiki->click_count;
             return view('wiki.victory', compact('wiki', 'count'));
         }
 

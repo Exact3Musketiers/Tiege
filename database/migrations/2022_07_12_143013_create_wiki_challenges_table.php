@@ -8,30 +8,24 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('wiki_paths', function (Blueprint $table) {
+        Schema::create('wiki_challenges', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('wiki_challenge_id')->nullable()->constrained();
             $table->string('start');
             $table->string('end');
-            $table->integer('click_count')->nullable();
-            $table->boolean('finished')->default(false);
+            $table->smallInteger('state')->nullable();
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('wiki_paths');
+        Schema::dropIfExists('wiki_challenges');
     }
 };
