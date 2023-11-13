@@ -5,7 +5,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="wiki">
     <div class="py-3">
         <h1>Welkom op Wiki Search</h1>
         <p>Bij dit spel moet je van Wikipedia pagina A naar Wikipedia pagina B navigeren in zo min mogelijk stappen. Je komt aan bij het doel door op de links te klikken en zo naar een volgende pagina te gaan. Aan het einde wordt je score opgeslagen zoen kunnen andere mensen het sneller proberen te doen.</p>
@@ -24,10 +24,11 @@
             <p class="text-truncate pe-3 mb-0"><strong>Deel deze link:</strong> <span id="sharable_link">{{ URL::full() }}</span></p>
             <a class="btn btn-primary btn-sm text-light" id="copy_link"><i class="far fa-copy"></i></a>
         </div>
-        <form method="POST" action="{{ route('wiki.store', ['challenge_id' => $challenge->getKey()]) }}">
+        {{-- <form method="POST" action="{{ route('wiki.store', ['challenge_id' => $challenge->getKey()]) }}">
             @csrf
             <button class="btn btn-success fs-4 px-2"><strong>Start!</strong></button>
-        </form>
+        </form> --}}
+        <wiki-challenge-starter></wiki-challenge-starter>
     </div>
 </div>
 <script>
