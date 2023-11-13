@@ -30,10 +30,14 @@ class Wiki
     public static function getWikiDescription($page) {
         // Get all wanted data from page
         $wiki = Http::get('https://nl.wikipedia.org/api/rest_v1/page/summary/'.$page);
-
+        
         // Check if the api throws an error
         if (array_key_exists('error', $wiki->json())) {
             return '<h1>Oeps, daar ging iets mis</h1><p><a href="'.url()->previous().'">Ga weer terug naar waar je was.</a></p>';
+        }
+        
+        if (!array_key_exists('extract', $wiki->json()) || $wiki->json()['extract'] === '') {
+            return 'Geen beschrijving gevonden';
         }
 
         return $wiki->json()['extract'];
