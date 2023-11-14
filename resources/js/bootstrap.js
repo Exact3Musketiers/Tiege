@@ -5,6 +5,7 @@
  */
 
 // window.Vue = require('vue').default;
+
 try {
     window.Popper = require('@popperjs/core').default;
 
@@ -17,7 +18,6 @@ import Echo from 'laravel-echo'
 
 import Pusher from "pusher-js"
 
-
 window.Echo = new Echo({
   broadcaster: 'pusher',
   key: '7e6ac8a8de72212bf68d',
@@ -27,6 +27,5 @@ window.Echo = new Echo({
 
 window.Echo.channel('challengers')
     .listen('StartWikiChallenge', e => {
-        console.log( '');
         console.log(e.user.name + ' HATH COMMETH!!!!');
     })

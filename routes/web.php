@@ -41,9 +41,10 @@ route::get('/wiki', [App\Http\Controllers\WikiController::class, 'index'])->name
 Route::middleware('auth')->group(function () {
     route::get('/wiki/refresh', [App\Http\Controllers\WikiController::class, 'refreshPage'])->name('wiki.refresh');
     Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['store', 'show'])->middleware(HasValidHash::class);
-    
+
     Route::resource('/wiki/challenge', App\Http\Controllers\WikiChallengesController::class)->only(['store', 'show']);
-    
+    Route::post('/wiki/challenge/{challenge}/start', [App\Http\Controllers\WikiChallengesController::class, 'start'])->name('challenge.start');
+
     Route::get('/music/lyrics', [App\Http\Controllers\LyricsController::class, 'index'])->name('lyrics');
     Route::get('/music/lastfm', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm');
     Route::get('/music/lastfm/compare', [App\Http\Controllers\LastfmController::class, 'index'])->name('lastfm.compare');

@@ -55,7 +55,7 @@ class WikiChallengesController extends Controller
         } else {
             dump('De originele dude(tte)');
         }
-        
+
         // Load page a and b into the session
         if (!$request->session()->has('wiki_page_1')) {
             $request->session()->put('wiki_page_1', [$challenge->start, Wiki::getWikiDescription($challenge->start)]);
@@ -68,6 +68,10 @@ class WikiChallengesController extends Controller
         $wiki[1] = $request->session()->get('wiki_page_2');
 
         return view('wikiChalenge.show', ['challenge' => $challenge, 'wiki' => $wiki]);
+    }
+
+    public function start(Request $request) {
+        return $request;
     }
 
     /**

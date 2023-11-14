@@ -1,30 +1,63 @@
 <template>
-    <div class="d-md-flex align-items-center">
-        <button class="btn btn-success fs-4 px-2 mb-md-0 mb-3 me-3"><strong>Start!</strong></button>
-        <div class="d-md-flex">
-            <div v-for="user in users" >
-                <div class="bg-dark rounded-circle fs-2 text-uppercase d-flex justify-content-center align-items-center mx-1 my-1 border" style="width: 40px;height: 40px;" v-text="user.charAt(0)" :title="user"></div>
+    <div class="p-3">
+        <button class="btn btn-success fs-4 px-2" @click="start"><strong>Start!</strong></button>
+        <div class="row gap-3 pt-3">
+            <div class="col mb-4 pe-none" style="max-width: 80px; max-height: 80px;" v-for="user in users">
+                <div class="bg-dark rounded-circle fs-1 text-uppercase border d-flex justify-content-center align-items-center" style="width: 80px; height: 80px;" v-text="user.name.charAt(0)"></div>
+                <p v-text="user.name" class="text-center text-truncate" style="width: 80px;"></p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
+    props: {
+        route: String,
+    },
     data() {
         return {
-            users: ['Piet', 'Rick', 'Pim', 'Furkan']
+            users: [
+                {
+                    id: 1,
+                    name: 'Piet',
+                },
+                {
+                    id: 2,
+                    name: 'VoidCallerZ',
+                },
+                {
+                    id: 3,
+                    name: 'Furkan',
+                },
+                {
+                    id: 4,
+                    name: 'Pim Heijmeriks',
+                },
+                {
+                    id: 5,
+                    name: 'Johannes de Vries',
+                },
+            ]
         };
     },
 
     computed: {
-        channel() {
-            return window.Echo.join()
-        }
+
     },
 
     methods: {
-        
+        start() {
+            axios
+                .post(this.route, {
+                    users: this.users
+                })
+                .then((response) => {
+                    console.log(response);
+                });
+        }
     },
 
 

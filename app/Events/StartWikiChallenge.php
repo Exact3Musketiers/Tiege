@@ -32,7 +32,7 @@ class StartWikiChallenge implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('challengers'),
+            new Channel('challengers'),
         ];
     }
 }
