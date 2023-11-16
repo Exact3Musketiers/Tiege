@@ -34,7 +34,7 @@ class WikiController extends Controller
                 $page1 = Wiki::getRandomPage();
                 $request->session()->put('wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]);
             }
-            
+
             if (!$request->session()->has('wiki_page_2')) {
                 $page2 = Wiki::getRandomPage();
                 $request->session()->put('wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]);
@@ -111,14 +111,12 @@ class WikiController extends Controller
             $wiki[1] = $request->session()->put('wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]);
         }
 
-        $store = [];
-
         $wiki = WikiPath::create([
             'user_id' => Auth::user()->getKey(),
             'wiki_challenge_id' => $request->query('challenge_id'),
             'start' => $request->session()->get('wiki_page_1')[0],
             'end' => $request->session()->get('wiki_page_2')[0],
-        ] + $store);
+        ]);
 
         return redirect(route('wiki.show', [$wiki]));
     }
@@ -136,32 +134,32 @@ class WikiController extends Controller
         if ($request->has('pg')) {
             $page = Wiki::wikiURL($request['pg']);
         }
-        
+
         $count = $request->session()->get('click_count') ?? 0;
 
         $wiki->update(['click_count' => $count]);
-            
+
 
         if ($request->session()->get('throughRedirectPage')) {
             $count = $count - 1;
             $request->session()->forget('throughRedirectPage');
         }
-        
+
         if ($request->session()->get('toErrorPage')) {
             $count = $count - 2;
             $request->session()->forget('toErrorPage');
         }
-        
+
         if ($request->session()->get('urlTampering')) {
             $count = $count + 4;
             $request->session()->forget('urlTampering');
         }
-        
+
         $request->session()->forget('click_count');
 
         $request->session()->put('click_count', $count + 1);
         $count = $request->session()->get('click_count');
-        
+
         if (Str::lower($page) == Str::replace(' ', '_', Str::lower($wiki->end))) {
             $request->session()->forget('click_count');
             $wiki->update(['finished' => true]);
@@ -169,7 +167,7 @@ class WikiController extends Controller
             return view('wiki.victory', compact('wiki', 'count'));
         }
 
-        $body = Wiki::getWikiPage($page, $wiki->getKey());    
+        $body = Wiki::getWikiPage($page, $wiki->getKey());
 
         return view('wiki.show', compact('wiki', 'body', 'count'));
     }

@@ -8,6 +8,7 @@ use App\Models\WikiPath;
 use App\Services\Wiki;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class WikiChallengesController extends Controller
 {
@@ -70,8 +71,18 @@ class WikiChallengesController extends Controller
         return view('wikiChalenge.show', ['challenge' => $challenge, 'wiki' => $wiki]);
     }
 
-    public function start(Request $request) {
-        return $request;
+    public function start(Request $request, WikiChallenges $challenge) {
+        $wiki = [];
+        $users = $request->users;
+        foreach ($users as $user) {
+            $wiki = WikiPath::create([
+                'user_id' => $user['id'],
+                'wiki_challenge_id' => $challenge->getKey(),
+                'start' => $request->session()->get('wiki_page_1')[0],
+                'end' => $request->session()->get('wiki_page_2')[0],
+            ]);
+        }
+        return $wiki;
     }
 
     /**
