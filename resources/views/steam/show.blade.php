@@ -128,7 +128,7 @@
                         </div>
                     </div>
                 </div>
-                @if ($allReviews->isNotEmpty())
+                @if (count($allReviews) > 0)
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <div class="card text-white bg-dark">
