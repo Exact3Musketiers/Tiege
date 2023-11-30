@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Arr;
-
-use App\Services\Steam;
-use App\Models\User;
 use App\Models\SteamReview;
+use App\Models\User;
+use App\Services\Steam;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 
 class SteamController extends Controller
@@ -31,7 +27,7 @@ class SteamController extends Controller
         $ownedGames = [];
         $percentagePlayed = 0;
         $steamReview = new SteamReview;
-        $allReviews = new SteamReview;
+        $allReviews = collect();
 
         if(isset($user->steamid))
         {
