@@ -11,41 +11,28 @@
 </template>
 
 <script>
+import Echo from 'laravel-echo';
+
 const axios = require('axios');
 
 export default {
     props: {
         route: String,
+        me: Object,
     },
     data() {
         return {
-            users: [
-                {
-                    id: 1,
-                    name: 'Piet',
-                },
-                {
-                    id: 2,
-                    name: 'VoidCallerZ',
-                },
-                {
-                    id: 3,
-                    name: 'Furkan',
-                },
-                {
-                    id: 4,
-                    name: 'Pim Heijmeriks',
-                },
-                {
-                    id: 5,
-                    name: 'Johannes de Vries',
-                },
-            ]
+            users: []
         };
     },
 
-    computed: {
+    mounted() {
+        this.users.push(JSON.parse(this.me));
 
+        window.Echo.join('challengers')
+            .here(users => (this.users = users))
+            .joining(user => this.users.push(user))
+            .leaving(user => (this.users = this.users.filter(u => (u.id !== user.id))))
     },
 
     methods: {

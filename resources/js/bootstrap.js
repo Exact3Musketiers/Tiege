@@ -20,12 +20,7 @@ import Pusher from "pusher-js"
 
 window.Echo = new Echo({
   broadcaster: 'pusher',
-  key: '7e6ac8a8de72212bf68d',
+  key: process.env.MIX_PUSHER_APP_KEY,
   cluster: 'eu',
   forceTLS: true
 });
-
-window.Echo.channel('challengers')
-    .listen('StartWikiChallenge', e => {
-        console.log(e.user.name + ' HATH COMMETH!!!!');
-    })

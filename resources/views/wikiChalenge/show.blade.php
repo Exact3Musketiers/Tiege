@@ -28,7 +28,7 @@
             @csrf
             <button class="btn btn-success fs-4 px-2"><strong>Start!</strong></button>
         </form> --}}
-        <wiki-challenge-starter route="{{ route('challenge.start', $challenge) }}"></wiki-challenge-starter>
+        <wiki-challenge-starter route="{{ route('challenge.start', $challenge) }}" me="{{json_encode(auth()->user()->toArray())}}"></wiki-challenge-starter>
     </div>
 </div>
 <script>
