@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('challengers', function ($user) {
+Broadcast::channel('challengers.{challenge_id}', function ($user) {
     if (auth()->check()) {
 
-        return $user->toArray();
+        return $user->only('id', 'name');
 
     }
 });

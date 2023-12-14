@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import Echo from 'laravel-echo';
 
 const axios = require('axios');
 
@@ -19,6 +18,7 @@ export default {
     props: {
         route: String,
         me: Object,
+        challengeId: Number,
     },
     data() {
         return {
@@ -27,9 +27,9 @@ export default {
     },
 
     mounted() {
-        this.users.push(JSON.parse(this.me));
+        // this.users.push(this.me);
 
-        window.Echo.join('challengers')
+        window.Echo.join('challengers.' + this.challengeId)
             .here(users => (this.users = users))
             .joining(user => this.users.push(user))
             .leaving(user => (this.users = this.users.filter(u => (u.id !== user.id))))

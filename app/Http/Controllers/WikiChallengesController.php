@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\StartWikiChallenge;
 use App\Models\WikiChallenges;
 use App\Models\WikiPath;
 use App\Services\Wiki;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class WikiChallengesController extends Controller
 {
@@ -50,7 +48,6 @@ class WikiChallengesController extends Controller
      */
     public function show(Request $request, WikiChallenges $challenge)
     {
-        StartWikiChallenge::dispatch(auth()->user());
         if ($challenge->user_id !== auth()->user()->getKey()) {
             dump('iemand anders');
         } else {
