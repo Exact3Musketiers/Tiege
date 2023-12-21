@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-use App\Services\Wiki;
 use App\Models\User;
 use App\Models\WikiPath;
+use App\Services\Wiki;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class WikiController extends Controller
 {
@@ -54,12 +53,25 @@ class WikiController extends Controller
         // Create a leaderboard
         $scores = WikiPath::with('user')
                     ->whereFinished(true)
+                    ->whereNull('wiki_challenge_id')
                     ->orderBy('created_at', 'DESC')
                     ->get();
 
         $scores = $scores->mapToGroups(function ($item, $key) {
             return [$item['start'].'_'.$item['end'] => $item];
-        });
+        })->take(5);
+//dd(WikiPath::with('wikiChallenges')->get());
+//        // Create a recent challenge board
+//        $challenges = WikiPath::with('user')
+//                    ->whereFinished(true)
+//                    ->whereNotNull('wiki_challenge_id')
+//                    ->orderBy('created_at', 'DESC')
+//                    ->whereDate('created_at', Carbon::today())
+//                    ->get();
+//
+//        $challenges = $challenges->mapToGroups(function ($item, $key) {
+//            return [$item['start'].'_'.$item['end'].'_'.$item['wiki_challenge_id'] => $item];
+//        })->take(5);
 
         return view('wiki.index', compact('wiki', 'scores'));
     }
@@ -137,7 +149,9 @@ class WikiController extends Controller
 
         $count = $request->session()->get('click_count') ?? 0;
 
-        $wiki->update(['click_count' => $count]);
+        if (!$wiki->finished) {
+            $wiki->update(['click_count' => $count]);
+        }
 
 
         if ($request->session()->get('throughRedirectPage')) {

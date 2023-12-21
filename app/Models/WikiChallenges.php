@@ -9,7 +9,7 @@ class WikiChallenges extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'start', 'end'];
+    protected $fillable = ['user_id', 'start', 'end', 'state'];
 
     function wikiPaths() {
         return $this->hasMany(WikiPath::class);

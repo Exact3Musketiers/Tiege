@@ -24,11 +24,11 @@
             <p class="text-truncate pe-3 mb-0"><strong>Deel deze link:</strong> <span id="sharable_link">{{ URL::full() }}</span></p>
             <a class="btn btn-primary btn-sm text-light" id="copy_link"><i class="far fa-copy"></i></a>
         </div>
-        {{-- <form method="POST" action="{{ route('wiki.store', ['challenge_id' => $challenge->getKey()]) }}">
-            @csrf
-            <button class="btn btn-success fs-4 px-2"><strong>Start!</strong></button>
-        </form> --}}
-        <wiki-challenge-starter route="{{ route('challenge.start', $challenge) }}" :challenge-id="{{$challenge->getKey()}}" :me="{{json_encode(auth()->user()->only('id', 'name'))}}"></wiki-challenge-starter>
+
+        <wiki-challenge-starter route="{{ route('challenge.start', $challenge) }}"
+                                :challenge="{{ json_encode($challenge->only('id', 'user_id')) }}"
+                                :me="{{ json_encode(auth()->user()->only('id', 'name')) }}">
+        </wiki-challenge-starter>
     </div>
 </div>
 <script>

@@ -18,6 +18,6 @@ class WikiPath extends Model
 
     public function wikiChallenges()
     {
-        return $this->belongsTo(wikiChallenges::class);
+        return $this->belongsTo(WikiChallenges::class);
     }
 }

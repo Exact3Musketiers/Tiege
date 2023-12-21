@@ -2,10 +2,8 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -14,14 +12,16 @@ class StartWikiChallenge implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $challenge;
+    public $route;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($user)
+    public function __construct($challenge, $route)
     {
-        $this->user = $user;
+        $this->challenge = $challenge;
+        $this->route = $route;
     }
 
     /**
@@ -32,7 +32,7 @@ class StartWikiChallenge implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('challengers'),
+            new PresenceChannel('challengers.'.$this->challenge->getKey()),
         ];
     }
 }

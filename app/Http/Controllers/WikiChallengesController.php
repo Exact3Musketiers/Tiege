@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StartWikiChallenge;
 use App\Models\WikiChallenges;
 use App\Models\WikiPath;
 use App\Services\Wiki;
@@ -48,12 +49,6 @@ class WikiChallengesController extends Controller
      */
     public function show(Request $request, WikiChallenges $challenge)
     {
-        if ($challenge->user_id !== auth()->user()->getKey()) {
-            dump('iemand anders');
-        } else {
-            dump('De originele dude(tte)');
-        }
-
         // Load page a and b into the session
         if (!$request->session()->has('wiki_page_1')) {
             $request->session()->put('wiki_page_1', [$challenge->start, Wiki::getWikiDescription($challenge->start)]);
@@ -71,14 +66,21 @@ class WikiChallengesController extends Controller
     public function start(Request $request, WikiChallenges $challenge) {
         $wiki = [];
         $users = $request->users;
-        foreach ($users as $user) {
-            $wiki = WikiPath::create([
+        foreach ($users as $key => $user) {
+            $new_path = WikiPath::create([
                 'user_id' => $user['id'],
                 'wiki_challenge_id' => $challenge->getKey(),
                 'start' => $request->session()->get('wiki_page_1')[0],
                 'end' => $request->session()->get('wiki_page_2')[0],
             ]);
+
+            $wiki[$new_path['user_id']] = $new_path->only('id');
         }
+
+        $challenge->update(['state' => 1]);
+
+        event(new StartWikiChallenge($challenge, $wiki));
+
         return $wiki;
     }
 
