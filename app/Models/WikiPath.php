@@ -16,7 +16,7 @@ class WikiPath extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function wikiChallenges()
+    public function wikiChallenge()
     {
         return $this->belongsTo(WikiChallenges::class);
     }

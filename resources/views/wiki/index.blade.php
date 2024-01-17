@@ -50,15 +50,16 @@
     </div>
 
     <div class="mb-3">
-        <h1>Leaderboard</h1>
+        <h1>Scorebord</h1>
 
         @foreach ($scores as $key => $items)
             @php
-                $name = explode('_', $key)
+                $name = explode('_', $key);
+                $id = $items[$loop->index]['id'];
             @endphp
             <div class="bg-dark rounded p-2 mb-1 d-flex justify-content-between align-items-center">
                 <h2 class="text-secondary fs-5 mb-0 py-2">
-                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
+                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $id }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
                         <i class="fas fa-chevron-down"></i></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
                     </a>
                 </h2>
@@ -69,7 +70,7 @@
                     </form>
                 @endauth
             </div>
-            <div class="collapse w-100" id="collapse_{{ $loop->iteration }}">
+            <div class="collapse w-100" id="collapse_{{ $id }}">
                 <div class="bg-dark rounded p-3 mb-3">
                     <div class="table-responsive w-100">
                         <table class="table table-dark align-middle caption-top">
@@ -102,13 +103,14 @@
     <div class="mb-3">
         <h1>Recente challenges</h1>
 
-        @foreach ($scores as $key => $items)
+        @foreach ($challenges as $key => $items)
             @php
-                $name = explode('_', $key)
+                $name = explode('_', $key);
+                $id = end($name);
             @endphp
             <div class="bg-dark rounded p-2 mb-1 d-flex justify-content-between align-items-center">
                 <h2 class="text-secondary fs-5 mb-0 py-2">
-                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
+                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $id }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
                         <i class="fas fa-chevron-down"></i></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
                     </a>
                 </h2>
@@ -119,7 +121,7 @@
                     </form>
                 @endauth
             </div>
-            <div class="collapse w-100" id="collapse_{{ $loop->iteration }}">
+            <div class="collapse w-100" id="collapse_{{ $id }}">
                 <div class="bg-dark rounded p-3 mb-3">
                     <div class="table-responsive w-100">
                         <table class="table table-dark align-middle caption-top">
@@ -135,10 +137,10 @@
                             <tbody>
                             @foreach ($items->sortBy('click_count') as $score)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ ($score->finished) ? $loop->iteration : '-' }}</td>
                                     <td>{{ $score->user->name }}</td>
-                                    <td>{{ $score->click_count }}</td>
-                                    <td>{{ date_format($score->created_at, "d-m-Y") }}</td>
+                                    <td>{{ ($score->finished) ? $score->click_count : '-' }}</td>
+                                    <td>{{ ($score->finished) ? date_format($score->created_at, "d-m-Y") : '-' }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
