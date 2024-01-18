@@ -55,12 +55,11 @@
         @foreach ($scores as $key => $items)
             @php
                 $name = explode('_', $key);
-                $id = $items[$loop->index]['id'];
             @endphp
             <div class="bg-dark rounded p-2 mb-1 d-flex justify-content-between align-items-center">
                 <h2 class="text-secondary fs-5 mb-0 py-2">
-                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $id }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
-                        <i class="fas fa-chevron-down"></i></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
+                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#scores_{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="scores_{{ $loop->iteration }}">
+                        <i class="fas fa-chevron-down"></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
                     </a>
                 </h2>
                 @auth
@@ -70,7 +69,7 @@
                     </form>
                 @endauth
             </div>
-            <div class="collapse w-100" id="collapse_{{ $id }}">
+            <div class="collapse w-100" id="scores_{{ $loop->iteration }}">
                 <div class="bg-dark rounded p-3 mb-3">
                     <div class="table-responsive w-100">
                         <table class="table table-dark align-middle caption-top">
@@ -106,11 +105,10 @@
         @foreach ($challenges as $key => $items)
             @php
                 $name = explode('_', $key);
-                $id = end($name);
             @endphp
             <div class="bg-dark rounded p-2 mb-1 d-flex justify-content-between align-items-center">
                 <h2 class="text-secondary fs-5 mb-0 py-2">
-                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#collapse_{{ $id }}" role="button" aria-expanded="false" aria-controls="collapse_{{ $loop->iteration }}">
+                    <a class="link-light text-decoration-none" data-bs-toggle="collapse" href="#challenges_{{ $loop->iteration }}" role="button" aria-expanded="false" aria-controls="challenges_{{ $loop->iteration }}">
                         <i class="fas fa-chevron-down"></i></i> {{ $name[0] }} <i class="fas fa-long-arrow-alt-right"></i> {{ $name[1] }}
                     </a>
                 </h2>
@@ -121,7 +119,7 @@
                     </form>
                 @endauth
             </div>
-            <div class="collapse w-100" id="collapse_{{ $id }}">
+            <div class="collapse w-100" id="challenges_{{ $loop->iteration }}">
                 <div class="bg-dark rounded p-3 mb-3">
                     <div class="table-responsive w-100">
                         <table class="table table-dark align-middle caption-top">
