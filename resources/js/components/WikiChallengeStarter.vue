@@ -36,7 +36,7 @@ export default {
             .joining(user => this.users.push(user))
             .leaving(user => (this.users = this.users.filter(u => (u.id !== user.id))))
             .listen('StartWikiChallenge', (e) => {
-                window.location.href = 'http://tiege.test/wiki/' + e.route[this.me.id].id;
+                window.location.href = '/wiki/' + e.route[this.me.id].id;
             });
 
     },
