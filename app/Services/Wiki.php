@@ -187,6 +187,21 @@ class Wiki
             $wiki
         );
 
+        // get countries by country code
+        $wiki = preg_replace_callback(
+            '/{{([A-Z]{2})}}/',
+            function ($matches) use ($pageId) {
+                $countries = collect(json_decode(file_get_contents('files/countries.json'), true));
+                if ($countries->pluck('short_name')->contains($matches[1])) {
+                    $name = $countries->where('short_name', $matches[1])->first()['name'];
+                    return '<a href="'.route('wiki.show', ['wiki' => $pageId, 'pg' => self::wikiURL($name), 'hash' => self::hashPage($name)]).'">'.$name.'</a>';
+                } else {
+                    return true;
+                }
+            },
+            $wiki
+        );
+
         $wiki = str_replace([
                     '{|',
                     "\n|-\n|",
