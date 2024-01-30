@@ -16,42 +16,45 @@ class WikiController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index(User $user, Request $request)
     {
         $wiki = [];
+        $duplicate = true;
+
         // Check if user is signed in
         if (Auth::check()) {
-            // If the rquest has the word reload delte all cookies
-            if (request()->has('reload')) {
-                $request->session()->forget('wiki_page_1');
-                $request->session()->forget('wiki_page_2');
-            }
+            while ($duplicate) {
+                // If the request has the word reload delete all cookies
+                if (request()->has('reload')) {
+                    Wiki::session_forget($request, ['wiki_page_1', 'wiki_page_2']);
+                }
 
-            // Load page a and b into cache
-            if (!$request->session()->has('wiki_page_1')) {
-                $page1 = Wiki::getRandomPage();
-                $request->session()->put('wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]);
-            }
+                // Load page a and b into cache
+                if (!$request->session()->has('wiki_page_1')) {
+                    $page1 = Wiki::getRandomPage();
+                    $request->session()->put('wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]);
+                }
 
-            if (!$request->session()->has('wiki_page_2')) {
-                $page2 = Wiki::getRandomPage();
-                $request->session()->put('wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]);
-            }
+                if (!$request->session()->has('wiki_page_2')) {
+                    $page2 = Wiki::getRandomPage();
+                    $request->session()->put('wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]);
+                }
 
-            $wiki[0] = $request->session()->get('wiki_page_1');
-            $wiki[1] = $request->session()->get('wiki_page_2');
+                $wiki[0] = $request->session()->get('wiki_page_1');
+                $wiki[1] = $request->session()->get('wiki_page_2');
 
-            // If a duplicate is generated refresh
-            if ($wiki[0] === $wiki[1]) {
-                $request->session()->forget('wiki_page_2');
-
-                return redirect(route('wiki.index'));
+                // If a duplicate is generated refresh
+                if ($wiki[0] === $wiki[1]) {
+                    $request->session()->forget('wiki_page_2');
+                } else {
+                    $duplicate = false;
+                }
             }
         }
 
-        $wikiPath =WikiPath::with('user', 'wikiChallenge')->get();
+        $wikiPath = WikiPath::with('user', 'wikiChallenge')->get();
 
         // Create a leaderboard
         $scores = $wikiPath
@@ -59,7 +62,7 @@ class WikiController extends Controller
                     ->whereNull('wiki_challenge_id')
                     ->sortByDesc('created_at');
 
-        $scores = $scores->mapToGroups(function ($item, $key) {
+        $scores = $scores->mapToGroups(function ($item) {
             return [$item['start'].'_'.$item['end'] => $item];
         })->take(5);
 
@@ -69,7 +72,7 @@ class WikiController extends Controller
                     ->sortByDesc('created_at')
                     ->where('created_at', '>', Carbon::now()->subDays(7));
 
-        $challenges = $challenges->mapToGroups(function ($item, $key) {
+        $challenges = $challenges->mapToGroups(function ($item) {
             return [$item['start'].'_'.$item['end'].'_'.$item['wiki_challenge_id'] => $item];
         })->take(5);
 
@@ -93,34 +96,24 @@ class WikiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(User $user, Request $request)
+    public function store(Request $request)
     {
         if ($request->has('challenge')) {
             $challenge = explode('_', $request->challenge);
 
-            $request->session()->forget('wiki_page_1');
-            $request->session()->forget('wiki_page_2');
+            Wiki::session_forget($request, ['wiki_page_1', 'wiki_page_2']);
+
             $page1 = $challenge[0];
             $page2 = $challenge[1];
 
             // Load page a and b into the session
-            $wiki[0] = $request->session()->put('wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]);
-            $wiki[1] = $request->session()->put('wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]);
+            $wiki[0] = session(['wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]]);
+            $wiki[1] = session(['wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]]);
         }
 
         $wiki = WikiPath::create([
@@ -136,8 +129,10 @@ class WikiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  WikiPath  $wiki
+     * @param  User  $user
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\View\View
      */
     public function show(WikiPath $wiki, User $user, Request $request)
     {
@@ -152,7 +147,6 @@ class WikiController extends Controller
         if (!$wiki->finished) {
             $wiki->update(['click_count' => $count]);
         }
-
 
         if ($request->session()->get('throughRedirectPage')) {
             $count = $count - 1;
@@ -179,7 +173,6 @@ class WikiController extends Controller
             $wiki->update(['finished' => true]);
 
             $challenges = WikiPath::with('WikiChallenge')->where('wiki_challenge_id', $wiki->wiki_challenge_id)->get();
-            $finished = $challenges->where('finished', false)->count() > 0;
 
             if (! $challenges->where('finished', false)->count() > 0) {
                 $challenges->first()->wikiChallenge()->update(['state' => 2]);
@@ -192,39 +185,5 @@ class WikiController extends Controller
         $body = Wiki::getWikiPage($page, $wiki->getKey());
 
         return view('wiki.show', compact('wiki', 'body', 'count'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

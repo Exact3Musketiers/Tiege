@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
@@ -22,20 +23,27 @@ class Wiki
     public static function unWikiURL($page) {
         return str_replace('_', ' ', $page);
     }
-    
+
     public static function hashPage($page) {
         return md5(self::wikiURL($page.config('services.salt')));
+    }
+
+    public static function session_forget(Request $request, Array $keys): void
+    {
+        foreach ($keys as $key) {
+            $request->session()->forget($key);
+        }
     }
 
     public static function getWikiDescription($page) {
         // Get all wanted data from page
         $wiki = Http::get('https://nl.wikipedia.org/api/rest_v1/page/summary/'.$page);
-        
+
         // Check if the api throws an error
         if (array_key_exists('error', $wiki->json())) {
             return '<h1>Oeps, daar ging iets mis</h1><p><a href="'.url()->previous().'">Ga weer terug naar waar je was.</a></p>';
         }
-        
+
         if (!array_key_exists('extract', $wiki->json()) || $wiki->json()['extract'] === '') {
             return 'Geen beschrijving gevonden';
         }
@@ -76,7 +84,7 @@ class Wiki
         }
 
         $wiki = preg_replace([
-            '/(style=".*?;")/', 
+            '/(style=".*?;")/',
             '/(colspan=".*?")/',
             '/(rowspan=".*?")/',
             '/(bgcolor=".*?")/',
@@ -94,7 +102,7 @@ class Wiki
             },
             $wiki
         );
-        
+
         // Make infobox images
         $wiki = preg_replace_callback(
             '/(?:handtekening.*?= )(.*?\.svg)/',
@@ -168,11 +176,11 @@ class Wiki
             },
             $wiki
         );
-        
+
         // Create see also links
         $wiki = preg_replace('/(?:{{Zie ook\|)(.*?)(?:}})/s', '$1', $wiki);
-        
-        
+
+
         // Create column list
         $wiki = preg_replace_callback(
             '/(?:{{Kolommen lijst.*?inhoud=\n\* )(.*?)(?:}})/s',
@@ -184,17 +192,17 @@ class Wiki
         );
 
         $wiki = str_replace([
-                    '{|', 
-                    "\n|-\n|", 
-                    "\n|- \n|", 
-                    "\n|  |", 
+                    '{|',
+                    "\n|-\n|",
+                    "\n|- \n|",
+                    "\n|  |",
                     "|}",
                     "",
                 ], [
-                    '<div class="row row-cols-2 w-100"><div class="col w-100"><ul', 
-                    '><li class="ps-3 py-0">', 
-                    '><li class="ps-3 py-0">', 
-                    '</div><div class="col">', 
+                    '<div class="row row-cols-2 w-100"><div class="col w-100"><ul',
+                    '><li class="ps-3 py-0">',
+                    '><li class="ps-3 py-0">',
+                    '</div><div class="col">',
                     '</ul></div></div>',
                 ], $wiki
             );
@@ -217,7 +225,7 @@ class Wiki
 
         // Remove tables, book links, bron
         $wiki = preg_replace_array(['/({{Tabel.*?\n\|.*?\n}}\n)/s', '/(<div style="overflow-x:auto;">.*?<\/div>)/s', '/(\[http:\/\/books.*?\])/s', '/({{Bron.*?}})/s', '/({{Citeer.*?}})/s'], [''], $wiki);
-        
+
         // Remove a bunch of stuff
         $wiki = str_replace(["'''", "''", "<small>", "</small>", "]]"], '', $wiki);
         $wiki = str_replace('{{Zie dp}}', '<a href="https://nl.wikipedia.org/wiki/'.self::wikiURL($page).'_(doorverwijspagina)">Zie doorverwijspagina</a><br /><br />', $wiki);
