@@ -112,8 +112,8 @@ class WikiController extends Controller
             $page2 = $challenge[1];
 
             // Load page a and b into the session
-            $wiki[0] = session(['wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]]);
-            $wiki[1] = session(['wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]]);
+            session()->put('wiki_page_1', [$page1, Wiki::getWikiDescription($page1)]);
+            session()->put('wiki_page_2', [$page2, Wiki::getWikiDescription($page2)]);
         }
 
         $wiki = WikiPath::create([
