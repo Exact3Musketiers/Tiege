@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/login', [App\Http\Controllers\PagesController::class, 'uwu'])->name('uwu');
+Route::post('/signIn', [App\Http\Controllers\Api\AuthController::class, 'signIn'])->name('signIn');
+Route::middleware('auth:sanctum')->post('/signOut', [App\Http\Controllers\Api\AuthController::class, 'signOut'])->name('signOut');
+
