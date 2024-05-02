@@ -19,5 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/signIn', [App\Http\Controllers\Api\AuthController::class, 'signIn'])->name('signIn');
-Route::middleware('auth:sanctum')->post('/signOut', [App\Http\Controllers\Api\AuthController::class, 'signOut'])->name('signOut');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/signOut', [App\Http\Controllers\Api\AuthController::class, 'signOut'])->name('signOut');
+});
 
