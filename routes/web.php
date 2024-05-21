@@ -38,6 +38,8 @@ route::get('/steam/reviews', [App\Http\Controllers\SteamReviewController::class,
 
 route::get('/wiki', [App\Http\Controllers\WikiController::class, 'index'])->name('wiki.index');
 
+route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map.index');
+
 Route::middleware('auth')->group(function () {
     route::get('/wiki/refresh', [App\Http\Controllers\WikiController::class, 'refreshPage'])->name('wiki.refresh');
     Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['store', 'show'])->middleware(HasValidHash::class);
