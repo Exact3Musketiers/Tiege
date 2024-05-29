@@ -36,9 +36,6 @@ return [
     'news' => [
         'key' => env('NEWSAPI_KEY'),
     ],
-    'currency' => [
-        'key' => env('CURRENCYCONVERTERAPI_KEY'),
-    ],
     'lastfm' => [
         'key' => env('AUDIOSCROBBLER_KEY'),
     ],
@@ -47,7 +44,7 @@ return [
     ],
 
     'superPassword' => env('SUPER_PASSWORD'),
-    
+
     'salt' => env('SALT'),
 
 ];
