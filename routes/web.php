@@ -22,9 +22,8 @@ Route::post('/search', [App\Http\Controllers\HomeController::class, 'search'])->
 Route::get('/policy', [App\Http\Controllers\PagesController::class, 'policy'])->name('policy');
 
 
-Route::resource('/numbers/random', App\Http\Controllers\RandomController::class);
-
-route::get('/numbers/driving', [App\Http\Controllers\CarEfficiencyController::class, 'index'])->name('driving.index');
+Route::get('/numbers/random', [App\Http\Controllers\NumberController::class, 'randomIndex'])->name('numbers.random');
+route::get('/numbers/driving', [App\Http\Controllers\NumberController::class, 'drivingIndex'])->name('numbers.driving');
 
 
 Route::get('/s', [App\Http\Controllers\SarcasmController::class, 'index'])->name('sarcasm');

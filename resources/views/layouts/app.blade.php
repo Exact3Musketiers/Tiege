@@ -109,9 +109,9 @@
                                     </button>
                                     <div class="collapse" id="numbers-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="numbers">
-                                            <li><a href="{{ route('random.index') }}"
+                                            <li><a href="{{ route('numbers.random') }}"
                                                     class="rounded">Random</a></li>
-                                            <li><a href="{{ route('driving.index') }}" class="rounded">Rond rijden</a>
+                                            <li><a href="{{ route('numbers.driving') }}" class="rounded">Rond rijden</a>
                                             </li>
                                         </ul>
                                     </div>
