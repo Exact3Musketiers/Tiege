@@ -4,13 +4,8 @@ namespace App\Http\Controllers;
 
 class NumberController extends Controller
 {
-    public function randomIndex()
+    public function index()
     {
         return view('numbers.rng');
-    }
-
-    public function drivingIndex()
-    {
-        return view('numbers.driving');
     }
 }
