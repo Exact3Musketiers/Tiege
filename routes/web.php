@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\HasValidHash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +59,39 @@ Route::middleware('auth')->group(function () {
     route::get('/steam/reviews/{user}/review/{review}', [App\Http\Controllers\SteamReviewController::class, 'edit'])->name('steam.review.edit');
 
 
+    Route::get('/spotify/auth', [App\Http\Controllers\Api\SpotifyController::class, 'authenticate'])->name('spotify.authenticate');
+    Route::get('/spotify/callback', [App\Http\Controllers\Api\SpotifyController::class, 'callback'])->name('spotify.callback');
+    Route::get('/spotify/following', [App\Http\Controllers\Api\SpotifyController::class, 'following'])->name('spotify.following');
+    Route::get('/dashboard', [App\Http\Controllers\Api\SpotifyController::class, 'dashboard'])->name('spotify.dashboard');
+    Route::get('/spotify/user', function (Request $request) {
+        $api = new SpotifyWebAPI\SpotifyWebAPI();
+
+        // Fetch the saved access token from somewhere. A session for example.
+        $api->setAccessToken(session('spotify_access_token'));
+
+        // It's now possible to request data about the currently authenticated user
+//        session(['spotify_access_token' => $accessToken]);
+        $user = $api->me();
+
+            $playlists = $api->getUserPlaylists($user->id, [
+                'limit' => 50
+            ]);
+//            dd(session('spotify_access_token'));
+            dd($api->getMyCurrentTrack());
+//            dd($api->getMyDevices());
+//            dd(json_decode($api->getMyDevices()->devices[0]));
+        $api->play('f00a2194a0862e524c5088bb1b03661be004935a', [
+            'uris' => ['spotify:track:41hP8Zj09hdeQywGGIcXxA'],
+        ]);
+        dd(
+            $playlists
+        );
+
+//        // Getting Spotify catalog data is of course also possible
+//        print_r(
+//            $api->getTrack('7EjyzZcbLxW7PaaLua9Ksb')
+//        );
+    });
 
     // Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
     // Route::post('/profile/destroy', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
