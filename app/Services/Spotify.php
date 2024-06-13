@@ -82,12 +82,33 @@ class Spotify
     public static function getTop($type = 'tracks',$limit = 50, $offset = 0, $time_range='short_term')
     {
         $api = new SpotifyWebAPI\SpotifyWebAPI();
+        if (is_null(auth()->user()->spotify_access_token)) {
+            abort(403,'oeeeh gen token meer');
+        }
         $api->setAccessToken(Crypt::decryptString(auth()->user()->spotify_access_token));
+        try {
+            return $api->getMyTop($type, [
+                'limit' => $limit,
+                'offset' => $offset,
+                'time_range'=> $time_range
+            ]);
+        } catch (SpotifyWebAPI\SpotifyWebAPIException $e) {
+//            return $e;
+//            dd($e->hasExpiredToken());
+            if ($e->getCode() === 401) {
+                 abort(403,'oeeeh gen token meer');
+            }
 
-        return $api->getMyTop($type, [
-            'limit' => $limit,
-            'offset' => $offset,
-            'time_range'=> $time_range
-        ]);
+                if ($e->getCode() == 429) { // 429 is Too Many Requests
+                    $lastResponse = $api->getRequest()->getLastResponse();
+
+                    $retryAfter = $lastResponse['headers']['retry-after']; // Number of seconds to wait before sending another request
+                } else {
+                    // Some other kind of error
+                }
+//                return abort(402,'dunno man');
+//            return $e->getCode();
+            abort(500);
+        }
     }
 }

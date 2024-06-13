@@ -14,12 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::post('/signIn', [App\Http\Controllers\Api\AuthController::class, 'signIn'])->name('signIn');
 Route::middleware('auth:sanctum')->group(function () {
+Route::get('/user', function (Request $request) {
+    return $request->user();
+});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
     Route::post('/signOut', [App\Http\Controllers\Api\AuthController::class, 'signOut'])->name('signOut');
     //before axios call store the token and refresh token in db so that the app can use them when doing auth()->user()->token or something
     Route::get('/dashboard', [App\Http\Controllers\Api\SpotifyController::class, 'dashboard'])->name('spotify.dashboard');
