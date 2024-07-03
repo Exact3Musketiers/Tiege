@@ -13,22 +13,35 @@
             @endguest
             @auth
                 <h5>Selecteer je auto om kilometers en zuinigheid bij te houden.</h5>
-                <div class="card text-white bg-dark">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="https://www.alblasserdamsnieuws.nl/wordpress/wp-content/uploads/2014/07/lexus.jpg" class="img-fluid w-100 rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <a href="#"><h5 class="card-title">Lexus CT 200h</h5></a>
-                                <p class="card-text mb-0"></p>
-                                <p class="card-text">Deze auto rijdt 1 op 24.</p>
+                <div class="row row-cols-xl-2 row-cols-1 g-3">
+                    @foreach($cars as $car)
+                        <div class="col d-flex">
+                            <div class="card with-footer text-white bg-dark">
+                                <div class="row h-100">
+                                    <div class="col-md-5">
+                                        <img src="{{ $car->get_image() }}" class="img-fluid w-100 object-fit-cover h-100" style="object-fit: cover;" alt="{{ $car->brand. ' ' .$car->model }}">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="card-body">
+                                            <a href="#"><h5 class="card-title">{{ $car->brand. ' ' .$car->model }}</h5></a>
+                                            <ul>
+                                                <li><b>Bouwjaar:</b> {{ $car->year }}</li>
+                                                <li><b>Afstand gereden:</b> {{ $car->total_distance }} km</li>
+                                                <li><b>Gemiddeld gebruik:</b> 1 op {{ $car->avg_usage }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a href="{{ route('driving.edit', $car) }}">Edit</a>
+                                    |
+                                    <a href="{{ route('driving.edit', $car) }}">Beheren</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-
-                <a href="#" class="btn btn-primary text-light mt-3">Nieuwe auto toevoegen? lekker bezig!</a>
+                <a href="{{ route('driving.create') }}" class="btn btn-primary text-light mt-3">Nieuwe auto toevoegen? Lekker bezig!</a>
             @endauth
         </div>
     </div>

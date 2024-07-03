@@ -24,7 +24,7 @@ Route::get('/policy', [App\Http\Controllers\PagesController::class, 'policy'])->
 
 Route::get('/numbers/random', [App\Http\Controllers\NumberController::class, 'index'])->name('numbers.random');
 
-route::resource('/driving', App\Http\Controllers\CarController::class)->except(['show']);
+route::resource('/driving', App\Http\Controllers\CarController::class)->parameters(['driving'=> 'car'])->except(['show']);
 
 
 Route::get('/s', [App\Http\Controllers\SarcasmController::class, 'index'])->name('sarcasm');
