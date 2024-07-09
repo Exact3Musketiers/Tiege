@@ -1,3 +1,7 @@
+@php
+    use App\Models\RefuelingStat
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -27,7 +31,7 @@
                                             <ul>
                                                 <li><b>Bouwjaar:</b> {{ $car->year }}</li>
                                                 <li><b>Afstand gereden:</b> {{ $car->total_distance }} km</li>
-                                                <li><b>Gemiddeld gebruik:</b> 1 op {{ $car->avg_usage }}</li>
+                                                <li><b>Gemiddeld gebruik:</b> 1 op {{ RefuelingStat::convertToFloat($car->avg_usage) }}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -35,13 +39,13 @@
                                 <div class="card-footer text-center">
                                     <a href="{{ route('driving.edit', $car) }}">Edit</a>
                                     |
-                                    <a href="{{ route('driving.edit', $car) }}">Beheren</a>
+                                    <a href="{{ route('efficiency.index', $car) }}">Beheren</a>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-                <a href="{{ route('driving.create') }}" class="btn btn-primary text-light mt-3">Nieuwe auto toevoegen? Lekker bezig!</a>
+                <a href="{{ route('driving.create') }}" class="btn btn-primary text-light mt-3">Nieuwe auto toevoegen</a>
             @endauth
         </div>
     </div>
