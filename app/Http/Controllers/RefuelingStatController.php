@@ -14,7 +14,7 @@ class RefuelingStatController extends Controller
             abort('404');
         }
 
-        $stats = RefuelingStat::where('car_id', $car->getKey())->get();
+        $stats = RefuelingStat::where('car_id', $car->getKey())->orderBy('created_at', 'DESC')->get();
 
         return view('efficiency.index', ['car' => $car, 'stats' => $stats]);
     }
@@ -55,9 +55,11 @@ class RefuelingStatController extends Controller
 
         RefuelingStat::create($validated);
 
-        $average = array_sum(RefuelingStat::where('car_id', $car->getKey())->pluck('usage')->toArray());
+        $history = RefuelingStat::where('car_id', $car->getKey())->pluck('usage')->toArray();
 
-        $car->update(['total_distance' => $validated['odo_reading'], 'avg_usage' => $average]);
+        $average = array_sum($history) / count($history);
+
+        $car->update(['total_distance' => $car->total_distance + $validated['odo_reading'], 'avg_usage' => $average]);
 
         return redirect()->route('efficiency.index', ['car' => $car]);
     }

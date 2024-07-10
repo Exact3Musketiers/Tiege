@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    @dump($errors->all())
     <div class="container">
         <div class="py-3">
             <h1>{{ $car->brand .' '. $car->model }}</h1>
             <div class="row pt-3 mb-3">
                 <div class="card bg-dark text-white col-12">
                     <div class="card-header">
-                        <h1 class="h5"><a href="{{ route('driving.index') }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | Pas je review aan</h1>
+                        <h1 class="h5"><a href="{{ route('driving.index') }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | Voeg een tankbeurt toe</h1>
                     </div>
                     <hr class="m-0">
                     <div class="card-body">
@@ -17,6 +16,8 @@
                                 @method('PATCH')
                             @endif
                             @csrf
+                            @include('includes._errors')
+
                             <div class="mb-3">
                                 <label for="odo_reading" class="form-label">Kilometerstand</label>
                                 <input class="form-control" name="odo_reading" id="odo_reading" value="{{ old('odo_reading') ?? $stat->odo_reading }}"  placeholder="Kilometerstand" type="number">

@@ -34,4 +34,19 @@ class RefuelingStat extends Model
         $return = $value / 1000;
         return (float) $return;
     }
+
+    public static function calculateTotal($array): array
+    {
+        $array = $array->toArray();
+
+        $return['liters_tanked'] = round(self::convertToFloat(array_sum($array)), 2);
+
+        $price = [];
+        foreach ($array as $key => $item) {
+            $price[] += self::convertToFloat($key) * self::convertToFloat($item);
+        }
+
+        $return['price'] = round(array_sum($price), 2);
+        return $return;
+    }
 }
