@@ -1,7 +1,7 @@
 @php
     use App\Models\RefuelingStat;
 
-    $total = RefuelingStat::calculateTotal($stats->pluck('liters_tanked', 'price_per_liter'));
+    $total = RefuelingStat::calculateTotal($stats);
 @endphp
 
 @extends('layouts.app')

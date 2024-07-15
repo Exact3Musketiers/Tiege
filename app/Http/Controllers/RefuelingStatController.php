@@ -14,7 +14,7 @@ class RefuelingStatController extends Controller
             abort('404');
         }
 
-        $stats = RefuelingStat::where('car_id', $car->getKey())->orderBy('created_at', 'DESC')->get();
+        $stats = $car->refuelingStats;
 
         return view('efficiency.index', ['car' => $car, 'stats' => $stats]);
     }
