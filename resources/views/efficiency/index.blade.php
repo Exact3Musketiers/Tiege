@@ -10,7 +10,7 @@
     <div class="container">
         <div class="py-3">
             <h1>{{ $car->brand .' '. $car->model }}</h1>
-            <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden> Je kan ook je auto toevoegen Als je dat leuk lijkt!</p>
+            <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden.</p>
             <table class="table table-dark table-striped table-hover">
                 <thead>
                     <tr>

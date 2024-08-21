@@ -4,7 +4,7 @@
     <div class="container">
         <div class="py-3">
             <h1>Auto Efficiency</h1>
-            <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden> Je kan ook je auto toevoegen Als je dat leuk lijkt!</p>
+            <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden.</p>
             <div class="row pt-3 mb-3">
                 <div class="card bg-dark text-white col-12">
                     <div class="card-header">
