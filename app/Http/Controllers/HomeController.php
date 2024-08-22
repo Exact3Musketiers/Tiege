@@ -39,27 +39,21 @@ class HomeController extends Controller
         $search = str_replace(' ', '+', $request->search);
         $url = 'https://www.google.com/search?q=' . $search;
 
-        // Check if request contains a dot
+        // If search looks like a webadres search for a top level domain
         if (strpos($request->search, '.') != null) {
             // Get top level domain
             $site = $request->search;
             $tld = explode(".", parse_url($site, PHP_URL_HOST));
 
-            // checks if request contains space and check if request contains top level domain
+            // If request contains space or contains a top level domain remove prefixes and redirect
             if (!str_contains($site, ' ') && count($tld) > 0) {
-                // Removes all domain prefixes
-                $site = str_replace('https://', '', $site);
-                $site = str_replace('http://', '', $site);
-                $site = str_replace('www.', '', $site);
-
-                // Adds https:// to domain name
+                $site = str_replace(['https://', 'http://', 'www.'], '', $site);
                 $site = 'https://' . $site;
-                // Opens site
                 return redirect()->away($site);
             }
         }
 
-        // Searches google
+        // Else search google
         return redirect()->away($url);
     }
 
