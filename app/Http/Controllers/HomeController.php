@@ -10,21 +10,6 @@ use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         // Get times
@@ -99,40 +84,29 @@ class HomeController extends Controller
         // Make google search
         $search = str_replace(' ', '+', $request->search);
         $url = 'https://www.google.com/search?q=' . $search;
+
         // Check if request contains a dot
-        if (strpos($request->search, '.') != null)
-        {
+        if (strpos($request->search, '.') != null) {
             // Get top level domain
             $site = $request->search;
             $tld = explode(".", parse_url($site, PHP_URL_HOST));
-            // checks if request contains space
-            if (!str_contains($site, ' '))
-            {
-                // Check if request contains top level domain
-                if (count($tld) > 0);
-                {
-                    // Removes all domain prefixes
-                    $site = str_replace('https://', '', $site);
-                    $site = str_replace('http://', '', $site);
-                    $site = str_replace('www.', '', $site);
+            
+            // checks if request contains space and check if request contains top level domain
+            if (!str_contains($site, ' ') && count($tld) > 0) {
+                // Removes all domain prefixes
+                $site = str_replace('https://', '', $site);
+                $site = str_replace('http://', '', $site);
+                $site = str_replace('www.', '', $site);
 
-                    // Adds https:// to domain name
-                    $site = 'https://' . $site;
-                    // Opens site
-                    return redirect()->away($site);
-                }
-            }
-            else
-            {
-                // Searches google
-                return redirect()->away($url);
+                // Adds https:// to domain name
+                $site = 'https://' . $site;
+                // Opens site
+                return redirect()->away($site);
             }
         }
-        else
-        {
-            // Searches google
-            return redirect()->away($url);
-        }
+
+        // Searches google
+        return redirect()->away($url);
     }
 
     /**
