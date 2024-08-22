@@ -12,66 +12,20 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Get times
-        $six = Carbon::createFromFormat('G:i', '06:00');
-        $twelve = Carbon::createFromFormat('G:i', '12:00');
-        $eighteen = Carbon::createFromFormat('G:i', '18:00');
-        $zero = Carbon::createFromFormat('G:i:s', '23:59:59');
-        // Check current time
-        $morning = Carbon::now()->isBetween($six,  $twelve);
-        $afternoon = Carbon::now()->isBetween($twelve,  $eighteen);
-        $evening = Carbon::now()->isBetween($eighteen,  $zero);
-        $night = Carbon::now()->isBetween($twelve,  $eighteen);
-
-        $daypart = '';
-        // Get current daypart
-        if ($morning === true) {
-            $daypart =  'Goedemorgen';
-        }
-        elseif ($afternoon) {
-            $daypart = 'Goedemiddag';
-        }
-        elseif ($evening) {
-            $daypart = 'Goedenavond';
-        }
-        elseif ($night) {
-            $daypart = 'Goedenacht';
-        }
-        // array of greetings
-        $greetings = [
-            'Hallo ',
-            'Gedag ',
-            'Gegroet ',
-            'Hoi ', 'Guten Tag, ',
-            'Jo Jo Jo ',
-            'Hey! het is broederman ',
-            'Wow, dat is de enige echte ',
-            'Tadaa! ',
-        ];
-        // Merge daypart with greetings array
-        array_push($greetings, $daypart);
-        // Randomize array order
-        shuffle($greetings);
-
-        // Get the first greeting
-        $greeting = $greetings[0];
-
-        // Get weather
+        // Get all page information
+        $greeting = $this->getGreetings();
         $weather = $this->weather();
-
-        // Get news
         $news = News::readNews(6);
 
         $steamReview = [];
 
-        if (SteamReview::all()->isNotEmpty())
-        {
+        if (SteamReview::all()->isNotEmpty()) {
             $steamReview = SteamReview::all()->random(1)->first();
             $steamReview->load('user');
         }
 
         // Return with greeting and weather
-        return view('home', compact('greeting', 'weather', 'news', 'steamReview'));
+        return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview]);
     }
 
     /**
@@ -90,7 +44,7 @@ class HomeController extends Controller
             // Get top level domain
             $site = $request->search;
             $tld = explode(".", parse_url($site, PHP_URL_HOST));
-            
+
             // checks if request contains space and check if request contains top level domain
             if (!str_contains($site, ' ') && count($tld) > 0) {
                 // Removes all domain prefixes
@@ -268,5 +222,48 @@ class HomeController extends Controller
         // Return weather
         return $allWeather;
 
+    }
+
+    /**
+     * @return array
+     */
+    public function getGreetings(): string
+    {
+        $hour = Carbon::now()->format('H');
+
+        $timeOfDayGreeting = 'Goedendag';
+
+        if ($hour < 24) {
+            $timeOfDayGreeting = 'Goedenavond ';
+        }
+        if ($hour < 18) {
+            $timeOfDayGreeting = 'Goedemiddag ';
+        }
+        if ($hour < 12) {
+            $timeOfDayGreeting = 'Goedemorgen ';
+        }
+        if ($hour < 6) {
+            $timeOfDayGreeting = 'Goedenacht ';
+        }
+
+        // array of greetings
+        $greetings = [
+            'Hallo ',
+            'Gedag ',
+            'Gegroet ',
+            'Hoi ', 'Guten Tag, ',
+            'Jo Jo Jo ',
+            'Hey! het is broederman ',
+            'Wow, dat is de enige echte ',
+            'Tadaa! ',
+        ];
+
+        // Merge the time dependent greeting with greetings array and randomize the order
+        $greetings[] = $timeOfDayGreeting;
+        shuffle($greetings);
+
+        // return the greeting
+
+        return $greetings[0];
     }
 }
