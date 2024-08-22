@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Http;
+use App\Models\SteamReview;
+use App\Services\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-
-use App\Models\SteamReview;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -27,8 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $this->writeNews();
-
         // Get times
         $six = Carbon::createFromFormat('G:i', '06:00');
         $twelve = Carbon::createFromFormat('G:i', '12:00');
@@ -77,7 +75,7 @@ class HomeController extends Controller
         $weather = $this->weather();
 
         // Get news
-        $news = $this->readNews(6);
+        $news = News::readNews(6);
 
         $steamReview = [];
 
@@ -296,54 +294,5 @@ class HomeController extends Controller
         // Return weather
         return $allWeather;
 
-    }
-
-    public function getNews()
-    {
-        $newsResponse = Http::get('https://newsapi.org/v2/top-headlines', [
-            'country' => 'nl',
-            'pageSize' => '20',
-            'apiKey' => config('services.news.key'),
-        ]);
-
-        return $newsResponse;
-    }
-
-    public function writeNews()
-    {
-        if (!file_exists('news.json')) {
-            $newsResponse = $this->getNews();
-            file_put_contents('news.json', $newsResponse);
-        }
-        $currentTime = time();
-        $age = filemtime('news.json');
-        $timeDifference = $currentTime - $age;
-        if ($timeDifference >= 3600) {
-            // Call NewsAPI
-            $newsResponse = $this->getNews();
-            file_put_contents('news.json', $newsResponse);
-        }
-    }
-
-    public function readNews($limit)
-    {
-        if (file_exists('news.json'))
-        {
-            $updatedAt = date('H:m:s', filemtime('news.json'));
-            $news = json_decode(file_get_contents('news.json'));
-            $articles = array_slice($news->articles, 0, $limit);
-            $news = [
-                'articles' => $articles,
-                'updatedAt' => $updatedAt,
-            ];
-        }
-        else
-        {
-            $news = [
-                'error' => 'Er is niets nieuws gebeurd'
-            ];
-        }
-
-        return $news;
     }
 }
