@@ -14,16 +14,15 @@ class HomeController extends Controller
     {
         // Get all page information
         $greeting = $this->getGreetings();
-        $weather = Weather::getWeather();
+        $weather = Weather::getWeather(cached: true);
         $news = News::readNews(6);
-dd($weather);
         $steamReview = [];
 
         if (SteamReview::all()->isNotEmpty()) {
             $steamReview = SteamReview::all()->random(1)->first();
             $steamReview->load('user');
         }
-
+        
         // Return with greeting and weather
         return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview]);
     }
