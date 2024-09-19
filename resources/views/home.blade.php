@@ -1,7 +1,25 @@
+@php
+    $routes = [
+        ['link' => route('numbers.random'), 'icon' => 'fas fa-dice-d20', 'text' => 'Random'],
+        ['link' => route('driving.index'), 'icon' => 'fas fa-car', 'text' => 'Rond Rijden'],
+        ['link' => route('sarcasm'), 'icon' => 'fas fa-font-case', 'text' => 'Sarcasm'],
+        ['link' => route('uwu'), 'icon' => 'fas fa-font-case', 'text' => 'UwU'],
+        ['link' => route('steam.index'), 'icon' => 'fab fa-steam', 'text' => 'Steam'],
+        ['link' => route('steam.review.all'), 'icon' => 'fab fa-steam', 'text' => 'Steam Reviews'],
+        ['link' => route('steam.review.all'), 'icon' => 'fab fa-wikipedia-w', 'text' => 'Wiki Search'],
+        ['link' => route('lyrics'), 'icon' => 'fas fa-music', 'text' => 'Lyrics'],
+        ['link' => route('lastfm'), 'icon' => 'fab fa-lastfm', 'text' => 'Muziek'],
+    ]
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
-    <div class="has-background-image lazy position-fixed" style="background: url({{ asset('images/backgrounds/1.jpg') }}) center center;"></div>
+    <div class="has-background-image lazy position-fixed"
+         style="
+            background: url({{ asset('images/backgrounds/1.jpg') }}) center center;
+        ">
+    </div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="row">
@@ -9,42 +27,17 @@
                 <div class="col-lg-8">
                     <div class="my-3">
                         <div class="card quick-access-box">
-                            <div class="card-header h4">
-                                 {{ $greeting }} @if(auth()->user() !== null) {{ Auth()->user()->name }} @else Gast! @endif
-                            </div>
                             <div class="card-body">
                                 <form action="{{ route('home.search') }}" method="POST">
                                     @csrf
                                     <div class="input-group mb-3">
                                         <input name="search" type="text" class="form-control outline-primary"
                                                placeholder="Wat wil je weten?" autofocus>
-                                        <button type="submit" class="btn btn-primary" type="button">
-                                            Zoek
-                                        </button>
                                     </div>
                                 </form>
-                                <hr>
-                                <p>Lekker chillen</p>
-                                <a href="https://youtube.com"><i class="quick-access-logo pe-4 fab fa-youtube"></i></a>
-                                <a href="https://twitch.tv"><i class="quick-access-logo pe-4 fab fa-twitch"></i></a>
-                                <a href="https://reddit.com"><i
-                                        class="quick-access-logo pe-4 fab fa-reddit"></i></a>
-                                <a href="https://monkeytype.com"><i
-                                        class="quick-access-logo pe-4 fas fa-i-cursor"></i></a>
-                                <hr>
-                                <p>Handige spulletjes</p>
-                                <a href="https://gmail.com"><i
-                                        class="quick-access-logo pe-4 fas fa-envelope"></i></a>
-                                <a href="https://deepl.com"><i
-                                        class="quick-access-logo pe-4 fas fa-language"></i></a>
-                                <a href="https://maps.google.com"><i
-                                        class="quick-access-logo pe-4 fas fa-globe-europe"></i></a>
-                                <hr>
-                                <p>Programmeren</p>
-                                <a href="https://github.com"><i
-                                        class="quick-access-logo pe-4 fab fa-github"></i></a>
-                                <a href="https://figma.com"><i class="quick-access-logo pe-4 fab fa-figma"></i></a>
-                                <a href="https://laravel.com"><i class="quick-access-logo pe-4 fab fa-laravel"></i></a>
+                                <div class="d-flex flex-col flex-wrap gap-3">
+                                    @each('components.nav-button', $routes, 'route')
+                                </div>
                             </div>
                         </div>
                     </div>

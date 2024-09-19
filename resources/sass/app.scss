@@ -85,7 +85,7 @@ select, input {
 
 //Home
 .quick-access-box {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.5);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(10.0px);
     -webkit-backdrop-filter: blur(10.0px);
@@ -98,6 +98,36 @@ select, input {
             background: rgb(255, 255, 255) !important;
             color: $black !important;
         }
+    }
+
+    .nav-button {
+        width: 75px;
+        display: flex;
+        flex-direction: column;
+        color: black;
+        flex-shrink: 1;
+        text-decoration: none;
+        text-overflow: ellipsis;
+    }
+
+    .nav-button-box {
+        width: 80px;
+        aspect-ratio: 1/1;
+        border-radius: 12px;
+        background: rgb(251,58,255);
+        background: linear-gradient(180deg, rgba(251,58,255,1) 0%, rgba(237,214,11,1) 100%);
+        transition: all 2s;
+        font-size: 45px;
+    }
+    .nav-button-box:hover {
+        background: rgb(251,58,255);
+        background: linear-gradient(180deg, rgba(237,214,11,1) 0%, rgb(71, 237, 11) 100%);
+    }
+
+    .nav-button-text {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     .top-image {
