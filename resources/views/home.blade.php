@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="has-background-image lazy position-fixed"></div>
+    <div class="has-background-image lazy position-fixed" style="background: url({{ asset('images/backgrounds/1.jpg') }}) center center;"></div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="row">
