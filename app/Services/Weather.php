@@ -60,7 +60,6 @@ class Weather
         }
         // Return weather
         return $all_weather;
-
     }
 
     /**

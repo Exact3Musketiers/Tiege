@@ -60,15 +60,14 @@
                                     @foreach ($news['articles'] as $article)
                                         <div class="col-lg-6 col-md-12 border-bottom">
 
-                                            <span><strong>{{ $article->title }}</strong> - <a
-                                                    href="{{ $article->url }}">link</a>
-                                        </span>
+                                            <span>
+                                                <strong>{{ $article->title }}</strong> -
+                                                <a href="{{ $article->url }}">
+                                                    link
+                                                </a>
+                                            </span>
                                         </div>
-
                                     @endforeach
-                                    <div class="m-0">
-                                        <span class="float-end">Geüpdatet: {{ $news['updatedAt'] }}</span>
-                                    </div>
                                 @endif
                             </div>
                         </div>

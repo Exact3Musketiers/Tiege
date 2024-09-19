@@ -2,59 +2,48 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Vedmant\FeedReader\Facades\FeedReader;
 
 class News
 {
-
     public static function getNews()
     {
-        return Http::get('https://newsapi.org/v2/top-headlines', [
-            'country' => 'nl',
-            'pageSize' => '20',
-            'apiKey' => config('services.news.key'),
-        ]);
-    }
+        $news = FeedReader::read('https://feeds.nos.nl/nosnieuwsalgemeen');
+        $news_array = [];
+        $items = $news->get_items();
 
-    public static function writeNews()
-    {
-        if (!file_exists('news.json')) {
-            $newsResponse = self::getNews();
-            file_put_contents('news.json', $newsResponse);
+        foreach ($items as $news) {
+            $news_array[] = [
+                'title' => $news->get_title(),
+                'description' => $news->get_description(),
+                'image' => $news->get_enclosure(),
+                'url' => $news->get_link()
+            ];
         }
 
-        self::refreshNews();
+        return $news_array;
     }
 
-    public static function readNews($limit, $retry = false)
+    public static function updateNews()
     {
-        self::writeNews();
+        $news = self::getNews();
+        Storage::disk('public')->put('json/news.json', json_encode($news));
 
-        if (file_exists('news.json')) {
-            $updatedAt = date('H:m:s', filemtime('news.json'));
-            $news = json_decode(file_get_contents('news.json'));
-            $articles = array_slice($news->articles, 0, $limit);
+    }
+
+    public static function readNews($limit)
+    {
+        if (file_exists('news.json') || !empty(json_decode(Storage::get('json/news.json')))) {
+            $news = json_decode(Storage::get('json/news.json'));
+            $articles = array_slice($news, 0, $limit);
             $news = [
                 'articles' => $articles,
-                'updatedAt' => $updatedAt,
             ];
         } else {
             $news = ['error' => 'Er is niets nieuws gebeurd'];
         }
 
         return $news;
-    }
-
-    public static function refreshNews(): void
-    {
-        $currentTime = time();
-        $age = filemtime('news.json');
-        $timeDifference = $currentTime - $age;
-
-        if ($timeDifference >= 3600) {
-            // Call NewsAPI
-            $newsResponse = self::getNews();
-            file_put_contents('news.json', $newsResponse);
-        }
     }
 }

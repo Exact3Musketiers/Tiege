@@ -22,16 +22,12 @@ class HomeController extends Controller
             $steamReview = SteamReview::all()->random(1)->first();
             $steamReview->load('user');
         }
-        
+
         // Return with greeting and weather
         return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview]);
     }
 
-    /**
-     * Search the internet.
-     *
-     *
-     */
+    // Search the internet.
     public function search(Request $request)
     {
         // Make google search
@@ -93,8 +89,6 @@ class HomeController extends Controller
         // Merge the time dependent greeting with greetings array and randomize the order
         $greetings[] = $timeOfDayGreeting;
         shuffle($greetings);
-
-        // return the greeting
 
         return $greetings[0];
     }
