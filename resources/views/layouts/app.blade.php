@@ -39,7 +39,7 @@
                 <div class="sidebar-behind collapse show" id="collapseSidebar">
                     <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sb-with sidebar text-center">
                         <div class="fs-2 card me-1 bg-dark slide-in-blurred-top mt-5">
-                            <a class="slide-rotate-hor-top text-decoration-none" href="{{route('home')}}">
+                            <a class="slide-rotate-hor-top text-decoration-none" href="{{route('home')}}" id="home">
                                 <div class="rainbow rainbow_text_animated">Tige.site</div>
                             </a>
                         </div>
@@ -109,9 +109,9 @@
                                     </button>
                                     <div class="collapse" id="numbers-collapse">
                                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="numbers">
-                                            <li><a href="{{ route('random.index') }}"
+                                            <li><a href="{{ route('numbers.random') }}"
                                                     class="rounded">Random</a></li>
-                                            <li><a href="{{ route('currency') }}" class="rounded">Currency</a>
+                                            <li><a href="{{ route('driving.index') }}" class="rounded">Rond rijden</a>
                                             </li>
                                         </ul>
                                     </div>

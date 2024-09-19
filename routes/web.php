@@ -19,13 +19,14 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('home.search');
 
-Route::get('/numbers/currency', [App\Http\Controllers\CurrencyController::class, 'index'])->name('currency');
 Route::get('/policy', [App\Http\Controllers\PagesController::class, 'policy'])->name('policy');
 
 
-Route::resource('/numbers/random', App\Http\Controllers\RandomController::class);
+Route::get('/numbers/random', [App\Http\Controllers\NumberController::class, 'index'])->name('numbers.random');
 
-Route::post('/currencyFetch', [App\Http\Controllers\CurrencyController::class, 'fetch'])->name('currency.fetch');
+route::resource('/driving', App\Http\Controllers\CarController::class)->parameters(['driving'=> 'car'])->except(['show']);
+route::resource('/driving/{car}/efficiency', App\Http\Controllers\RefuelingStatController::class)->except(['show']);
+
 
 Route::get('/s', [App\Http\Controllers\SarcasmController::class, 'index'])->name('sarcasm');
 Route::get('/UwU', [App\Http\Controllers\PagesController::class, 'uwu'])->name('uwu');
