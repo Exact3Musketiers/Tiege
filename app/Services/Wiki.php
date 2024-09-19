@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class Wiki
 {
-    // Get the end of a random wikipedia page url
+    // Get the end of a numbers wikipedia page url
     public static function getRandomPage()
     {
         $wiki = json_decode(file_get_contents('files/wikipedia.json'), true);
