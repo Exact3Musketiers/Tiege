@@ -15,6 +15,4 @@ yarn-error.log
 /public/js
 /public/vendor
 /public/mix-manifest.json
-/public/news.json
-public/.DS_Store
 .DS_Store

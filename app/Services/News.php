@@ -28,7 +28,7 @@ class News
     public static function updateNews()
     {
         $news = self::getNews();
-        Storage::disk('public')->put('json/news.json', json_encode($news));
+        Storage::put('json/news.json', json_encode($news));
 
     }
 
