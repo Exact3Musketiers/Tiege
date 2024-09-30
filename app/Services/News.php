@@ -9,7 +9,7 @@ class News
 {
     public static function getNews()
     {
-        $news = FeedReader::read('https://feeds.nos.nl/nosnieuwsalgemeen');
+        $news = FeedReader::read('https://nu.nl/rss/Wetenschap');
         $news_array = [];
         $items = $news->get_items();
 

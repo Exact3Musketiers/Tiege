@@ -15,7 +15,7 @@ class HomeController extends Controller
         // Get all page information
         $greeting = $this->getGreetings();
         $weather = Weather::getWeather(cached: true);
-        $news = News::readNews(6);
+        $news = News::readNews(8);
         $steamReview = [];
 
         if (SteamReview::all()->isNotEmpty()) {

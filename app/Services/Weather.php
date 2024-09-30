@@ -39,6 +39,8 @@ class Weather
                 return ['error' => 'Er is iets mis gegaan met het ophalen van het weer.'];
             }
 
+            $bram = self::weatherManBram($weather);
+
             $to_jas = self::toJas($weather);
             $wind_direction = self::getWindDirection($weather);
 
@@ -51,11 +53,12 @@ class Weather
                 'temperatureMax' => round($weather->main->temp_max),
                 'temperatureMin' => round($weather->main->temp_min),
                 'temperatureFeels' => round($weather->main->feels_like),
-                'windText' => $wind_speed['text'],
-                'windBft' => $wind_speed['bft'],
-                'windDirection' => $wind_direction,
+                'wind_text' => $wind_speed['text'],
+                'wind_bft' => $wind_speed['bft'],
+                'wind_direction' => $wind_direction,
                 'type' => $weather->weather[0]->description,
-                'toJas' => $to_jas,
+                'bram' => $bram,
+                'to_jas' => $to_jas,
             ];
         }
         // Return weather
@@ -89,9 +92,7 @@ class Weather
     public static function getWindDirection(mixed $weather): string
     {
         $directions = [
-            'Noorden', 'Noord Noord Oosten', 'Noord Oosten', 'Oost Noord Oosten', 'Oosten', 'Oost Zuid Oosten',
-            'Zuid Oosten', 'Zuid Zuid Oosten', 'Zuiden', 'Zuid Zuid Westen', 'Zuid Westen', 'West Zuid Westen',
-            'Westen', 'West Noord Westen', 'Noord Westen', 'Noord Noord Westen'
+            'N', 'NNO', 'NO', 'ONO', 'O', 'OZO', 'ZO', 'ZZO', 'Z', 'ZZW', 'ZW', 'WZW', 'W', 'WNW', 'NW', 'NNW'
         ];
 
         $windDeg = $weather->wind->deg;
@@ -114,5 +115,30 @@ class Weather
             $bft = 12;
 
         return ['bft' => $bft, 'text' => $bft_names[$bft]];
+    }
+
+    public static function weatherManBram(mixed $weather)
+    {
+        $the_chosen_bram = $weather->weather[0]->main;
+
+
+        $brammen = [
+            'Thunderstorm' => 'images/brammen/donder_bram.png',
+            'Drizzle' => 'images/brammen/vochtige_bram.png', // done
+            'Rain' => 'images/brammen/natte_bram.png', // done
+            'Snow' => 'images/brammen/koude_bram.png', //done
+            'Atmosphere' => 'images/brammen/oh_shit_bram.png', // done
+            'Clear' => 'images/brammen/gewoon_bram.png', // done
+            'Clouds' => 'images/brammen/bewolkte_bram.png',
+        ];
+
+        if (array_key_exists($the_chosen_bram, $brammen)) {
+            $return = $brammen[$the_chosen_bram];
+        } else {
+            shuffle($brammen);
+            $return = end($brammen);
+        }
+
+        return $return;
     }
 }

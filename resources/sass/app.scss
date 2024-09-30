@@ -17,6 +17,7 @@
     background-color: transparent !important
 }
 
+
 html,
 body {
     height: 100%;
@@ -90,7 +91,7 @@ select, input {
     backdrop-filter: blur(10.0px);
     -webkit-backdrop-filter: blur(10.0px);
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: none;
     color: $black;
 
     form, .input-group {
@@ -152,6 +153,41 @@ select, input {
             -webkit-text-fill-color: $primary;
         }
     }
+
+    .news-item {
+        transition: all 200ms;
+    }
+
+    .news-item:hover {
+        background-color: rgba(255, 255, 255, 0.69);
+    }
+}
+
+.quick-access-box.to-jas {
+    color: white;
+    h1 {
+        font-weight: bold;
+    }
+}
+
+.quick-access-box.weather {
+    color: white;
+    background-size: contain;
+    h1 {
+        font-weight: bolder;
+        text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;;
+    }
+
+    .weather-wrap {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.quick-access-box.red {
+    background-color: $danger;
+}
+.quick-access-box.green {
+    background-color: #47ed0b;
 }
 
 .quick-access-box .border-bottom {
