@@ -32,10 +32,9 @@ class News
 
     }
 
-    public static function readNews($limit)
+    public static function readNews($limit = 8)
     {
-        if (file_exists('news.json') || !empty(json_decode(Storage::get('json/news.json')))) {
-            $news = json_decode(Storage::get('json/news.json'));
+        if (Storage::exists('json/news.json') && !is_null($news = json_decode(Storage::get('json/news.json')))) {
             $articles = array_slice($news, 0, $limit);
             $news = [
                 'articles' => $articles,
