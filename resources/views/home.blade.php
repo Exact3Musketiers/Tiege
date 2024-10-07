@@ -20,7 +20,7 @@
             background: url({{ asset('images/backgrounds/1.jpg') }}) center center;
         ">
     </div>
-    <div class="container">
+    <div class="container home">
         <div class="row justify-content-center">
             <div class="row">
 

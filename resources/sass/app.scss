@@ -23,6 +23,28 @@ body {
     height: 100%;
 }
 
+*:not(.rainbow_text_animated,a,input,textarea,button) {
+    color: #ffffff !important;
+}
+
+.home {
+    * {
+        color: #000 !important;
+    }
+
+    .to-jas h1 {
+        color: #ffffff !important;
+    }
+
+    .weather-wrap h1 {
+        color: #ffffff !important;
+    }
+
+    .score h1 {
+        color: #ffffff !important;
+    }
+}
+
 body.full-page {
     background-color: #000000;
 }
