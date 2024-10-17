@@ -1,13 +1,11 @@
-import UwuIfy from './components/Uwu-ify.vue';
-import WikiChallengeStarter from './components/WikiChallengeStarter.vue';
-import { createApp } from 'vue'
+import '../sass/app.scss';
 import './bootstrap';
 
+import {createApp} from 'vue'
+import UwuIfy from './components/Uwu-ify.vue';
+import WikiChallengeStarter from './components/WikiChallengeStarter.vue';
+
 
 createApp({
-    components: { UwuIfy },
-}).mount('#uwu')
-
-createApp({
-    components: { WikiChallengeStarter },
-}).mount('#wiki')
+    components: { UwuIfy,WikiChallengeStarter }
+}).mount('#app')

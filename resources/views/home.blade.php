@@ -109,8 +109,6 @@
         </div>
     </div>
     </div>
-@endsection
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var lazyloadImages;
@@ -161,3 +159,5 @@
         }
     });
 </script>
+@endsection
+
