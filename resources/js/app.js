@@ -1,7 +1,7 @@
 import UwuIfy from './components/Uwu-ify.vue';
 import WikiChallengeStarter from './components/WikiChallengeStarter.vue';
 import { createApp } from 'vue'
-require('./bootstrap');
+import './bootstrap';
 
 
 createApp({
