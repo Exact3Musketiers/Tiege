@@ -30,10 +30,12 @@
                 <a class="btn btn-primary btn-sm text-light" id="copy_link"><i class="far fa-copy"></i></a>
             </div>
 
-            <wiki-challenge-starter route="{{ route('challenge.start', $challenge) }}"
-                                    :challenge="{{ json_encode($challenge->only('id', 'user_id')) }}"
-                                    :me="{{ json_encode(auth()->user()->only('id', 'name')) }}">
-            </wiki-challenge-starter>
+            <div id="app">
+                <wiki-challenge-starter route="{{ route('challenge.start', $challenge) }}"
+                                        :challenge="{{ json_encode($challenge->only('id', 'user_id')) }}"
+                                        :me="{{ json_encode(auth()->user()->only('id', 'name')) }}">
+                </wiki-challenge-starter>
+            </div>
         </div>
     </div>
     <script>

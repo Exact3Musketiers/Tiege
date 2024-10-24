@@ -10,14 +10,13 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
+
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
@@ -27,13 +26,13 @@
 </head>
 
 <body>
-    <div id="app">
+    <div>
         <div class="container-fluid">
             {{--SIDEBAR--}}
             <div class="row flex-nowrap">
                 <button class="btn btn-primary collapse-sidebar mt-3" id="menuToggler" type="button"
                     data-bs-toggle="collapse" data-bs-target="#collapseSidebar" aria-expanded="true"
-                    aria-controls="collapseSidebar" onclick="toggleMenu()">
+                    aria-controls="collapseSidebar">
                     <i class="fas py-1"></i>
                 </button>
                 <div class="sidebar-behind collapse show" id="collapseSidebar">
@@ -192,63 +191,5 @@
         </div>
     </div>
 </body>
-
 </html>
 
-<script>
-    //TODO: deze niet already open dingen overriden
-    let clickedMobile = false
-    let clickedDesktop = true;
-
-    function toggleMenu() {
-        const isMobile = window.innerWidth <= 600;
-        clickedMobile = document.getElementById("menuToggler").getAttribute("aria-expanded") === 'true' && isMobile;
-        clickedDesktop = document.getElementById("menuToggler").getAttribute("aria-expanded") === 'true' && !isMobile;
-    }
-
-    function mobileNav() {
-        if (window.innerWidth <= 600 && !clickedMobile || window.innerWidth >= 600 && !clickedDesktop) {
-            document.getElementById("collapseSidebar").classList.remove("show");
-            document.getElementById("menuToggler").setAttribute("aria-expanded", "false");
-        } else {
-            document.getElementById("collapseSidebar").classList.add("show")
-            document.getElementById("menuToggler").setAttribute("aria-expanded", "true");
-        }
-    }
-
-    window.onload = window.onresize = mobileNav;
-
-    //Hides nav on ctrl+q
-    function HideNav(e) {
-        var evtobj = window.event ? event : e
-        if (evtobj.keyCode == 81 && evtobj.ctrlKey) {
-            var sidebar = document.getElementsByClassName('sidebar');
-            var sidebarBehind = document.getElementsByClassName('sidebar-behind');
-            if (sidebar[0].classList.contains('collapse')) {
-                sidebar[0].classList.remove('collapse');
-                sidebarBehind[0].classList.remove('collapse')
-            } else {
-                sidebar[0].classList.add('collapse')
-                sidebarBehind[0].classList.add('collapse')
-            }
-        }
-    }
-
-    document.onkeydown = HideNav;
-
-
-    //Sets current active navbar links
-    document.addEventListener("DOMContentLoaded", function () {
-        const loc = window.location.href;
-        const split = loc.split("/");
-        const hrefSelector = document.querySelectorAll("a[href='" + loc + "']");
-        if (split[3] == "")
-            document.getElementById("home").classList.add('active');
-        else {
-            // document.getElementById(split[3]).parentNode.children[0].classList.add('active');
-            // document.getElementById(split[3]).classList.add('show');
-            if (hrefSelector.length > 0)
-                document.getElementById(hrefSelector[0].classList.add('active'));
-        }
-    });
-</script>
