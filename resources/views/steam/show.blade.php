@@ -25,7 +25,7 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 @if(!$playerSummary->isEmpty())
-                                    <a href="{{ $playerSummary['profileurl'] }}"><h5 class="card-title">{{ $playerSummary['personaname'] }}</h5></a>
+                                    <h5 class="card-title"><a href="{{ $playerSummary['profileurl'] }}">{{ $playerSummary['personaname'] }}</a></h5>
                                     <p class="card-text mb-0">Eigenaar van {{ count($ownedGames) }} games!</p>
                                     <p class="card-text">{{ $playerSummary['personaname'] }} heeft {{ $percentagePlayed }}% van die games gespeeld.</p>
                                     <div class="progress">

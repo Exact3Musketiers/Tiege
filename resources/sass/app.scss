@@ -23,7 +23,7 @@ body {
 }
 
 *:not(.rainbow_text_animated,a,input,textarea,button) {
-    color: #ffffff !important;
+    color: #f0e7dc;
 }
 
 .home {
@@ -223,10 +223,6 @@ select, input {
 
 }
 
-.wrap-col {
-    overflow-x: hidden;
-}
-
 //nav
 .collapse-sidebar {
     margin-left: 79px;
@@ -377,13 +373,13 @@ select, input {
 
         .profile {
             &.profile-picture {
-                background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%);
-                background-size: cover;
+                background-color: #fc6f96;
                 width: 100%;
                 height: 81px;
 
                 .profile-text {
                     overflow: hidden;
+                    color: #461282;
                 }
             }
         }
@@ -635,4 +631,8 @@ a[aria-expanded="false"] > .fa-chevron-down {
     .card-footer {
         background-color: #1a1a1f !important;
     }
+}
+
+[aria-expanded="1"]:before {
+    transform: rotate(90deg);
 }

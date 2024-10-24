@@ -46,19 +46,15 @@
                         <div class="card bg-tertiary-dark me-1 slide-in-left">
                             <div class="profile profile-picture text-center">
 
-                                <div class="profile-text text-light fs-1 fw-bold h-50">
+                                <div class="profile-text fs-1 fw-bold h-50">
                                     @if(auth()->user() !== null) {{ Auth::user()->name }} @else Gast @endif
                                 </div>
 
-                                <div class="text-muted fs-4 fw-bold">
+                                <div class="fs-4 fw-bold">
                                     @if(auth()->user() !== null)
-                                    @if(Auth::user()->role == 0)
-                                    Admin
+                                        {{ Auth::user()->role == 0 ? 'Admin' : 'Gebruiker' }}
                                     @else
-                                    Gebruiker
-                                    @endif
-                                    @else
-                                    Gebruiker
+                                        Gebruiker
                                     @endif
                                 </div>
                             </div>
@@ -99,66 +95,27 @@
                         <div class="card bg-tertiary-dark me-1 mb-auto slide-in-left">
                             <ul class="nav flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                                 id="menu">
-                                <li class="mb-1">
-                                    <button class="btn btn-toggle align-items-center rounded collapsed"
-                                        data-bs-toggle="collapse" data-bs-target="#numbers-collapse"
-                                        aria-expanded="false">
-                                        <i class="far fa-hand-peace"></i>
-                                        <span class="ms-1">Numbers</span>
-                                    </button>
-                                    <div class="collapse" id="numbers-collapse">
-                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="numbers">
-                                            <li><a href="{{ route('numbers.random') }}"
-                                                    class="rounded">Random</a></li>
-                                            <li><a href="{{ route('driving.index') }}" class="rounded">Rond rijden</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="mb-1">
-                                    <button class="btn btn-toggle align-items-center rounded collapsed"
-                                        data-bs-toggle="collapse" data-bs-target="#textify-collapse"
-                                        aria-expanded="false">
-                                        <i class="fas fa-font"></i><span class="ms-1">Text-ify</span>
-                                    </button>
-                                    <div class="collapse" id="textify-collapse">
-                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="textify">
-                                            <li><a href="{{ route('sarcasm') }}"
-                                                    class="rounded">SaRCasMIfY</a></li>
-                                            <li><a href="{{ route('uwu') }}" class="rounded">UwUify</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="mb-1">
-                                    <button class="btn btn-toggle align-items-center rounded collapsed"
-                                        data-bs-toggle="collapse" data-bs-target="#game-collapse"
-                                        aria-expanded="false">
-                                        <i class="fas fa-gamepad"></i><span class="ms-1">Games</span>
-                                    </button>
-                                    <div class="collapse" id="game-collapse">
-                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" id="game">
-                                            <li><a href="{{ route('steam.index') }}" class="rounded">Steam</a></li>
-                                            <li><a href="{{ route('steam.review.all') }}" class="rounded">reviews</a></li>
-                                            <li><a href="{{ route('wiki.index') }}" class="rounded">Wiki Search</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
+                                <x-nav-collapse :routes="[
+                                    ['name' => 'Random', 'route' => 'numbers.random'],
+                                    ['name' => 'Rond Rijden', 'route' => 'driving.index']
+                                ]" title="Nummers" icon="far fa-hand-peace" />
+
+                                <x-nav-collapse :routes="[
+                                    ['name' => 'SaRCasMIfY', 'route' => 'sarcasm'],
+                                    ['name' => 'UwUify', 'route' => 'uwu']
+                                ]" title="Textify" icon="fas fa-font" />
+
+                                <x-nav-collapse :routes="[
+                                    ['name' => 'Steam', 'route' => 'steam.index'],
+                                    ['name' => 'Reviews', 'route' => 'steam.review.all'],
+                                    ['name' => 'Wiki Search', 'route' => 'wiki.index']
+                                ]" title="Games" icon="fas fa-gamepad" />
+
                                 @auth
-                                <li class="mb-1">
-                                    <button class="btn btn-toggle align-items-center rounded collapsed"
-                                        data-bs-toggle="collapse" data-bs-target="#music-collapse"
-                                        aria-expanded="false">
-                                        <i class="fas fa-music"></i><span class="ms-1">Music</span>
-                                    </button>
-                                    <div class="collapse" id="music-collapse" id="music">
-                                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                            <li><a href="{{ route('lyrics') }}" class="rounded">Lyrics</a>
-                                            </li>
-                                            <li><a href="{{ route('lastfm') }}" class="rounded">Lastfm</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
+                                    <x-nav-collapse :routes="[
+                                        ['name' => 'Lyrics', 'route' => 'lyrics'],
+                                        ['name' => 'Lastfm', 'route' => 'lastfm'],
+                                    ]" title="Muziek" icon="fas fa-music" />
                                 @endauth
                             </ul>
                         </div>
@@ -182,7 +139,7 @@
 
                     </div>
                 </div>
-                <div class="col p-0 wrap-col">
+                <div class="col p-0">
                     <main>
                         @yield('content')
                     </main>
