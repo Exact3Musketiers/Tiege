@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\SteamReview;
+use App\Models\User;
+use App\Services\Weather;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class ProfileController extends Controller
 {
@@ -13,16 +17,17 @@ class ProfileController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(User $profile)
     {
-        if ($profile->getKey() !== Auth::user()->id)
-        {
+        if ($profile->getKey() !== Auth::user()->id) {
             abort(403);
         }
 
-        return view('profile.edit', compact('profile'));
+        $countries = collect(json_decode(file_get_contents('files/countries.json'), true));
+
+        return view('profile.edit', ['profile' => $profile, 'countries' => $countries]);
     }
 
     /**
@@ -30,23 +35,34 @@ class ProfileController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, User $profile)
     {
-        if ($profile->getKey() !== Auth::user()->id)
-        {
+        if ($profile->getKey() !== Auth::user()->id) {
             abort(403);
         }
 
-        // dd($request);
+        $countries = collect(json_decode(file_get_contents('files/countries.json'), true))
+            ->pluck('short_name');
 
         $validated = $request->validate([
-            'steamid' => ['required', 'min:3', 'max:255'],
+            'steamid' => ['sometimes', 'nullable', 'min:3', 'max:255'],
+            'country' => ['sometimes', 'nullable', 'required_with:city', 'min:2', 'max:2', Rule::in($countries)],
+            'city' => ['sometimes', 'nullable', 'required_with:country', 'min:3', 'max:255'],
         ]);
-// dd($profile, $validated);
+        
+        $location = ucfirst(strtolower($validated['city'])) .','. $validated['country'];
 
-        $profile->update($validated);
+        unset($validated['city'], $validated['country']);
+
+        $weather =  Weather::apiGet($location);
+        if ($weather->status() !== 200) {
+            throw ValidationException::withMessages(['city' => 'The given country or city does not exist or another problem has occurred.']);
+        }
+
+        $profile->update($validated + ['location' => $location]);
+        Cache::forget('weather.' . $profile->getKey());
         return back();
     }
 

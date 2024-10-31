@@ -32,6 +32,7 @@ return [
 
     'weather' => [
         'key' => env('OPENWEATHERMAP_KEY'),
+        'default_location' => env('DEFAULT_WEATHER_LOCATION', 'Sneek,NL'),
     ],
     'news' => [
         'key' => env('NEWSAPI_KEY'),

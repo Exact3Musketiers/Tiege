@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Http;
 
 class Weather
 {
-    public static function apiGet() {
+    public static function apiGet($location) {
         return Http::get('api.openweathermap.org/data/2.5/weather', [
-            'q' => 'sneek,nl',
+            'q' => $location,
             'lang' => 'nl',
             'units' => 'metric',
             'APPID' => config('services.weather.key'),
@@ -17,17 +17,26 @@ class Weather
     }
 
     public static function getWeather($cached = false) {
+        $user = auth()->user();
+        $user_id = null;
+        $location = config('services.weather.default_location');
+        
+        if (!is_null($user) && !is_null($user->location)) {
+            $user_id = $user->getKey();
+            $location = $user->location;
+        }
+
         if (request()->has('refresh')) {
-            Cache::forget('weather');
+            Cache::forget('weather.' . $user_id);
         }
 
         if ($cached && ! request()->has('refresh')) {
             // Call openweathermap api
-            $all_weather = Cache::remember('weather', 900, function () {
+            $all_weather = Cache::remember('weather.' . $user_id, 900, function () {
                 return self::getWeather($cached = false);
             });
         } else {
-            $response = self::apiGet();
+            $response = self::apiGet($location);
 
             if ($response->status() !== 200) {
                 return ['error' => 'Er is iets mis gegaan met het ophalen van het weer.'];

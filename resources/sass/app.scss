@@ -22,7 +22,7 @@ body {
     height: 100%;
 }
 
-*:not(.rainbow_text_animated,a,input,textarea,button) {
+*:not(.rainbow_text_animated,a,input,textarea,button,.list-group-item-danger) {
     color: #f0e7dc;
 }
 
@@ -35,8 +35,17 @@ body {
         color: #ffffff !important;
     }
 
-    .weather-wrap h1 {
-        color: #ffffff !important;
+    .weather-wrap {
+        position: relative;
+
+        .location {
+            position: absolute;
+            bottom: 10px;
+        }
+
+        h1 {
+            color: #ffffff !important;
+        }
     }
 
     .score h1 {

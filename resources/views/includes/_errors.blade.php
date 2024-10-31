@@ -15,7 +15,7 @@
 @endif --}}
 
 @if(count($errors) > 0)
-    <ul class="list-group mb-3">
+    <ul class="list-group my-3">
         @foreach ($errors->all() as $error)
             <div class="list-group-item list-group-item-danger">{{ $error }}</div>
         @endforeach

@@ -1,21 +1,27 @@
 @extends('layouts.app')
 
+@php
+    $explode_location = explode(',', $profile->location);
+    $location =  ['city' => $explode_location[0] ?? null, 'country' => $explode_location[1] ?? null];
+@endphp
+
 @section('content')
     <div class="container">
+        @include('includes._errors')
+
         <div class="row mt-5">
             <div class="card bg-dark col-md-12">
                 <div class="card-header">Voeg Steam toe aan Profiel</div>
                 <hr>
                 <div class="card-body">
-                    @error('form')
-                        {{-- @dd($errors) --}}
-                    @enderror
                     <form action="{{ route('profile.update', $profile) }}" method="post">
                         @method('patch')
                         @csrf
                         <div class="mb-3">
                             <label for="steamid" class="form-label">Voeg je Steamid toe</label>
-                            <input type="number" class="form-control" name="steamid" value="{{ old('steamid', (isset($profile->steamid)) ? $profile->steamid : '') }}" id="steamid" aria-describedby="steamid" placeholder="bijv.: 1234567890">
+                            <input type="number" class="form-control" name="steamid"
+                                   value="{{ old('steamid', (isset($profile->steamid)) ? $profile->steamid : '') }}"
+                                   id="steamid" aria-describedby="steamid" placeholder="bijv.: 1234567890">
                         </div>
                         <button type="submit" class="btn btn-primary">Sla op</button>
                     </form>
@@ -28,22 +34,31 @@
                 <div class="card-header">Voeg je locatie toe</div>
                 <hr>
                 <div class="card-body">
-                    @error('form')
-                        {{-- @dd($errors) --}}
-                    @enderror
                     <form action="{{ route('profile.update', $profile) }}" method="post">
                         @method('patch')
                         @csrf
-                        <div class="input-group">
-                            <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Separated link</a></li>
-                            </ul>
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <label for="city" class="form-label">Stad</label>
+                                    <input type="text" class="form-control" name="city" value="{{ old('city') ?? $location['city'] }}">
+                                </div>
+                                <div class="col-4">
+                                    <label for="country" class="form-label">Land</label>
+                                    <select class="form-select" name="country">
+                                        <option selected value="">Kies een land</option>
+                                        @foreach($countries as $country)
+                                            <option @if(!empty(old('country')) && $country['short_name'] === old('country'))
+                                                        selected
+                                                    @elseif(empty(old('country')) && $location['country'] === $country['short_name'])
+                                                        selected
+                                                    @endif value="{{ $country['short_name'] }}">
+                                                {{ $country['name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Sla op</button>
                     </form>

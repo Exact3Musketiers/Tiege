@@ -82,6 +82,13 @@
                                 <h1>{{ $weather['type'] }}</h1>
                                 <h1>{{ $weather['wind_bft'] }} Bft - {{ $weather['wind_direction'] }}</h1>
                                 <h1>{{ $weather['wind_text'] }}</h1>
+                                <small class="location">
+                                    @if (!is_null(auth()->user()) && !is_null(auth()->user()->location))
+                                        {{ Str::replace(',', ', ', auth()->user()->location) }}
+                                    @else
+                                        {{ Str::replace(',', ', ', config('services.weather.default_location')) }}
+                                    @endif
+                                </small>
                             </div>
                         </div>
                     @endif
