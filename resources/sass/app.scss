@@ -28,11 +28,11 @@ body {
 
 .home {
     * {
-        color: #000 !important;
+        color: #000;
     }
 
     .to-jas h1 {
-        color: #ffffff !important;
+        color: #ffffff;
     }
 
     .weather-wrap {
@@ -44,12 +44,12 @@ body {
         }
 
         h1 {
-            color: #ffffff !important;
+            color: #ffffff;
         }
     }
 
     .score h1 {
-        color: #ffffff !important;
+        color: #ffffff;
     }
 }
 
@@ -175,6 +175,7 @@ select, input {
         background: rgb(0, 165, 207);
         background: $gradient;
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
 
         &:hover, &:active {
@@ -190,6 +191,14 @@ select, input {
 
     .news-item:hover {
         background-color: rgba(255, 255, 255, 0.69);
+    }
+}
+
+.quick-access-box.greeting {
+    background: $color-pop;
+background: linear-gradient(90deg, $color-pop 00%, rgba(255,255,255,0.5) 100%);
+    h1 {
+        color: $color-pop-text;
     }
 }
 
@@ -381,13 +390,13 @@ select, input {
 
         .profile {
             &.profile-picture {
-                background-color: #fc6f96;
+                background-color: $color-pop;
                 width: 100%;
                 height: 81px;
 
                 .profile-text {
                     overflow: hidden;
-                    color: #461282;
+                    color: $color-pop-text;
                 }
             }
         }

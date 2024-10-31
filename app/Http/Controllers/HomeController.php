@@ -14,6 +14,10 @@ class HomeController extends Controller
 {
     public function index()
     {
+        if (request()->has('refresh')) {
+            Cache::forget('background_image');
+        }
+
         // Get all page information
         $greeting = $this->getGreetings();
         $weather = Weather::getWeather(cached: true);
@@ -66,28 +70,29 @@ class HomeController extends Controller
     {
         $hour = Carbon::now()->format('H');
 
-        $timeOfDayGreeting = 'Goedendag';
+        $timeOfDayGreeting = 'Goedendag, ';
 
         if ($hour < 24) {
-            $timeOfDayGreeting = 'Goedenavond ';
+            $timeOfDayGreeting = 'Goedenavond, ';
         }
         if ($hour < 18) {
-            $timeOfDayGreeting = 'Goedemiddag ';
+            $timeOfDayGreeting = 'Goedemiddag, ';
         }
         if ($hour < 12) {
-            $timeOfDayGreeting = 'Goedemorgen ';
+            $timeOfDayGreeting = 'Goedemorgen, ';
         }
         if ($hour < 6) {
-            $timeOfDayGreeting = 'Goedenacht ';
+            $timeOfDayGreeting = 'Goedenacht, ';
         }
 
         // array of greetings
         $greetings = [
-            'Hallo ',
-            'Gedag ',
-            'Gegroet ',
-            'Hoi ', 'Guten Tag, ',
-            'Jo Jo Jo ',
+            'Hallo, ',
+            'Gedag, ',
+            'Gegroet, ',
+            'Hoi, ',
+            'Guten Tag, ',
+            'Jo Jo Jo, ',
             'Hey! het is broederman ',
             'Wow, dat is de enige echte ',
             'Tadaa! ',
