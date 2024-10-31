@@ -17,7 +17,9 @@
 @section('content')
     <div class="has-background-image lazy position-fixed"
          style="
-            background: url({{ asset('images/backgrounds/1.jpg') }}) center center;
+            background: url({{ asset('images/backgrounds/'.$bg) }}) center center;
+            background-repeat: no-repeat;
+            background-size: cover;
         ">
     </div>
     <div class="container home">

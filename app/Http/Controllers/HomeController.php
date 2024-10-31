@@ -7,6 +7,7 @@ use App\Services\News;
 use App\Services\Weather;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use File;
 
 class HomeController extends Controller
 {
@@ -23,8 +24,11 @@ class HomeController extends Controller
             $steamReview->load('user');
         }
 
+        $bg_count = count(File::files(public_path('images/backgrounds')));
+        $bg = rand(1, $bg_count).'.jpg';
+
         // Return with greeting and weather
-        return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview]);
+        return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview, 'bg' => $bg]);
     }
 
     // Search the internet.
