@@ -25,6 +25,34 @@
 
         <div class="row mt-5">
             <div class="card bg-dark col-md-12">
+                <div class="card-header">Voeg je locatie toe</div>
+                <hr>
+                <div class="card-body">
+                    @error('form')
+                        {{-- @dd($errors) --}}
+                    @enderror
+                    <form action="{{ route('profile.update', $profile) }}" method="post">
+                        @method('patch')
+                        @csrf
+                        <div class="input-group">
+                            <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sla op</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="card bg-dark col-md-12">
                 <div class="card-header">Profiel Verwijderen</div>
                 <hr>
                 <div class="card-body">
