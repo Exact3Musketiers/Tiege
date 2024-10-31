@@ -22,6 +22,7 @@
             background-size: cover;
         ">
     </div>
+
     <div class="container home">
         <div class="row justify-content-center">
             <div class="row">
@@ -80,7 +81,7 @@
 
                         <div class="card quick-access-box weather mb-3" style="background: url({{ asset($weather['bram']) }}) top center; background-size: cover;">
                             <div class="weather-wrap px-3 py-5 rounded-3">
-                                <h1>{{ $weather['temperature'] }}&degC</h1>
+                                <h1>{{ $weather['temperature'] }}&deg;C</h1>
                                 <h1>{{ $weather['type'] }}</h1>
                                 <h1>{{ $weather['wind_bft'] }} Bft - {{ $weather['wind_direction'] }}</h1>
                                 <h1>{{ $weather['wind_text'] }}</h1>
@@ -117,56 +118,5 @@
             </div>
         </div>
     </div>
-    </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var lazyloadImages;
-
-        if ("IntersectionObserver" in window) {
-            lazyloadImages = document.querySelectorAll(".lazy");
-            var imageObserver = new IntersectionObserver(function (entries, observer) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        var image = entry.target;
-                        image.classList.remove("lazy");
-                        imageObserver.unobserve(image);
-                    }
-                });
-            });
-
-            lazyloadImages.forEach(function (image) {
-                imageObserver.observe(image);
-            });
-        } else {
-            var lazyloadThrottleTimeout;
-            lazyloadImages = document.querySelectorAll(".lazy");
-
-            function lazyload() {
-                if (lazyloadThrottleTimeout) {
-                    clearTimeout(lazyloadThrottleTimeout);
-                }
-
-                lazyloadThrottleTimeout = setTimeout(function () {
-                    var scrollTop = window.pageYOffset;
-                    lazyloadImages.forEach(function (img) {
-                        if (img.offsetTop < (window.innerHeight + scrollTop)) {
-                            img.src = img.dataset.src;
-                            img.classList.remove('lazy');
-                        }
-                    });
-                    if (lazyloadImages.length == 0) {
-                        document.removeEventListener("scroll", lazyload);
-                        window.removeEventListener("resize", lazyload);
-                        window.removeEventListener("orientationChange", lazyload);
-                    }
-                }, 20);
-            }
-
-            document.addEventListener("scroll", lazyload);
-            window.addEventListener("resize", lazyload);
-            window.addEventListener("orientationChange", lazyload);
-        }
-    });
-</script>
 @endsection
 

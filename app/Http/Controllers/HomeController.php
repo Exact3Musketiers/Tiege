@@ -8,6 +8,7 @@ use App\Services\Weather;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use File;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -24,8 +25,10 @@ class HomeController extends Controller
             $steamReview->load('user');
         }
 
-        $bg_count = count(File::files(public_path('images/backgrounds')));
-        $bg = rand(1, $bg_count).'.jpg';
+        $bg = Cache::remember('background_image', 3600, function () {
+            $bg_count = count(File::files(public_path('images/backgrounds')));
+            return rand(1, $bg_count).'.jpg';
+        });
 
         // Return with greeting and weather
         return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview, 'bg' => $bg]);
