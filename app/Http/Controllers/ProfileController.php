@@ -55,14 +55,19 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'steamid' => ['sometimes', 'nullable', 'min:3', 'max:255'],
-            'country' => ['sometimes', 'required_with:city', 'string', 'min:2', 'max:2', Rule::in($countries)],
-            'city' => ['sometimes', 'required_with:country', 'string', 'min:3', 'max:255'],
+            'country' => ['sometimes', 'nullable', 'required_with:city', 'string', 'min:2', 'max:2', Rule::in($countries)],
+            'city' => ['sometimes', 'nullable', 'required_with:country', 'string', 'min:3', 'max:255'],
             'background_image' => ['sometimes', 'integer', 'max:255'],
+            'email' => ['sometimes', 'required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($profile->getKey())],
         ]);
 
         $return = $validated;
 
-        if (array_key_exists('city', $validated) && array_key_exists('country', $validated)) {
+        if (array_key_exists('city', $validated) &&
+            array_key_exists('country', $validated) &&
+            !is_null($validated['city']) &&
+            !is_null($validated['country'])
+        ) {
             $location = ucfirst(strtolower($validated['city'])) .','. $validated['country'];
             unset($validated['city'], $validated['country']);
 

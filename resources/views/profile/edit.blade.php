@@ -18,30 +18,22 @@
                         @method('patch')
                         @csrf
                         <div class="mb-3">
-                            <label for="steamid" class="form-label">Voeg je Steamid toe</label>
+                            <label for="email" class="form-label">Pas je email aan</label>
+                            <input type="text" class="form-control" name="email"
+                                   value="{{ old('steamid', (isset($profile->email)) ? $profile->email : '') }}"
+                                   id="email" aria-describedby="email" placeholder="bijv.: email@provider.nl">
+                        </div>
+                        <div class="mb-3">
+                            <label for="steamid" class="form-label">Beheer je Steamid</label>
                             <input type="number" class="form-control" name="steamid"
                                    value="{{ old('steamid', (isset($profile->steamid)) ? $profile->steamid : '') }}"
                                    id="steamid" aria-describedby="steamid" placeholder="bijv.: 1234567890">
                         </div>
-                        <button type="submit" class="btn btn-primary">Sla op</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <div class="card bg-dark col-md-12">
-                <div class="card-header">Voeg je locatie toe</div>
-                <hr>
-                <div class="card-body">
-                    <form action="{{ route('profile.update', $profile) }}" method="post">
-                        @method('patch')
-                        @csrf
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col-8">
                                     <label for="city" class="form-label">Stad</label>
-                                    <input type="text" class="form-control" name="city" value="{{ old('city') ?? $location['city'] }}">
+                                    <input type="text" class="form-control" name="city" value="{{ old('city') ?? $location['city'] }}" placeholder="Harkema">
                                 </div>
                                 <div class="col-4">
                                     <label for="country" class="form-label">Land</label>
