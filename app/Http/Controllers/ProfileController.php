@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use File;
 
 class ProfileController extends Controller
 {
@@ -27,7 +28,13 @@ class ProfileController extends Controller
 
         $countries = collect(json_decode(file_get_contents('files/countries.json'), true));
 
-        return view('profile.edit', ['profile' => $profile, 'countries' => $countries]);
+        $images = [];
+        $bg_count = count(File::files(public_path('images/backgrounds')));
+        for ($i=1; $i <= $bg_count; $i++) {
+            $images[] = asset('images/backgrounds/'.$i.'.jpg');
+        }
+
+        return view('profile.edit', ['profile' => $profile, 'countries' => $countries, 'images' => $images]);
     }
 
     /**
@@ -48,20 +55,39 @@ class ProfileController extends Controller
 
         $validated = $request->validate([
             'steamid' => ['sometimes', 'nullable', 'min:3', 'max:255'],
-            'country' => ['sometimes', 'nullable', 'required_with:city', 'min:2', 'max:2', Rule::in($countries)],
-            'city' => ['sometimes', 'nullable', 'required_with:country', 'min:3', 'max:255'],
+            'country' => ['sometimes', 'required_with:city', 'string', 'min:2', 'max:2', Rule::in($countries)],
+            'city' => ['sometimes', 'required_with:country', 'string', 'min:3', 'max:255'],
+            'background_image' => ['sometimes', 'integer', 'max:255'],
         ]);
-        
-        $location = ucfirst(strtolower($validated['city'])) .','. $validated['country'];
 
-        unset($validated['city'], $validated['country']);
+        $return = $validated;
 
-        $weather =  Weather::apiGet($location);
-        if ($weather->status() !== 200) {
-            throw ValidationException::withMessages(['city' => 'The given country or city does not exist or another problem has occurred.']);
+        if (array_key_exists('city', $validated) && array_key_exists('country', $validated)) {
+            $location = ucfirst(strtolower($validated['city'])) .','. $validated['country'];
+            unset($validated['city'], $validated['country']);
+
+            $weather =  Weather::apiGet($location);
+            if ($weather->status() !== 200) {
+                throw ValidationException::withMessages(['city' => 'The given country or city does not exist or another problem has occurred.']);
+            }
+
+            $return += ['location' => $location];
         }
 
-        $profile->update($validated + ['location' => $location]);
+        if (array_key_exists('background_image', $validated)) {
+            $background_image = $validated['background_image'];
+            unset($validated['background_image']);
+
+            if ((integer)$background_image === 0) {
+                $background_image = null;
+            } else {
+                $background_image = asset('images/backgrounds/'.$background_image.'.jpg');
+            }
+
+            $return += ['background_image_path' => $background_image];
+        }
+
+        $profile->update($return);
         Cache::forget('weather.' . $profile->getKey());
         return back();
     }

@@ -16,11 +16,14 @@
 
 @section('content')
     <div class="has-background-image lazy position-fixed"
-         style="
-            background: url({{ asset('images/backgrounds/'.$bg) }}) center center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        ">
+        @if (!is_null($bg))
+            style="
+                background: url({{ $bg }}) center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            "
+        @endif
+    >
     </div>
 
     <div class="container home">

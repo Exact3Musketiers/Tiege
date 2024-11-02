@@ -68,12 +68,43 @@
 
         <div class="row mt-5">
             <div class="card bg-dark col-md-12">
+                <div class="card-header">Kies je achtergrond</div>
+                <hr>
+                <div class="card-body">
+                    <form action="{{ route('profile.update', $profile) }}" method="post">
+                        @method('patch')
+                        @csrf
+                        <div class="mb-3 row gap-y-2 row-gap-3">
+                            <label for="steamid" class="form-label">Selecteer een van de onderstaande afbeeldingen</label>
+                            <div class="col-lg-4 col-md-6 col-12">
+                                <input type="radio" name="background_image" value="0" id="image_radio_0" class="btn-check" />
+                                <label class="ratio ratio-16x9 btn" for="image_radio_0">
+                                    <div class="rounded-1 justify-content-center align-items-center d-flex">Geen achtergrond</div>
+                                </label>
+                            </div>
+                            @foreach ($images as $image)
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <input type="radio" name="background_image" value="{{ $loop->iteration }}" id="image_radio_{{ $loop->iteration }}" class="btn-check" />
+                                    <label class="ratio ratio-16x9 btn" for="image_radio_{{ $loop->iteration }}">
+                                        <img  src="{{ $image}}" class="rounded-1" alt="Achtergrond foto optie {{ $loop->iteration }}">
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sla op</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="card bg-dark col-md-12">
                 <div class="card-header">Profiel Verwijderen</div>
                 <hr>
                 <div class="card-body">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                        Remove account
+                        Account verwijderen
                     </button>
                 </div>
             </div>
@@ -84,19 +115,18 @@
             <div class="modal-dialog">
                 <div class="modal-content bg-dark">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Delete account</h5>
+                        <h5 class="modal-title" id="deleteModalLabel">Weet je het zeker?</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        You will not be able to reverse deleting your account.
-                        Are you sure?
+                        Deze actie kan niet worden teruggedraaid
                     </div>
                     <form method="POST" action="{{ route('profile.destroy', $profile)}}">
                         @method('DELETE')
                         @csrf
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" typeof="submit">Delete account</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger" typeof="submit">Account verwijderen</button>
+                            <button type="button" class="btn btn-light text-dark" data-bs-dismiss="modal">Annuleer</button>
                         </div>
                     </form>
 

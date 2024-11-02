@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'location',
+        'background_image_path',
     ];
 
     /**

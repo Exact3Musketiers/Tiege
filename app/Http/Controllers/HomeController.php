@@ -29,10 +29,20 @@ class HomeController extends Controller
             $steamReview->load('user');
         }
 
-        $bg = Cache::remember('background_image', 3600, function () {
-            $bg_count = count(File::files(public_path('images/backgrounds')));
-            return rand(1, $bg_count).'.jpg';
-        });
+        $user = auth()->user();
+
+        if (!is_null($user)) {
+            if (!is_null($background_image = $user->background_image_path)) {
+                $bg = $background_image;
+            } else {
+                $bg = null;
+            }
+        } else {
+            $bg = Cache::remember('background_image', 3600, function () {
+                $bg_count = count(File::files(public_path('images/backgrounds')));
+                return asset('images/backgrounds/'.rand(1, $bg_count).'.jpg');
+            });
+        }
 
         // Return with greeting and weather
         return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview, 'bg' => $bg]);
