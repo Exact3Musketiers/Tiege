@@ -17,7 +17,7 @@ return new class extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('location');
-            $table->string('background_image_path');
+            $table->dropColumn('background_image_path');
         });
     }
 };
