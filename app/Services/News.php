@@ -9,20 +9,44 @@ class News
 {
     public static function getNews()
     {
-        $news = FeedReader::read('https://nu.nl/rss/Wetenschap');
+        $topics = [
+            'https://nu.nl/rss/Wetenschap',
+            'https://nu.nl/rss/Tech',
+            'https://nu.nl/rss/eten-en-drinken',
+            'https://nu.nl/rss/film',
+            'https://nu.nl/rss/Opmerkelijk',
+        ];
         $news_array = [];
-        $items = $news->get_items();
+        $lengths = [];
 
-        foreach ($items as $news) {
-            $news_array[] = [
-                'title' => $news->get_title(),
-                'description' => $news->get_description(),
-                'image' => $news->get_enclosure(),
-                'url' => $news->get_link()
-            ];
+        foreach ($topics as $key => $topic) {
+            $news = FeedReader::read($topic);
+            $items = $news->get_items();
+
+            foreach ($items as $news) {
+                $news_array[$key][] = [
+                    'title' => $news->get_title(),
+                    'description' => $news->get_description(),
+                    'image' => $news->get_enclosure(),
+                    'url' => $news->get_link()
+                ];
+            }
+
+            $lengths[] = count($news_array[$key]);
         }
 
-        return $news_array;
+        $merged_news = [];
+        $length = max($lengths);
+
+        for ($i = 0; $i < $length; $i++) {
+            for ($j = 0; $j <= count($topics); $j++) {
+                if (isset($news_array[$j][$i])) {
+                    $merged_news[] = $news_array[$j][$i];
+                }
+            }
+        }
+
+        return array_unique($merged_news, SORT_REGULAR);
     }
 
     public static function updateNews()
@@ -35,7 +59,7 @@ class News
     public static function readNews($limit = 8)
     {
         if (Storage::exists('json/news.json') && !is_null($news = json_decode(Storage::get('json/news.json')))) {
-            $articles = array_slice($news, 0, $limit);
+            $articles = array_slice((array)$news, 0, $limit);
             $news = [
                 'articles' => $articles,
             ];
