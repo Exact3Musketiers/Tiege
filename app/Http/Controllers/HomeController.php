@@ -5,22 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\SteamReview;
 use App\Services\News;
 use App\Services\Weather;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use File;
 use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        $user = auth()->user();
+        $location = config('services.weather.default_location');
+
+        if (!is_null($user) && !is_null($user->location)) {
+            $location = $user->location;
+        }
+
         if (request()->has('refresh')) {
             Cache::forget('background_image');
         }
 
         // Get all page information
         $greeting = $this->getGreetings();
-        $weather = Weather::getWeather(cached: true);
+        $weather = Weather::getWeather(location: $location, cached: true);
         $news = News::readNews();
         $steamReview = [];
 

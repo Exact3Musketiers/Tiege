@@ -16,15 +16,8 @@ class Weather
         ]);
     }
 
-    public static function getWeather($cached = false) {
-        $user = auth()->user();
-        $user_id = null;
-        $location = config('services.weather.default_location');
-        
-        if (!is_null($user) && !is_null($user->location)) {
-            $user_id = $user->getKey();
-            $location = $user->location;
-        }
+    public static function getWeather($location, $cached = false) {
+        $user_id = auth()->id();
 
         if (request()->has('refresh')) {
             Cache::forget('weather.' . $user_id);
@@ -32,8 +25,8 @@ class Weather
 
         if ($cached && ! request()->has('refresh')) {
             // Call openweathermap api
-            $all_weather = Cache::remember('weather.' . $user_id, 900, function () {
-                return self::getWeather($cached = false);
+            $all_weather = Cache::remember('weather.' . $user_id, 900, function () use($location) {
+                return self::getWeather(location: $location, cached: false);
             });
         } else {
             $response = self::apiGet($location);
