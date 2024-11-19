@@ -12,7 +12,7 @@
                     </div>
                     <label for="text" class="form-label">Je sarcasme</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="vUL HIEr uw texT in" id="sarcasm">
+                        <input type="text" class="form-control" placeholder="vUL HIEr uw texT in" id="sarcasm-input">
                         <button class="btn btn-secondary" type="button"  id="copyButt" data-bs-toggle="modal" data-bs-target="#sarcasmModal"><i class="far fa-copy"></i></button>
                     </div>
                     <button class="btn btn-primary" id="sarcasmButt">Sarcasmify!</button>
@@ -48,25 +48,24 @@
     document.getElementById("copyButt").addEventListener("click", copyURL)
 
     function sarcasmify() {
-        var text = document.getElementById("text").value.toLowerCase();
-        var sarcasm = document.getElementById("sarcasm");
-        var textArray = text.split('');
+        let text = document.getElementById("text").value.toLowerCase();
+        let sarcasm = document.getElementById("sarcasm-input");
+        let textArray = text.split('');
 
         for (let i = 0; i < textArray.length; i++) {
-
-            if (Math.floor(Math.random() * 2) == 0) {
+            if (Math.floor(Math.random() * 2) === 0) {
                 textArray[i] = textArray[i].toUpperCase();
             }
         }
 
-        sarcasm.value = textArray.join('')
+        sarcasm.value = textArray.join('');
     }
 
     function copyURL() {
-        var input = document.getElementById("sarcasm");
-        input.select(),
-        input.setSelectionRange(0,99999),
-        document.execCommand("copy")
+        let input = document.getElementById("sarcasm-input");
+        input.select();
+        input.setSelectionRange(0,99999);
+        document.execCommand("copy");
     }
 </script>
 @endsection

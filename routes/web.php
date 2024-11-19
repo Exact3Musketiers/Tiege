@@ -28,7 +28,7 @@ route::resource('/driving', App\Http\Controllers\CarController::class)->paramete
 route::resource('/driving/{car}/efficiency', App\Http\Controllers\RefuelingStatController::class)->except(['show']);
 
 
-Route::get('/s', [App\Http\Controllers\SarcasmController::class, 'index'])->name('sarcasm');
+Route::get('/s', [App\Http\Controllers\PagesController::class, 'sarcasm'])->name('sarcasm');
 Route::get('/UwU', [App\Http\Controllers\PagesController::class, 'uwu'])->name('uwu');
 
 Route::get('/steam', [App\Http\Controllers\SteamController::class, 'index'])->name('steam.index');

@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\LyricsController;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -28,7 +26,7 @@ class MusicServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('partials.music', function ($view) {
+        View::composer('includes.music', function ($view) {
             // if (empty(Auth::user()->lastfm))
             //     $musicFeed = [
             //         'friendsTracks' => app('App\Http\Controllers\LastfmController')->getFriendsLastfmInfo()
