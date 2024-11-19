@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\SteamReview;
 use App\Services\News;
 use App\Services\Weather;
-use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -19,10 +17,6 @@ class HomeController extends Controller
 
         if (!is_null($user) && !is_null($user->location)) {
             $location = $user->location;
-        }
-
-        if (request()->has('refresh')) {
-            Cache::forget('background_image');
         }
 
         // Get all page information
@@ -36,23 +30,8 @@ class HomeController extends Controller
             $steamReview->load('user');
         }
 
-        $user = auth()->user();
-
-        if (!is_null($user)) {
-            if (!is_null($background_image = $user->background_image_path)) {
-                $bg = $background_image;
-            } else {
-                $bg = null;
-            }
-        } else {
-            $bg = Cache::remember('background_image', 3600, function () {
-                $bg_count = count(File::files(public_path('images/backgrounds')));
-                return asset('images/backgrounds/'.rand(1, $bg_count).'.jpg');
-            });
-        }
-
         // Return with greeting and weather
-        return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview, 'bg' => $bg]);
+        return view('home', ['greeting' => $greeting, 'weather' => $weather, 'news' => $news, 'steamReview' => $steamReview]);
     }
 
     // Search the internet.

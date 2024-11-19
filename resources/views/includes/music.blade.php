@@ -1,16 +1,14 @@
-<div class="slide-in-elliptic-top-fwd card bg-transparent d-flex flex-column align-items-center align-items-sm-start px-3">
-    <div class="navbar-dark-under py-3">
-        <div class="col-12">
-            <div class="text-center music-widget">
+    <div class="navbar-dark-under py-3 w-100 mx-auto d-block">
+            <div class="text-center">
                 @if(!empty(Auth::user()->lastfm))
                     @if(isset($musicFeed['recentTracks']))
 
                         <h4>Now playing:</h4>
-                        <h3>{{ $musicFeed['recentTracks']->track[0]->artist->{'#text'} }}</h3>
+                        <h3>{{ Str::limit($musicFeed['recentTracks']->track[0]->artist->{'#text'}, 35) }}</h3>
 
-                        <img src={{ $musicFeed['recentTracks']->track[0]->image[1]->{"#text"} }}/>
-                        <h3>{{ $musicFeed['recentTracks']->track[0]->name }}</h3>
-                        <h6>{{ $musicFeed['recentTracks']->track[0]->album->{'#text'} }}</h6>
+                        <img src="{{ $musicFeed['recentTracks']->track[0]->image[1]->{"#text"} }}" alt="Album image" />
+                        <h3>{{ Str::limit($musicFeed['recentTracks']->track[0]->name, 35) }}</h3>
+                        <h6>{{ Str::limit($musicFeed['recentTracks']->track[0]->album->{'#text'}, 60) }}</h6>
                         <a href="{{route('lyrics')}}">See lyrics</a>
                     @endif
                 @endif
@@ -32,7 +30,5 @@
                         @endif
                     </div>
                 @endforeach --}}
-            </div>
         </div>
     </div>
-</div>

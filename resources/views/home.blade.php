@@ -15,17 +15,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="has-background-image lazy position-fixed"
-        @if (!is_null($bg))
-            style="
-                background: url({{ $bg }}) center center;
-                background-repeat: no-repeat;
-                background-size: cover;
-            "
-        @endif
-    >
-    </div>
-
     <div class="container home">
         <div class="row justify-content-center">
             <div class="row">

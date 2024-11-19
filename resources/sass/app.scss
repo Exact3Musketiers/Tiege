@@ -22,8 +22,8 @@ body {
     height: 100%;
 }
 
-*:not(.rainbow_text_animated,a,input,textarea,button,.list-group-item-danger) {
-    color: #f0e7dc;
+*:not(.rainbow_text_animated,a,input,textarea,button,.list-group-item-danger,.profile-text) {
+    color: $text;
 }
 
 .home {
@@ -350,101 +350,56 @@ background: linear-gradient(90deg, $color-pop 00%, rgba(255,255,255,0.5) 100%);
     }
 }
 
+nav {
+    background: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 100%);
+    padding: 0 60px 0 60px;
+}
+
+
+.sidebar-button {
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 6px;
+    width: 40px;
+    aspect-ratio: 1/1;
+    z-index: 1;
+    transition: background .9s;
+}.close {
+     background-color: rgba(0, 0, 0, 0.8);
+     backdrop-filter: blur(10.0px);
+     -webkit-backdrop-filter: blur(10.0px);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+     position: absolute;
+     top: 0;
+     right: -40px;
+ }
+
+.sidebar-button:hover {
+    background: rgb(255, 255, 255);
+    i {
+        color: rgba(0, 0, 0);
+    }
+}
+
 .sidebar {
-    position: fixed;
-    margin-left: -15px;
-    overflow-y: scroll;
-    height: 100vh;
-    max-width: 212px !important;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10.0px);
+    -webkit-backdrop-filter: blur(10.0px);
+    width: 300px;
 
-    li {
-        width: 100% !important;
-
-        a {
-            width: 100%;
-
-            &:hover, &:focus {
-                background: $dark-secondary;
-            }
-        }
-
-        .btn {
-            width: 100% !important;
-        }
+    .btn-close {
+        color: $text !important;
     }
 
-    .card {
-        margin-top: 20px;
+    .profile {
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        background-color: $color-pop;
+        color: $color-pop-text;
     }
-}
-
-@media only screen and (min-width: 600px) {
-    .sidebar .collapse li {
-        padding: 5px 0 5px 0;
-    }
-    .sidebar {
-
-        .card {
-            padding: 4px;
-        }
-
-        .profile {
-            &.profile-picture {
-                background-color: $color-pop;
-                width: 100%;
-                height: 81px;
-
-                .profile-text {
-                    overflow: hidden;
-                    color: $color-pop-text;
-                }
-            }
-        }
-    }
-    .sidebar-behind {
-        width: 200px;
-        min-height: 100vh;
-        background-color: $dark-secondary;
-    }
-    .navbar-dark-under {
-        width: 200px;
-        margin-left: -24px;
-        margin-bottom: 50px;
-
-    }
-}
-
-@media only screen and (max-width: 1000px) {
-    .music-widget > .row > .border-end {
-        border-right: 0 !important;
-    }
-    .music-widget > .row {
-        width: 100%;
-        border-bottom: darken($primary, 25%) 1px solid;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    .sidebar .collapse li {
-        padding: 10px 0 10px 0;
-    }
-    .sidebar, .sidebar-behind {
-        width: 100vw;
-        background-color: $dark-secondary;
-    }
-    .sidebar {
-        max-width: 100% !important;
-    }
-    .navbar-dark-under {
-        margin-left: 5px;
-        margin-bottom: 100px;
-        width: 100vw;
-
-        .mb-lg-2 .text-lg-start {
-            justify-content: center;
-        }
-    }
-
 }
 
 //Lyrics
