@@ -336,15 +336,19 @@ nav {
     z-index: 1;
     transition: background .9s;
 }.close {
-     background-color: rgba(0, 0, 0, 0.8);
-     backdrop-filter: blur(10.0px);
-     -webkit-backdrop-filter: blur(10.0px);
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10.0px);
+    -webkit-backdrop-filter: blur(10.0px);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-left-radius: 0;
-     position: absolute;
-     top: 0;
-     right: -40px;
+    position: absolute;
+    top: 0;
+    right: -40px;
+     @media screen and (max-width: 600px) {
+         right: 0;
+         border-radius: 6px;
+     }
  }
 
 .sidebar-button:hover {
