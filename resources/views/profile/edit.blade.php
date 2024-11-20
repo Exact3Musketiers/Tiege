@@ -9,58 +9,56 @@
     <div class="container">
         @include('includes._errors')
 
-        <div class="row mt-5">
-            <div class="card bg-dark col-md-12">
-                <div class="card-header">Voeg Steam toe aan Profiel</div>
-                <hr>
-                <div class="card-body">
-                    <form action="{{ route('profile.update', $profile) }}" method="post">
-                        @method('patch')
-                        @csrf
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Pas je email aan</label>
-                            <input type="text" class="form-control" name="email"
-                                   value="{{ old('steamid', (isset($profile->email)) ? $profile->email : '') }}"
-                                   id="email" aria-describedby="email" placeholder="bijv.: email@provider.nl">
-                        </div>
-                        <div class="mb-3">
-                            <label for="steamid" class="form-label">Beheer je Steamid</label>
-                            <input type="number" class="form-control" name="steamid"
-                                   value="{{ old('steamid', (isset($profile->steamid)) ? $profile->steamid : '') }}"
-                                   id="steamid" aria-describedby="steamid" placeholder="bijv.: 1234567890">
-                        </div>
-                        <div class="mb-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <label for="city" class="form-label">Stad</label>
-                                    <input type="text" class="form-control" name="city" value="{{ old('city') ?? $location['city'] }}" placeholder="Harkema">
-                                </div>
-                                <div class="col-4">
-                                    <label for="country" class="form-label">Land</label>
-                                    <select class="form-select" name="country">
-                                        <option selected value="">Kies een land</option>
-                                        @foreach($countries as $country)
-                                            <option @if(!empty(old('country')) && $country['short_name'] === old('country'))
-                                                        selected
-                                                    @elseif(empty(old('country')) && $location['country'] === $country['short_name'])
-                                                        selected
-                                                    @endif value="{{ $country['short_name'] }}">
-                                                {{ $country['name'] }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+        <div>
+            <div class="content-box">
+                <h1>Pas jezelf aan</h1>
+                <hr />
+                <form action="{{ route('profile.update', $profile) }}" method="post">
+                    @method('patch')
+                    @csrf
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Pas je email aan</label>
+                        <input type="text" class="form-control" name="email"
+                               value="{{ old('steamid', (isset($profile->email)) ? $profile->email : '') }}"
+                               id="email" aria-describedby="email" placeholder="bijv.: email@provider.nl">
+                    </div>
+                    <div class="mb-3">
+                        <label for="steamid" class="form-label">Beheer je Steamid</label>
+                        <input type="number" class="form-control" name="steamid"
+                               value="{{ old('steamid', (isset($profile->steamid)) ? $profile->steamid : '') }}"
+                               id="steamid" aria-describedby="steamid" placeholder="bijv.: 1234567890">
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <label for="city" class="form-label">Stad</label>
+                                <input type="text" class="form-control" name="city" value="{{ old('city') ?? $location['city'] }}" placeholder="Harkema">
+                            </div>
+                            <div class="col-4">
+                                <label for="country" class="form-label">Land</label>
+                                <select class="form-select" name="country">
+                                    <option selected value="">Kies een land</option>
+                                    @foreach($countries as $country)
+                                        <option @if(!empty(old('country')) && $country['short_name'] === old('country'))
+                                                    selected
+                                                @elseif(empty(old('country')) && $location['country'] === $country['short_name'])
+                                                    selected
+                                                @endif value="{{ $country['short_name'] }}">
+                                            {{ $country['name'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Sla op</button>
-                    </form>
-                </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sla op</button>
+                </form>
             </div>
         </div>
 
-        <div class="row mt-5">
-            <div class="card bg-dark col-md-12">
-                <div class="card-header">Kies je achtergrond</div>
+        <div class="mt-3">
+            <div class="content-box">
+                <h1>Kies je achtergrond</h1>
                 <hr>
                 <div class="card-body">
                     <form action="{{ route('profile.update', $profile) }}" method="post">
@@ -89,8 +87,8 @@
             </div>
         </div>
 
-        <div class="row mt-5">
-            <div class="card bg-dark col-md-12">
+        <div class="my-3">
+            <div class="content-box">
                 <div class="card-header">Profiel Verwijderen</div>
                 <hr>
                 <div class="card-body">

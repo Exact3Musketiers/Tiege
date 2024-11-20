@@ -2,21 +2,20 @@
 
 @section('content')
     <div class="container">
-        <div class="row pt-5">
-            <div class="card bg-dark col-md-12">
-                <div class="card-header">sARcASMify je SHit!</div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label for="text" class="form-label">Je text</label>
-                        <input type="text" class="form-control" placeholder="Vul hier uw text in" id="text">
-                    </div>
-                    <label for="text" class="form-label">Je sarcasme</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="vUL HIEr uw texT in" id="sarcasm-input">
-                        <button class="btn btn-secondary" type="button"  id="copyButt" data-bs-toggle="modal" data-bs-target="#sarcasmModal"><i class="far fa-copy"></i></button>
-                    </div>
-                    <button class="btn btn-primary" id="sarcasmButt">Sarcasmify!</button>
+        <div class="content-box">
+            <h1>sARcASMify je SHit!</h1>
+            <hr />
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="text" class="form-label">Je text</label>
+                    <input type="text" class="form-control" placeholder="Vul hier uw text in" id="text">
                 </div>
+                <label for="sarcasm-output" class="form-label">jE sARCasME</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="vUL HIEr uw texT in" id="sarcasm-output">
+                    <button class="btn btn-secondary" type="button" id="copyButt" data-bs-toggle="modal" data-bs-target="#sarcasmModal"><i class="far fa-copy"></i></button>
+                </div>
+                <button class="btn btn-primary" id="sarcasmButt">Sarcasmify!</button>
             </div>
         </div>
     </div>
@@ -49,7 +48,7 @@
 
     function sarcasmify() {
         let text = document.getElementById("text").value.toLowerCase();
-        let sarcasm = document.getElementById("sarcasm-input");
+        let sarcasm = document.getElementById("sarcasm-output");
         let textArray = text.split('');
 
         for (let i = 0; i < textArray.length; i++) {

@@ -1,25 +1,24 @@
 <template>
-    <div class="row mt-5">
-        <div class="card bg-dark col-md-12">
-            <div class="card-header">UwUify</div>
-            <div class="alert alert-primary d-flex align-items-center" role="alert" v-if="showNotification">
-                <i class="fs-5 fad fa-copy flex-shrink-0 me-2"></i>
-            <div>
-                Text gekopieewd. *aaaargg* UwU
+    <div class="content-box">
+        <h1>UwUify</h1>
+        <hr />
+        <div class="alert alert-primary d-flex align-items-center" role="alert" v-if="showNotification">
+            <i class="fs-5 fad fa-copy flex-shrink-0 me-2 text-black"></i>
+        <div class="text-black">
+            Text gekopieewd. *aaaargg* UwU
+        </div>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="text" class="form-label">Je text</label>
+                <textarea class="form-control form-control-lg textarea-height" id="uwuin" rows="3" placeholder="UwU in" v-model="textToUwuIfy"></textarea>
             </div>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="text" class="form-label">Je text</label>
-                    <textarea class="form-control form-control-lg textarea-height" id="uwuin" rows="3" placeholder="UwU in" v-model="textToUwuIfy"></textarea>
-                </div>
-                <label for="text" class="form-label">Je UwU</label>
-                <div class="input-group mb-3">
-                    <textarea class="form-control form-control-lg textarea-height" id="uwuout" rows="3"
-                        placeholder="UwU out" v-model="textUwuFied"></textarea>
-                    <button class="btn btn-secondary" type="button" v-on:click="saveToClipboard"><i
-                            class="far fa-copy"></i></button>
-                </div>
+            <label for="text" class="form-label">Je UwU</label>
+            <div class="input-group mb-3">
+                <textarea class="form-control form-control-lg textarea-height" id="uwuout" rows="3"
+                    placeholder="UwU out" v-model="textUwuFied"></textarea>
+                <button class="btn btn-secondary" type="button" v-on:click="saveToClipboard"><i
+                        class="far fa-copy"></i></button>
             </div>
         </div>
     </div>

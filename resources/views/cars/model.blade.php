@@ -3,12 +3,14 @@
 @section('content')
     <div class="container">
         <div class="py-3">
-            <h1>Auto Efficiency</h1>
-            <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden.</p>
-            <div class="row pt-3 mb-3">
-                <div class="card bg-dark text-white col-12">
+            <div class="content-box mb-3">
+                <h1>Auto Efficiency</h1>
+                <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden.</p>
+            </div>
+            <div class="pt-3 mb-3">
+                <div class="content-box col-12">
                     <div class="card-header">
-                        <h1 class="h5"><a href="{{ route('driving.index') }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | Pas je review aan</h1>
+                        <h1 class="h5"><a href="{{ route('driving.index') }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | @if(!$car->exists) Voeg je auto toe @else Pas je auto aan @endif</h1>
                     </div>
                     <hr class="m-0">
                     <div class="card-body">

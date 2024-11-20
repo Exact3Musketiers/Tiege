@@ -17,7 +17,7 @@
     <div class="container pt-5" >
         <div class="row">
             <div class="col-lg-8">
-                <div class="card text-white bg-dark">
+                <div class="card text-white content-box">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="@if(!$playerSummary->isEmpty()){{ $playerSummary['avatarfull'] }} @else {{ asset('/images/placeholder-square.jpeg') }} @endif" class="img-fluid w-100 rounded-start" alt="...">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card text-white bg-dark mt-4">
+                <div class="card text-white content-box mt-4">
                     <div class="row g-0">
                         <div class="col-md-4">
                             @if (isset($selectedGameInfo['header_image']))
@@ -63,18 +63,27 @@
                             </div>
                         </div>
                         <form action="{{ route('steam.getNewGame', $user) }}" class="p-3">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text bg-primary border-primary">Tussen de</span>
-                                <input type="number" name="min" class="form-control" placeholder="Minimum minuten gespeeld" aria-label="Username" value="{{ old('min') ?? cache('user.'.$user->getKey().'.minutes', ['min' => null])['min'] }}">
-                                <span class="input-group-text bg-primary border-primary">en de</span>
-                                <input type="number" name="max" class="form-control" placeholder="Maximum minuten gespeeld" aria-label="Server" value="{{ old('max') ?? cache('user.'.$user->getKey().'.minutes', ['max' => null])['max'] }}">
-                                <span class="input-group-text bg-primary border-primary">minuten</span>
+                            <h4 class="mb-3">Vul de tijd gespeeld in (In minuten)</h4>
+                            <div class="form- mb-3">
+                                <label for="playedMin">Minimum minuten gespeeld</label>
+                                <input type="number" name="min" class="form-control"  id="playedMin"
+                                       placeholder="0"
+                                       value="{{ old('min') ?? cache('user.'.$user->getKey().'.minutes',
+                                                    ['min' => null])['min'] }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="playedMax">Maximum minuten gespeeld</label>
+                                <input type="number" name="max" class="form-control" id="playedMax"
+                                       placeholder="1000"
+                                       value="{{ old('max') ?? cache('user.'.$user->getKey().'.minutes',
+                                                    ['max' => null])['max'] }}">
                             </div>
                             <button type="submit" class="btn btn-outline-primary w-100">Geef me een ander spel</button>
                         </form>
                     </div>
                 </div>
-                <div class="card text-white bg-dark mt-4">
+                <div class="card text-white content-box mt-4 mb-lg-4">
                     <div class="row g-0">
 
                         <div class="card-body m-0">
@@ -129,44 +138,42 @@
                     </div>
                 </div>
                 @if ($allReviews->isNotEmpty())
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <div class="card text-white bg-dark">
-                                <div class="card-header">Anderen zeggen dit:</div>
+                    <div class="mt-4 mb-lg-4">
+                        <div class="content-box">
+                            <p>Anderen zeggen dit:</p>
+                            <div class="row row-cols-1 row-cols-lg-3 g-2">
+                                @foreach ($allReviews as $review)
+                                    <div class="col-md-4 mt-2">
+                                        <div class="card bg-dark
+                                            @if ($review->recomended)
+                                                border-success
+                                            @else
+                                                border-danger
+                                            @endif  mb-3 h-100">
+                                            <div class="card-header">{{ $review->user->name }}</div>
+                                            <hr class="m-0">
+                                            <div class="card-body pt-2">
+                                                <p class="card-text">{{ $review->review }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                        @foreach ($allReviews as $review)
-                        <div class="col-md-4 mt-2">
-                            <div class="card bg-dark
-                                @if ($review->recomended)
-                                    border-success
-                                @else
-                                    border-danger
-                                @endif  mb-3 h-100">
-                                <div class="card-header">{{ $review->user->name }}</div>
-                                <hr class="m-0">
-                                <div class="card-body pt-2">
-                                    <p class="card-text">{{ $review->review }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
                     </div>
                 @endif
             </div>
-            <div class="col-lg-4 mb-5">
-                <div class="card text-white bg-dark">
+            <div class="col-lg-4 mt-4 mt-lg-0 mb-4">
+                <div class="content-box">
                     <div class="card-body">
                         @if (count($recentGames) > 0)
                             @foreach ($recentGames as $game)
-                                <div class="card w-100 bg-dark">
                                 <img src="{{ $game['img_logo_url'] }}" class="card-img-top" alt="{{ $game['name'] }}">
                                 <div class="card-body">
-                                    <h5 class="card-title hidden-icon text-center"><a href="steam://run/{{$game['appid']}}/"><i class="fas fa-play icon"></i>{{ $game['name'] }}</a></h5>
+                                    <h5 class="card-title hidden-icon text-center my-2"><a href="steam://run/{{$game['appid']}}/"><i class="fas fa-play icon"></i>{{ $game['name'] }}</a></h5>
                                     <hr class="mt-0 mb-2">
                                     <p class="mb-0">Afgelopen 2 weken {{ App\Services\Steam::minutesToHours($game['playtime_2weeks']) }} gespeeld</p>
                                     <p>In totaal {{ App\Services\Steam::minutesToHours($game['playtime_forever']) }} gespeeld</p>
-                                </div>
                             </div>
                             @endforeach
                         @else

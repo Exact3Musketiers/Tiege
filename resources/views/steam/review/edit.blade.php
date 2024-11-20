@@ -3,11 +3,11 @@
 @section('content')
     <div class="container">
         <div class="row pt-5 mb-3">
-            <div class="card bg-dark text-white col-12">
+            <div class="content-box col-12">
                 <div class="card-header">
                     <h1 class="h5"><a href="{{ route('steam.review.index', $user) }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | Pas je review aan</h1>
                 </div>
-                <hr class="m-0">
+                <hr />
                 <div class="card-body">
                     <form action="{{ route('steam.update', [$user, $review]) }}" method="post">
                         @method('PATCH')

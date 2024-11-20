@@ -18,6 +18,8 @@
             return asset('images/backgrounds/'.rand(1, $bg_count).'.jpg');
         });
     }
+
+    $exceptions = collect(['steam.show', 'wiki.show']);
 @endphp
 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -47,17 +49,15 @@
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 </head>
-
 <body>
-<div class="has-background-image lazy position-fixed"
-     @if (!is_null($bg))
+<div class="has-background-image lazy position-fixed z-n1"
+     @if (!is_null($bg) && !$exceptions->contains(Route::currentRouteName()))
          style="
                 background: url({{ $bg }}) center center;
                 background-repeat: no-repeat;
                 background-size: cover;
             "
-    @endif
->
+    @endif>
 </div>
 <div>
     <nav class="navbar w-100">

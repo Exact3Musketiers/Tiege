@@ -1,17 +1,13 @@
 <div id="coinPage">
-    <div class="row mt-3">
-        <div class="card bg-dark col-md-12">
-            <div class="card-body">
-                <div class="text-center pb-3">
-                    <button class="btn btn-primary w-100" id="flipButton" onclick="flipCoin()">Click for heads/tails</button>
-                </div>
-                <div class="hot-arena d-flex flex-column justify-content-center">
-                    <div id="announcer"><h1 class="text-center fs-large">Kop of Munt</h1></div>
-                    <div id="hand"></div>
-                    <div id="coin"></div>
-                    <div id="coinResult" class="display-4 mx-auto text-center"></div>
-                </div>
-            </div>
+    <div class="content-box">
+        <div class="text-center pb-3">
+            <button class="btn btn-primary w-100" id="flipButton" onclick="flipCoin()">Click for heads/tails</button>
+        </div>
+        <div class="hot-arena d-flex flex-column justify-content-center">
+            <div id="announcer"><h1 class="text-center fs-large">Kop of Munt</h1></div>
+            <div id="hand"></div>
+            <div id="coin"></div>
+            <div id="coinResult" class="display-4 mx-auto text-center"></div>
         </div>
     </div>
 </div>

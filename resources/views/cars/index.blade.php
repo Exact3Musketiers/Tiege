@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container">
-        <div class="py-3">
+        <div class="py-3 content-box">
             <h1>Auto Efficiency</h1>
             <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden> Je kan ook je auto toevoegen Als je dat leuk lijkt!</p>
             @guest

@@ -1,7 +1,6 @@
-
-<div class="row mt-3" id="rngPage">
-    <div class="card bg-dark col-md-12">
-        <div class="card-body text-center">
+<div class="mt-3" id="rngPage">
+    <div class="content-box">
+        <div class="text-center">
             <div class="input-group mb-3">
                 <span class="input-group-text bg-primary border-primary"">#1</span>
                 <input type="number" id="numberInput1" class="form-control" placeholder="Number 1" aria-label="Number 1">

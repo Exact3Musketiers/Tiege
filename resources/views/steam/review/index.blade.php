@@ -2,18 +2,16 @@
 
 @section('content')
     <div class="container">
-        <div class="row pt-5 mb-3">
-            <div class="card bg-dark text-white col-12">
-                <div class="card-header">
-                    <h1 class="h5"><a href="{{ route('steam.review.all') }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | Jou eigen reviews</h1>
-                </div>
-                @auth
-                    <hr class="m-0">
-                    <div class="card-body">
-                        <a href="{{ route('steam.review.all') }}">Bekijk alle reviews</a>
-                    </div>
-                @endauth
+        <div class="content-box mb-3">
+            <div class="card-header">
+                <h1 class="h5"><a href="{{ route('steam.review.all') }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | Jou eigen reviews</h1>
             </div>
+            @auth
+                <hr />
+                <div class="card-body">
+                    <a href="{{ route('steam.review.all') }}">Bekijk alle reviews</a>
+                </div>
+            @endauth
         </div>
         <div class="row mb-3 gx-3">
             @if (! empty($reviews))
