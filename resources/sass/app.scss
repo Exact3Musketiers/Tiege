@@ -22,7 +22,7 @@ body {
     height: 100%;
 }
 
-*:not(.rainbow_text_animated,a,input,textarea,button,.list-group-item-danger,.profile-text) {
+*:not(.rainbow_text_animated,a,input,textarea,select,button,.list-group-item-danger,.profile-text) {
     color: $text;
 }
 

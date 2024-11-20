@@ -4,8 +4,8 @@
     $is_current_page = $route === $current_route;
 @endphp
 
-<div class="profile text-center">
-    <div class="profile-text fs-1 fw-bold h-50">
+<div class="profile text-center p-2">
+    <div class="profile-text fs-1 fw-bold h-50 text-nowrap overflow-x-hidden">
         @if(auth()->user() !== null)
             {{ Auth::user()->name }}
         @else

@@ -18,7 +18,7 @@
     <div class="container home">
         <div class="row justify-content-center">
             <div class="row">
-                <div class="mt-3">
+                <div>
                     <div class="card quick-access-box px-3 py-1 greeting">
                         <h1 class="m-0 fw-bold">
                             {{ $greeting . ' ' . (auth()->user()?->name ?? 'Gast') . '!' }}

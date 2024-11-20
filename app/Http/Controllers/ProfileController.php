@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\SteamReview;
 use App\Models\User;
 use App\Services\Weather;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use File;
 
 class ProfileController extends Controller
 {
@@ -54,7 +54,9 @@ class ProfileController extends Controller
             ->pluck('short_name');
 
         $validated = $request->validate([
-            'steamid' => ['sometimes', 'nullable', 'min:3', 'max:255'],
+            'steamid' => ['sometimes', 'nullable', 'numeric', 'min:3'],
+            'lastfm' => ['sometimes', 'nullable', 'string', 'min:3', 'max:255'],
+            'name' => ['sometimes', 'required', 'max:255'],
             'country' => ['sometimes', 'nullable', 'required_with:city', 'string', 'min:2', 'max:2', Rule::in($countries)],
             'city' => ['sometimes', 'nullable', 'required_with:country', 'string', 'min:3', 'max:255'],
             'background_image' => ['sometimes', 'integer', 'max:255'],

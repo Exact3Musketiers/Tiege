@@ -17,9 +17,15 @@
                     @method('patch')
                     @csrf
                     <div class="mb-3">
+                        <label for="name" class="form-label">Pas je naam aan</label>
+                        <input type="text" class="form-control" name="name"
+                               value="{{ old('name', (isset($profile->name)) ? $profile->name : '') }}"
+                               id="name" aria-describedby="name" placeholder="bijv.: Johannes de Vries">
+                    </div>
+                    <div class="mb-3">
                         <label for="email" class="form-label">Pas je email aan</label>
                         <input type="text" class="form-control" name="email"
-                               value="{{ old('steamid', (isset($profile->email)) ? $profile->email : '') }}"
+                               value="{{ old('email', (isset($profile->email)) ? $profile->email : '') }}"
                                id="email" aria-describedby="email" placeholder="bijv.: email@provider.nl">
                     </div>
                     <div class="mb-3">
@@ -27,6 +33,12 @@
                         <input type="number" class="form-control" name="steamid"
                                value="{{ old('steamid', (isset($profile->steamid)) ? $profile->steamid : '') }}"
                                id="steamid" aria-describedby="steamid" placeholder="bijv.: 1234567890">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastfm" class="form-label">Beheer je lastfm koppeling</label>
+                        <input type="text" class="form-control" name="lastfm"
+                               value="{{ old('lastfm', (isset($profile->lastfm)) ? $profile->lastfm : '') }}"
+                               id="lastfm" aria-describedby="lastfm" placeholder="Johannes_de_vries24">
                     </div>
                     <div class="mb-3">
                         <div class="row">
