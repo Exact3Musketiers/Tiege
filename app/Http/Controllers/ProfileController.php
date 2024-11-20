@@ -63,13 +63,18 @@ class ProfileController extends Controller
             'email' => ['sometimes', 'required', 'string', 'email', 'max:255', Rule::unique(User::class)->ignore($profile->getKey())],
         ]);
 
+
         $return = $validated;
 
         if (array_key_exists('city', $validated) &&
-            array_key_exists('country', $validated) &&
-            !is_null($validated['city']) &&
-            !is_null($validated['country'])
+            is_null($validated['country']) &&
+            is_null($validated['city']) &&
+            !is_null($profile->location)
         ) {
+            $return['location'] = null;
+        }
+
+        if (array_key_exists('city', $validated) && !is_null($validated['city'])) {
             $location = ucfirst(strtolower($validated['city'])) .','. $validated['country'];
             unset($validated['city'], $validated['country']);
 

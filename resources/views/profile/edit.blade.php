@@ -61,9 +61,18 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @if(!empty($location['city']))
+                                <a class="pt-1 ps-" href="#" onclick="event.preventDefault(); document.removeLocation.submit()">Verwijder je locatie</a>
+                            @endif
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Sla op</button>
+                </form>
+                <form name="removeLocation" class="d-none" action="{{ route('profile.update', $profile) }}" method="post">
+                    @method('patch')
+                    @csrf
+                    <input type="hidden" name="city">
+                    <input type="hidden" name="country">
                 </form>
             </div>
         </div>
