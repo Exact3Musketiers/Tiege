@@ -325,7 +325,9 @@ nav {
     background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 100%);
     padding: 0 60px 0 60px;
 }
-
+.fake-nav {
+    height: 67px;
+}
 
 .sidebar-button {
     background: rgba(0, 0, 0, 0.5);

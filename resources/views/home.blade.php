@@ -18,16 +18,9 @@
     <div class="container home">
         <div class="row justify-content-center">
             <div class="row">
-                <div>
-                    <div class="card quick-access-box px-3 py-1 greeting">
-                        <h1 class="m-0 fw-bold">
-                            {{ $greeting . ' ' . (auth()->user()?->name ?? 'Gast') . '!' }}
-                        </h1>
-                    </div>
-                </div>
                 {{-- Left --}}
                 <div class="col-lg-8">
-                    <div class="my-3">
+                    <div class="mb-3">
                         {{-- navigation --}}
                         <div class="card quick-access-box">
                             <div class="card-body">
@@ -67,14 +60,16 @@
                 </div>
 
                 {{-- Right --}}
-                <div class="float-end col-lg-4 col-md-12 mt-3">
+                <div class="float-end col-lg-4 col-md-12 mt-3 mt-md-0">
                     @if(isset($weather['error']))
                         <div class="card quick-access-box mb-3">
                             <p>{{ $weather['error'] }}</p>
                         </div>
                     @else
-                        <div class="card quick-access-box to-jas text-center {{ $weather['to_jas'] ? 'red' : 'green' }} mb-3">
-                            <h1 class="p-1 mb-0">{{ $weather['to_jas'] ? 'TO JAS :(' : 'NOT TO JAS!!!' }}</h1>
+                        <div class="card quick-access-box px-3 py-1 greeting mb-3">
+                            <h1 class="m-0 fw-bold fs-3">
+                                {{ $greeting . ' ' . (auth()->user()?->name ?? 'Gast') . '!' }}
+                            </h1>
                         </div>
 
                         <div class="card quick-access-box weather mb-3" style="background: url({{ asset($weather['bram']) }}) top center; background-size: cover;">
@@ -93,6 +88,10 @@
                             </div>
                         </div>
                     @endif
+
+                    <div class="card quick-access-box to-jas text-center {{ $weather['to_jas'] ? 'red' : 'green' }} mb-3">
+                        <h1 class="p-1 mb-0">{{ $weather['to_jas'] ? 'TO JAS :(' : 'NOT TO JAS!!!' }}</h1>
+                    </div>
 
                     @if (!empty($steamReview))
                         <div class="card quick-access-box mb-3">

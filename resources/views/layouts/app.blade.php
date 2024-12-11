@@ -60,7 +60,7 @@
     @endif>
 </div>
 <div>
-    <nav class="navbar w-100">
+    <nav class="navbar w-100 position-fixed z-3">
         <button class="fs-5 ms-3 me-lg-3 sidebar-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
                 aria-controls="sidebar">
             <i class="fas fa-bars"></i>
@@ -70,6 +70,9 @@
         </a>
         <div style="width: 54px"></div>
     </nav>
+    @if(Route::currentRouteName() !== 'steam.show')
+        <div class="fake-nav"></div>
+    @endif
 
     <div class="container-fluid">
         <div class="row flex-nowrap">
