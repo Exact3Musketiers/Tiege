@@ -66,13 +66,15 @@ class Spotify
         $api = new SpotifyWebAPI\SpotifyWebAPI();
 
         // Fetch the saved access token from somewhere. A session for example.
-        $api->setAccessToken(session('spotify_access_token'));
-        dd($api->getMyTop('tracks', [
-            'limit' => 50,
-            'offset' => 0,
-            'time_range'=>'long_term'
-        ]));
-        dd($api->getArtist('2SmW1lFlBJn4IfBzBZDlSh'));
+//        dd(auth()->user()->spotify_access_token);
+        $api->setAccessToken(Crypt::decryptString(auth()->user()->spotify_access_token));
+//        dd($api->getMyTop('tracks', [
+//            'limit' => 50,
+//            'offset' => 0,
+//            'time_range'=>'long_term'
+//        ]));
+//        dd($api->getTrack('4BP3uh0hFLFRb5cjsgLqDh'));
+//        dd($api->getArtist('3IYUhFvPQItj6xySrBmZkd'));
         return $api->getUserFollowedArtists([
             'limit' => 1,
             'after' => '0L8ExT028jH3ddEcZwqJJ5'

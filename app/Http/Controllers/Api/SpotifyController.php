@@ -19,19 +19,18 @@ class SpotifyController extends Controller
         Spotify::getToken($request);
 //        return redirect('home');
 //        127.0.0.1:4040
-        return redirect('exp://192.168.50.166:8081/--/music');
+        return redirect('exp://10.1.1.166:8081/--/music');
     }
 
     public function following(Request $request)
     {
-        dd(auth()->user()->spotify_access_token);
-        dd(Spotify::getTop());
-        dd(Spotify::getTop()->items);
+//        dd(auth()->user()->spotify_access_token);
+        dd(Spotify::getFollowedArtists());
+//        dd(Spotify::getTop()->items);
     }
 
     public function dashboard(Request $request)
     {
-
 //        return $request->all();
 //        return Spotify::getTop($request->get('type'), 50,0, $request->get('time_range'));
         return Spotify::getTop($request->get('type'), 50,0, $request->get('time_range'))->items;
