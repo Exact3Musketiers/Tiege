@@ -11,7 +11,7 @@
         <div class="py-3">
             <div class="content-box mb-3">
                 <h1>{{ $car->brand .' '. $car->model }}</h1>
-                <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden.</p>
+                <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometer je hebt gereden.</p>
             </div>
             <div class="content-box">
                 <div class="table-responsive">
