@@ -63,24 +63,12 @@
                                 @endif
                             </div>
                         </div>
-                        <form action="{{ route('steam.getNewGame', $user) }}" class="p-3">
-                            <h4 class="mb-3">Vul de tijd gespeeld in (In minuten)</h4>
-                            <div class="form- mb-3">
-                                <label for="playedMin">Minimum minuten gespeeld</label>
-                                <input type="number" name="min" class="form-control"  id="playedMin"
-                                       placeholder="0"
-                                       value="{{ old('min') ?? cache('user.'.$user->getKey().'.minutes',
-                                                    ['min' => null])['min'] }}">
+                        <form action="{{ route('steam.getNewGame', $user) }}">
+                            <div class="p-3 w-100">
+                                <h4>Genereer een ander spel</h4>
+                                <button class="btn btn-outline-primary mb-1" name="played" value="0">Een spel dat ik nog niet heb gespeeld</button>
+                                <button class="btn btn-outline-primary mb-1" name="played" value="1">Maakt niet uit</button>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="playedMax">Maximum minuten gespeeld</label>
-                                <input type="number" name="max" class="form-control" id="playedMax"
-                                       placeholder="1000"
-                                       value="{{ old('max') ?? cache('user.'.$user->getKey().'.minutes',
-                                                    ['max' => null])['max'] }}">
-                            </div>
-                            <button type="submit" class="btn btn-outline-primary w-100">Geef me een ander spel</button>
                         </form>
                     </div>
                 </div>

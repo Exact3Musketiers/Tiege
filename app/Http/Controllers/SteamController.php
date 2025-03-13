@@ -50,7 +50,7 @@ class SteamController extends Controller
                 return collect(Steam::getOwnedGames($user));
             });
             $selectedGame = Cache::remember('user.'.$user->getKey().'.selectedGame', 86500, function () use($user, $ownedGames) {
-                return Steam::selectGame($user, $ownedGames, 0, 1500000);
+                return Steam::selectGame($ownedGames);
             });
 
 
@@ -76,10 +76,9 @@ class SteamController extends Controller
 
     public function getNewGame(Request $request, User $user)
     {
-        $validated = $request->validate([
-            'min' => ['lte:max'],
-            'max' => ['gte:min']
-        ]);
+       $played =  (bool)collect($request->validate([
+            'played' => ['nullable', 'bool'],
+        ]))->first();
 
         $ownedGames = Cache::remember('user.'.$user->getKey().'.ownedGames', 86500, function () use($user) {
             return collect(Steam::getOwnedGames($user));
@@ -87,25 +86,12 @@ class SteamController extends Controller
 
         cache::forget('user.'.$user->getKey().'.selectedGame');
         cache::forget('user.'.$user->getKey().'.selectedGameInfo');
-        cache::forget('user.'.$user->getKey().'.minutes');
-
-        $min = $request->min;
-        $max = $request->max;
-
-        Cache::remember('user.'.$user->getKey().'.minutes', 86500, function () use($min, $max) {
-            return ['min' => $min, 'max' => $max];
-        });
 
         $selectedGameInfo = [];
 
-        $selectedGame = Cache::remember('user.'.$user->getKey().'.selectedGame', 86500, function () use($user, $ownedGames, $validated) {
-            return Steam::selectGame($user, $ownedGames, $validated['min'], $validated['max']);
+        $selectedGame = Cache::remember('user.'.$user->getKey().'.selectedGame', 86500, function () use($user, $ownedGames, $played) {
+            return Steam::selectGame($ownedGames, $played);
         });
-        if (!empty($selectedGame)) {
-            $selectedGameInfo = Cache::remember('user.'.$user->getKey().'.selectedGameInfo', 86500, function () use($selectedGame) {
-                return Steam::getGameInfo($selectedGame);
-            });
-        }
 
         return back();
     }

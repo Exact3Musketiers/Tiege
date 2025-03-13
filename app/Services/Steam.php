@@ -102,11 +102,14 @@ class Steam
             'appids' => $game['appid'],
             'format' => 'json',
         ]);
+
         $info = [];
-        if (!empty($steamResponse[$game['appid']]['data'])) {
+
+        if ($steamResponse[$game['appid']]['success']) {
             $info = $steamResponse[$game['appid']]['data'];
             $info['playtime_forever'] = self::minutesToHours($game['playtime_forever']);
         }
+
         return $info;
     }
 
@@ -129,27 +132,26 @@ class Steam
         return $image;
     }
 
-    //! wherebetween laravel collection
-    public static function getGamesToPlay($games, $startingPlaytime = 15, $endingPlaytime = 60)
+    public static function getGamesToPlay($games, $played = true)
     {
-        $selectedGames = [];
-        for ($i=0; $i < count($games); $i++) {
-            if ($games[$i]['playtime_forever'] >= $startingPlaytime && $games[$i]['playtime_forever'] <= $endingPlaytime) {
-                $selectedGames[$i] = $games[$i];
-            }
-        }
+        $selectedGames = collect($games);
 
+        if (!$played) {
+            $selectedGames = $selectedGames->where('playtime_forever', 0);
+        }
         return $selectedGames;
     }
 
-    public static function selectGame($user, $ownedGames, $min, $max)
+    public static function selectGame($ownedGames, $played = true)
     {
-        $gamesToPlay = self::getGamesToPlay($ownedGames, $min, $max);
-        $randomGame = [];
-        if ($gamesToPlay) {
-            $randomGame = collect($gamesToPlay)->random();
+        $game = collect(self::getGamesToPlay($ownedGames, $played))->random();
+
+        // When the game has no image, it usualy means the game is unlisted and does not have any info beyond a name and a playtime.
+        // This makes sure a game is returned which can be shown on the show page.
+        if ($game['img_icon_url'] === '') {
+            return self::selectGame($ownedGames, $played = true);
         }
 
-        return $randomGame;
+        return $game;
     }
 }
