@@ -24,6 +24,7 @@
                                 <th scope="col">Gebruik (km/l)</th>
                                 <th scope="col">Prijs (per l)</th>
                                 <th scope="col">Datum</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,6 +36,15 @@
                                     <td>{{ RefuelingStat::convertToFloat($stat->usage) }}</td>
                                     <td>{{ RefuelingStat::convertToFloat($stat->price_per_liter) }}</td>
                                     <td>{{ $stat->record_date }}</td>
+                                    <td>
+                                        <form action="{{ route('efficiency.destroy', [$car->getKey(), $stat->getKey()]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                            <button class="btn btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -45,6 +55,7 @@
                                 <th>{{ $total['liters_tanked'] }} l</th>
                                 <th>{{ round(RefuelingStat::convertToFloat($car->avg_usage), 1) }} km/l</th>
                                 <th>&#8364;{{ $total['price'] }}</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </tfoot>

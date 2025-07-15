@@ -63,4 +63,24 @@ class RefuelingStatController extends Controller
 
         return redirect()->route('efficiency.index', ['car' => $car]);
     }
+
+    public function destroy(Car $car, RefuelingStat $stat)
+    {
+        if ($car->user_id !== auth()->user()->getKey()) {
+            abort('404');
+        }
+
+        $history = collect(
+            RefuelingStat::where('car_id', $car->getKey())->get(['id', 'usage'])
+        )->where('id', '!=', $stat->getKey())->pluck('usage')->toArray();
+
+        $average = array_sum($history) / count($history);
+        $total_distance = $car->total_distance - $stat->odo_reading;
+
+        $car->update(['total_distance' => $total_distance, 'avg_usage' => $average]);
+
+        $stat->delete();
+
+        return redirect()->route('efficiency.index', ['car' => $car]);
+    }
 }

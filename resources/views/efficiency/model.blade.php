@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+{{-- @dd($stat) --}}
     <div class="container">
         <div class="py-3">
             <div class="content-box">
@@ -26,11 +27,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="price_per_liter" class="form-label">Prijs per liter</label>
-                            <input class="form-control" name="price_per_liter" id="price_per_liter" value="{{ old('price_per_liter') ?? $car->price_per_liter }}"  placeholder="Prijs per liter" type="number" step="0.001" >
+                            <input class="form-control" name="price_per_liter" id="price_per_liter" value="{{ old('price_per_liter') ?? $stat->price_per_liter }}"  placeholder="Prijs per liter" type="number" step="0.001" >
                         </div>
                         <div class="mb-3">
                             <label for="record_date" class="form-label">Datum</label>
-                            <input class="form-control" name="record_date" id="record_date" value="{{ old('record_date') ?? $car->record_date }}"  placeholder="Datum" type="date">
+                            <input class="form-control" name="record_date" id="record_date" value="{{ old('record_date') ?? $stat->record_date }}"  placeholder="Datum" type="date">
                         </div>
                         <button type="submit" class="btn btn-outline-primary w-100">Opslaan</button>
                     </form>
