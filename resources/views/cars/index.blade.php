@@ -8,7 +8,7 @@
     <div class="container">
         <div class="py-3 content-box">
             <h1>Auto Efficiency</h1>
-            <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometers en hoeveel kilometer je hebt gereden> Je kan ook je auto toevoegen Als je dat leuk lijkt!</p>
+            <p>Houd hier al je auto's bij! en zie hoe efficient ze zijn!</p>
             @guest
                 <h5>Om je kilometers bij te houden moet je wel inloggen.</h5>
                 <a href="{{ route('login') }}" class="btn btn-primary text-white">Login</a>

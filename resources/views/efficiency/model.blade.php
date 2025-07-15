@@ -6,7 +6,7 @@
         <div class="py-3">
             <div class="content-box">
                 <div class="card-header">
-                    <h1 class="h5"><a href="{{ route('driving.index') }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | Voeg een tankbeurt toe voor je <span class="text-secondary">{{ $car->brand .' '. $car->model }}</span></h1>
+                    <h1 class="h5"><a href="{{ route('efficiency.index', $car) }}"><i class="fas fa-angle-left pe-2"></i>terug</a> | Voeg een tankbeurt toe voor je <span class="text-secondary">{{ $car->brand .' '. $car->model }}</span></h1>
                 </div>
                 <hr class="m-0">
                 <div class="card-body">

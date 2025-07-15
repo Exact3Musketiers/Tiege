@@ -10,6 +10,7 @@
     <div class="container">
         <div class="py-3">
             <div class="content-box mb-3">
+                <a href="{{ route('driving.index') }}"><i class="fas fa-angle-left pe-2"></i>terug</a>
                 <h1>{{ $car->brand .' '. $car->model }}</h1>
                 <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometer je hebt gereden.</p>
             </div>
