@@ -11,9 +11,9 @@ class News
     {
         $topics = [
             'https://nu.nl/rss/Wetenschap',
-            'https://nu.nl/rss/film',
+            'https://nu.nl/rss/goed-nieuws',
+            'https://nu.nl/rss/Tweakers',
             'https://nu.nl/rss/cultuur-overig',
-            'https://nu.nl/rss/Tech',
             'https://nu.nl/rss/Opmerkelijk',
         ];
         $news_array = [];
