@@ -15,6 +15,7 @@
                 <p>Houd hier bij hoe efficient je auto is. Vul in hoeveel je tankt en hoeveel kilometer je hebt gereden.</p>
             </div>
             <div class="content-box">
+                <a href="{{ route('efficiency.create', $car) }}" class="btn btn-primary text-light mb-3">Voeg tankbeurt toe</a>
                 <div class="table-responsive">
                     <table class="table table-dark table-striped table-hover">
                         <thead>
@@ -62,7 +63,6 @@
                         </tfoot>
                     </table>
                 </div>
-                <a href="{{ route('efficiency.create', $car) }}" class="btn btn-primary text-light mt-3">Voeg tankbeurt toe</a>
             </div>
         </div>
     </div>
