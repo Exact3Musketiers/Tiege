@@ -15,6 +15,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="position-relative"></div>
     <div class="container home">
         <div class="row justify-content-center">
             <div class="row">
@@ -115,5 +116,17 @@
             </div>
         </div>
     </div>
+        <div onclick="play()" class="btn btn-primary mb-3 me-3 position-absolute bottom-0 end-0">
+            <i class="far fa-share"></i>
+        </div>
+        <audio id="audio" src="{{ asset('audio/cher.mp3') }}"></audio>
+    </div>
+
+    <script>
+        function play() {
+            var audio = document.getElementById("audio");
+            audio.play();
+        }
+    </script>
 @endsection
 
