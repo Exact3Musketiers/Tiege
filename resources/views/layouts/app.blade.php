@@ -28,10 +28,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+        <meta name="description" content="Dit is een hele website! Kom hier om lekker te genieten van allemaal random programmeer projecten. Doe een wikipedia speurtocht of houdt bij hoe efficient je auto is!">
+        <meta name="keywords"
+            content="Piet, Jouke, Korfmaker, Piet Korfmaker, Piet Jouke Korfmaker, pietonline.com, Wiki, Wikipedia, Steam, Games, Wikipedia Game, Nieuws, Weer, To jas or not to jas, Gewoon Bram, Op de fiets ny harkema, Cher">
+
+
+        <meta property="og:url" content="https://tige.site/">
+        <meta property="og:image" content="https://tige.site/images/brammen/bewolkte_bram.png">
+        <meta property="og:description"
+            content="Dit is een hele website! Kom hier om lekker te genieten van allemaal random programmeer projecten. Doe een wikipedia speurtocht of houdt bij hoe efficient je auto is!">
+        <meta property="og:title" content="Tige | Home">
+        <meta property="og:site_name" content="Piet Korfmaker | pietonline.com">
+        <meta property="og:see_also" content="https://tige.site/">
+        <meta property="og:type" content="website">
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @php $exploded_name = explode('.', request()->route()->getName()); @endphp
+    <title>Tige | {{ ucFirst($exploded_name[0]); }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
