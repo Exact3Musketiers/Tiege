@@ -52,7 +52,7 @@
                         <tfoot>
                             <tr>
                                 <th scope="row">Totaal:</th>
-                                <th>{{ $car->total_distance }} km</th>
+                                <th>{{ $total['distance_driven'] }} km</th>
                                 <th>{{ $total['liters_tanked'] }} l</th>
                                 <th>{{ round(RefuelingStat::convertToFloat($car->avg_usage), 1) }} km/l</th>
                                 <th>&#8364;{{ $total['price'] }}</th>

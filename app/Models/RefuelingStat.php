@@ -37,6 +37,7 @@ class RefuelingStat extends Model
 
     public static function calculateTotal($stats): array
     {
+        $return['distance_driven'] = $stats->sum('odo_reading');
         $return['liters_tanked'] = self::convertToFloat($stats->sum('liters_tanked'));
 
         $return['price'] = $stats->map(function ($item) {
