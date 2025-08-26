@@ -8,7 +8,7 @@
     @csrf
         <div class="form-group mb-3">
             <label for="email" class="col-form-label text-md-right">E-Mail Addres</label>
-                <input id="email" type="email" class="form-control fs-5 @error('email') is-invalid @enderror"" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
+                <input id="email" type="email" class="form-control fs-5 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email" tabindex="1">
                 @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -26,7 +26,7 @@
                         <div class="col-sm-12 col-md-12 col-xl-7 text-xl-end">
                             <label for="" class="col-form-label">
                                 <small>
-                                    <a href="{{ route('password.request') }}">
+                                    <a href="{{ route('password.request') }}" tabindex="5">
                                         Wachtwoord Vergeten?
                                     </a>
                                 </small>
@@ -35,7 +35,7 @@
                     @endif
                 </div>
             </div>
-                <input id="password" type="password" class="form-control fs-5 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Wachtwoord">
+                <input id="password" type="password" class="form-control fs-5 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Wachtwoord" tabindex="2">
                 @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
 
         <div class="form-group mb-3">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="remember"
+                <input class="form-check-input" type="checkbox" name="remember" tabindex="3"
                     id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                 <label class="form-check-label" for="remember">
@@ -55,12 +55,12 @@
         </div>
 
         <div class="form-group mb-0">
-            <button type="submit" class="btn btn-primary w-100">
+            <button type="submit" class="btn btn-primary w-100" tabindex="4">
                 Inloggen
             </button>
         </div>
         <div class="text-center">
-            Nog geen account? <a href="{{ route('register') }}">Maak er een</a>!
+            Nog geen account? <a href="{{ route('register') }}" tabindex="6">Maak er een</a>!
         </div>
     </form>
 </div>
