@@ -1,3 +1,10 @@
+@php
+    $bg = Cache::remember('background_image', 3600, function () {
+        $bg_count = count(File::files(public_path('images/backgrounds')));
+        return asset('images/backgrounds/'.rand(1, $bg_count).'.jpg');
+    });
+@endphp
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -32,7 +39,14 @@
                 </div>
             </div>
         </div>
-        <div class="col bg-with-img text-center justify-content-center align-items-center d-block d-none d-md-flex">
+        <div class="col text-center justify-content-center align-items-center d-block d-none d-md-flex"
+            @if (!is_null($bg))
+                style="
+            background: url({{ $bg }}) center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            "
+            @endif>
             <div class="bg-dark-opacity">
                 <img class="img-fluid p-5" src="{{ asset('/images/logo-white.png') }}" alt="">
             </div>

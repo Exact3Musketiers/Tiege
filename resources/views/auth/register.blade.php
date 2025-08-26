@@ -61,6 +61,17 @@
             <input id="password-confirm" type="password" class="form-control fs-5" name="password_confirmation" required autocomplete="new-password" placeholder="Bevestig Wachtwoord">
         </div>
 
+        <div id="invite_code" class="form-group mb-3">
+            <label for="invite_code" class="col-form-label text-md-right">Uitnodigingscode</label>
+
+            <input id="invite_code" type="text" class="form-control fs-5 @error('invite_code') is-invalid @enderror" value="{{ old('invite_code') }}" name="invite_code" placeholder="Code voor het maken van een account..." required>
+            @error('invite_code')
+            <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
         <div id="musketier" class="form-group mb-3 hidden-input">
             <label for="musketier-password" class="col-form-label text-md-right">Musketier Wachtwoord</label>
 
