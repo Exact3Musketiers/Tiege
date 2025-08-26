@@ -28,8 +28,8 @@
                 <hr>
                 <p>{{ $wiki[1][1] }}</p>
             </div>
-            
-            <div class="content-box d-flex justify-content-between align-items-center mb-3 p-3 rounded">
+
+            <div class="content-box mb-3">
                 <label for="sharable_link" class="form-label">Deel deze link:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" value="{{ URL::full() }}" readonly id="sharable_link" aria-describedby="invite link">
