@@ -10,8 +10,9 @@
         @include('includes._errors')
 
         <div class="content-box mb-3">
+            <label for="invite_link" class="form-label">Pas je naam aan</label>
             <div class="input-group">
-                <input type="text" class="form-control" value="https://tige.site/register?invite={{ config('services.inviteCode') }}" readonly>
+                <input type="text" class="form-control" value="https://tige.site/register?invite={{ config('services.inviteCode') }}" readonly id="invite_link" aria-describedby="invite link">
                 <button class="btn btn-secondary" type="button"
                         onclick="navigator.clipboard.writeText('https://tige.site/register?invite={{ config('services.inviteCode') }}')">
                     <i class="fas fa-copy"></i>
