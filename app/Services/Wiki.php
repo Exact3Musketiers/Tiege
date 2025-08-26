@@ -35,7 +35,7 @@ class Wiki
 
     public static function getWikiDescription($page) {
         // Get all wanted data from page
-        $wiki = Http::get('https://nl.wikipedia.org/api/rest_v1/page/summary/'.$page);
+        $wiki = Http::withUserAgent(request()->userAgent())->get('https://nl.wikipedia.org/api/rest_v1/page/summary/'.$page);
 
         // Check if the api throws an error
         if (array_key_exists('error', $wiki->json())) {
@@ -52,7 +52,7 @@ class Wiki
     public static function getWikiPage($page = 'https://en.wikipedia.org/wiki/Special:Random', $pageId = null)
     {
         // Get all wanted data from page
-        $wiki = Http::get('https://nl.wikipedia.org/w/api.php', [
+        $wiki = Http::withUserAgent(request()->userAgent())->get('https://nl.wikipedia.org/w/api.php', [
             'format' => 'json',
             'action' => 'parse',
             'page' => $page,
