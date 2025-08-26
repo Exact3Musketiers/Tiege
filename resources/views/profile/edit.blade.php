@@ -13,15 +13,14 @@
             <label for="invite_link" class="form-label">Tige delen? Gebruik deze link</label>
             <div class="input-group">
                 <input type="text" class="form-control" value="https://tige.site/register?invite={{ config('services.inviteCode') }}" readonly id="invite_link" aria-describedby="invite link">
-                <button class="btn btn-secondary rounded-r-lg" type="button"
+                <button class="btn btn-secondary rounded-end" type="button"
                         onclick="navigator.clipboard.writeText('https://tige.site/register?invite={{ config('services.inviteCode') }}'); document.getElementById('copy-success').classList.remove('d-none'); setTimeout(() => document.getElementById('copy-success').classList.add('d-none'), 2000);">
                     <i class="fas fa-copy"></i>
                 </button>
                 <div id="copy-success"
-                     class="d-none position-absolute top-100 start-50 translate-middle-x alert alert-success py-1 px-2 mt-2">
+                     class="d-none position-absolute top-50 start-50 translate-middle-x alert rounded alert-success text-dark py-1 px-2 mt-2">
                     het kopiëren is gelukt!
                 </div>
-
             </div>
         </div>
 

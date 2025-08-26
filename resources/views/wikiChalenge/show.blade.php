@@ -28,9 +28,20 @@
                 <hr>
                 <p>{{ $wiki[1][1] }}</p>
             </div>
+            
             <div class="content-box d-flex justify-content-between align-items-center mb-3 p-3 rounded">
-                <p class="text-truncate pe-3 mb-0"><strong>Deel deze link:</strong> <span id="sharable_link">{{ URL::full() }}</span></p>
-                <a class="btn btn-primary btn-sm text-light" id="copy_link"><i class="far fa-copy"></i></a>
+                <label for="sharable_link" class="form-label">Deel deze link:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" value="{{ URL::full() }}" readonly id="sharable_link" aria-describedby="invite link">
+                    <button class="btn btn-secondary rounded-end" type="button"
+                            onclick="navigator.clipboard.writeText({{ URL::full() }}); document.getElementById('copy-success').classList.remove('d-none'); setTimeout(() => document.getElementById('copy-success').classList.add('d-none'), 2000);">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <div id="copy-success"
+                         class="d-none position-absolute top-50 start-50 translate-middle-x alert rounded alert-success text-dark py-1 px-2 mt-2">
+                        het kopiëren is gelukt!
+                    </div>
+                </div>
             </div>
 
             <div class="content-box" id="app">
