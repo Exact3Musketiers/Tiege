@@ -9,7 +9,20 @@
     <div class="container">
         @include('includes._errors')
 
+        <div class="content-box mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control" value="https://tige.site/register?invite={{ config('services.inviteCode') }}" readonly>
+                <button class="btn btn-secondary" type="button"
+                        onclick="navigator.clipboard.writeText('https://tige.site/register?invite={{ config('services.inviteCode') }}')">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </div>
+
         <div>
+            <div class="content-box">
+
+            </div>
             <div class="content-box">
                 <h1>Pas jezelf aan</h1>
                 <hr />

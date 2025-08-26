@@ -1,3 +1,10 @@
+@php
+    $invite_code = null;
+    if (request()->has('invite') && request()->get('invite') === config('services.inviteCode')) {
+        $invite_code = config('services.inviteCode');
+    }
+@endphp
+
 @extends('layouts.login')
 
 @section('content')
@@ -64,7 +71,7 @@
         <div id="invite_code" class="form-group mb-3">
             <label for="invite_code" class="col-form-label text-md-right">Uitnodigingscode</label>
 
-            <input id="invite_code" type="text" class="form-control fs-5 @error('invite_code') is-invalid @enderror" value="{{ old('invite_code') }}" name="invite_code" placeholder="Code voor het maken van een account..." required>
+            <input id="invite_code" type="text" class="form-control fs-5 @error('invite_code') is-invalid @enderror" value="{{ old('invite_code') ?? $invite_code }}" name="invite_code" placeholder="Code voor het maken van een account..." required>
             @error('invite_code')
             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
