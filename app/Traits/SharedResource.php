@@ -1,6 +1,8 @@
 <?php
 namespace App\Traits;
 
+use Illuminate\Support\Str;
+
 trait SharedResource
 {
     public function getActionRoute($prefix = '', $routeModels = [], $action = 'update')
@@ -18,7 +20,6 @@ trait SharedResource
 
     public function getBaseRoute()
     {
-        return property_exists($this, 'baseRoute') ? $this->baseRoute : $this->getTable();
+        return property_exists($this, 'baseRoute') ? $this->baseRoute : Str::singular($this->getTable());
     }
-
 }

@@ -18,4 +18,9 @@ class PagesController extends Controller
     {
         return view('policy');
     }
+
+    public function cyberguesser()
+    {
+        return view('guesser.show');
+    }
 }

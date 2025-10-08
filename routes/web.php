@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\HasValidHash;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,8 @@ route::get('/steam/reviews', [App\Http\Controllers\SteamReviewController::class,
 
 route::get('/wiki', [App\Http\Controllers\WikiController::class, 'index'])->name('wiki.index');
 
+route::get('/cyberguesser', [App\Http\Controllers\PagesController::class, 'cyberguesser'])->name('cyberguesser');
+
 Route::middleware('auth')->group(function () {
     route::get('/wiki/refresh', [App\Http\Controllers\WikiController::class, 'refreshPage'])->name('wiki.refresh');
     Route::resource('wiki', App\Http\Controllers\WikiController::class)->only(['store', 'show'])->middleware(HasValidHash::class);
@@ -58,6 +61,7 @@ Route::middleware('auth')->group(function () {
     route::get('/steam/reviews/{user}', [App\Http\Controllers\SteamReviewController::class, 'index'])->name('steam.review.index');
     route::get('/steam/reviews/{user}/review/{review}', [App\Http\Controllers\SteamReviewController::class, 'edit'])->name('steam.review.edit');
 
+    route::resource('location', App\Http\Controllers\LocationController::class)->except('show')->middleware(EnsureUserIsAdmin::class);
 
 
     // Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');

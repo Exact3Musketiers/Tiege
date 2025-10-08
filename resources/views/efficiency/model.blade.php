@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- @dd($stat) --}}
     <div class="container">
         <div class="py-3">
             <div class="content-box">

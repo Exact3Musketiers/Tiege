@@ -230,7 +230,6 @@ background: linear-gradient(90deg, $color-pop 00%, rgba(255,255,255,0.5) 100%);
 .has-background-image {
     width: 100%;
     height: 100vh;
-
 }
 
 @media only screen and (max-width: 600px) {
@@ -242,6 +241,22 @@ background: linear-gradient(90deg, $color-pop 00%, rgba(255,255,255,0.5) 100%);
             margin-left: 10px;
         }
     }
+}
+
+
+.panorama-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+    margin-top: 25px;
+}
+.panorama-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 
