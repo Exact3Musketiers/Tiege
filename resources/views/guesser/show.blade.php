@@ -11,15 +11,46 @@
     <div class="container">
         <div class="panorama-wrapper">
             <iframe src="https://cdn.pannellum.org/2.5/pannellum.htm#panorama={{ urlencode('https://upload.wikimedia.org/wikipedia/commons/5/59/360_panorama_-_JR_Shinjuku_Station_south_east_ticket_gates_-_Dec_16_2020.jpeg') }}" allowfullscreen></iframe>
+            <div id="map" style="
+                width:450px;
+                aspect-ratio: 16 / 9;
+                position:absolute;
+                bottom: 0;
+                border-radius: 0 5px 0 0;
+            "></div>
         </div>
     </div>
-    <div id="map" class="h-100"></div>
-    <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
 
-        L.imageOverlay('./images/cyberpunk_map.webp', {
-            maxZoom: 1,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    <script>
+        const map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: 1,
+            maxZoom: 6,
+            noWrap: true
+        });
+
+        let bound_size = map.getContainer().offsetWidth / 2
+
+        const bounds = [[0, 0], [-bound_size, bound_size]];
+
+        L.tileLayer('./maps/cyberpunk/{z}/{x}/{y}.jpg', {
+            noWrap: true,
+            minZoom: 1,
+            maxZoom: 6,
+            tileSize: bound_size,
+            bounds: bounds
         }).addTo(map);
+
+        map.fitBounds(bounds);
+        map.setMaxBounds(bounds);
+
+        let marker = {}
+        map.on('click', function(e) {
+            if (marker != undefined) {
+                map.removeLayer(marker);
+            };
+
+            marker = L.marker(e.latlng).addTo(map);
+        })
     </script>
 @endsection
