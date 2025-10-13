@@ -33,7 +33,7 @@
 
         const bounds = [[0, 0], [-bound_size, bound_size]];
 
-        L.tileLayer('./maps/cyberpunk/{z}/{x}/{y}.jpg', {
+        L.tileLayer('https://ams3.digitaloceanspaces.com/postis-dev/piet/maps/cyberpunk/{z}/{x}/{y}.jpg', {
             noWrap: true,
             minZoom: 1,
             maxZoom: 6,
@@ -43,7 +43,9 @@
 
         map.fitBounds(bounds);
         map.setMaxBounds(bounds);
-
+        map.on('click', function(e) {
+            console.log(e.latlng)
+        })
         let marker = {}
         map.on('click', function(e) {
             if (marker != undefined) {

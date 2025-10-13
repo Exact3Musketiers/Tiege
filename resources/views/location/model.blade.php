@@ -52,13 +52,40 @@
         </div>
     </div>
 
-    <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
 
-        L.imageOverlay('../../images/cyberpunk_map.webp', {
-            maxZoom: 1,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    <script>
+        const map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: 1,
+            maxZoom: 6,
+            noWrap: true
+        });
+
+        let bound_size = map.getContainer().offsetWidth / 2
+
+        const bounds = [[0, 0], [-bound_size, bound_size]];
+
+        L.tileLayer('https://postis-dev.ams3.cdn.digitaloceanspaces.com/piet/maps/cyberpunk/{z}/{x}/{y}.jpg', {
+            noWrap: true,
+            minZoom: 1,
+            maxZoom: 6,
+            tileSize: bound_size,
+            bounds: bounds
         }).addTo(map);
+
+        map.fitBounds(bounds);
+        map.setMaxBounds(bounds);
+        map.on('click', function(e) {
+            console.log(e.latlng)
+        })
+        let marker = {}
+        map.on('click', function(e) {
+            if (marker != undefined) {
+                map.removeLayer(marker);
+            };
+
+            marker = L.marker(e.latlng).addTo(map);
+        })
     </script>
 @endsection
 
